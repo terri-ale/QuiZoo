@@ -11,4 +11,7 @@ public class BatteryReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Toast.makeText(context, "BAttery's dying!!", Toast.LENGTH_LONG).show();
     }
+
+
+    //UnaLinea
 }
