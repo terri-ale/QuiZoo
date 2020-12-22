@@ -10,4 +10,44 @@
         android:name="com.example.quizoo.AdminLoginFragment"
         android:label="fragment_admin_login"
         tools:layout="@layout/fragment_admin_login" />
+    <fragment
+        android:id="@+id/createUserFragment"
+        android:name="com.example.quizoo.CreateUserFragment"
+        android:label="fragment_create_user"
+        tools:layout="@layout/fragment_create_user" />
+    <fragment
+        android:id="@+id/chooseUserFragment"
+        android:name="com.example.quizoo.ChooseUserFragment"
+        android:label="fragment_choose_user"
+        tools:layout="@layout/fragment_choose_user" />
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.example.quizoo.PerfilFragment"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" />
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.example.quizoo.GameFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game" />
+    <fragment
+        android:id="@+id/perfilAdminFragment"
+        android:name="com.example.quizoo.PerfilAdminFragment"
+        android:label="fragment_perfil_admin"
+        tools:layout="@layout/fragment_perfil_admin" />
+    <fragment
+        android:id="@+id/adminUsersFragment"
+        android:name="com.example.quizoo.AdminUsersFragment"
+        android:label="fragment_admin_users"
+        tools:layout="@layout/fragment_admin_users" />
+    <fragment
+        android:id="@+id/adminCardsFragment"
+        android:name="com.example.quizoo.AdminCardsFragment"
+        android:label="fragment_admin_cards"
+        tools:layout="@layout/fragment_admin_cards" />
+    <fragment
+        android:id="@+id/createCardsFragment"
+        android:name="com.example.quizoo.CreateCardsFragment"
+        android:label="fragment_create_cards"
+        tools:layout="@layout/fragment_create_cards" />
 </navigation>
