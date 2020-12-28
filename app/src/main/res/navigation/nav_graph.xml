@@ -31,11 +31,6 @@
         android:label="fragment_game"
         tools:layout="@layout/fragment_game" />
     <fragment
-        android:id="@+id/perfilAdminFragment"
-        android:name="com.example.quizoo.view.fragment.PerfilAdminFragment"
-        android:label="fragment_perfil_admin"
-        tools:layout="@layout/fragment_perfil_admin" />
-    <fragment
         android:id="@+id/adminUsersFragment"
         android:name="com.example.quizoo.view.fragment.AdminUsersFragment"
         android:label="fragment_admin_users"
@@ -50,4 +45,9 @@
         android:name="com.example.quizoo.view.fragment.CreateCardsFragment"
         android:label="fragment_create_cards"
         tools:layout="@layout/fragment_create_cards" />
+    <fragment
+        android:id="@+id/perfilAdminFragment"
+        android:name="com.example.quizoo.view.fragment.PerfilAdminFragment"
+        android:label="fragment_perfil_admin"
+        tools:layout="@layout/fragment_perfil_admin" />
 </navigation>
