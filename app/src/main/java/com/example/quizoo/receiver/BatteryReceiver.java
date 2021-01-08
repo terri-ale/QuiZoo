@@ -11,10 +11,11 @@ public class BatteryReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        String menssage = ".Batería baja. Por favor, conecte el cargador";
         String action = intent.getAction();
 
         if(action.equals(Intent.ACTION_BATTERY_LOW)){
-            Toast.makeText(context, getApplicationName(context) + ".Batería baja. Por favor, conecte el cargador", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, getApplicationName(context) + menssage, Toast.LENGTH_LONG).show();
         }
 
     }
