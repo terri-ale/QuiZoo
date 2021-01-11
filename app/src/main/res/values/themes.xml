@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.QuiZoo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#FFBB80</item>
+        <item name="colorPrimary">#EA8F41</item>
 
         <item name="colorPrimaryVariant">#B9FFA0</item>
         <item name="colorOnPrimary">@color/white</item>
