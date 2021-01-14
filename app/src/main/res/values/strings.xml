@@ -6,4 +6,8 @@
     <string name="crea_una_contrase_a_para_entrar_en_el_modo_administrador">Crea una contraseña para entrar en el modo administrador</string>
     <string name="password">Contraseña</string>
     <string name="admin">Admin</string>
+    <string name="tv_entra_admin">Entra como administrador</string>
+    <string name="bt_entrar">Entrar</string>
+    <string name="warning_incorrect_password">Contraseña incorrecta</string>
+    <string name="warning_empty_field">Campo vacío</string>
 </resources>

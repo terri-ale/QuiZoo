@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.quizoo.R;
+import com.example.quizoo.viewmodel.ViewModelActivity;
 
 
 public class CreateUserFragment extends Fragment {
 
+    private ViewModelActivity viewModel;
 
     public CreateUserFragment() {
         // Required empty public constructor

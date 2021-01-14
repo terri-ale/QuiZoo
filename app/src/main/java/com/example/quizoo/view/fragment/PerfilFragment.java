@@ -14,11 +14,12 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.example.quizoo.R;
+import com.example.quizoo.viewmodel.ViewModelActivity;
 
 
 public class PerfilFragment extends Fragment {
 
-
+    private ViewModelActivity viewModel;
 
     public PerfilFragment() {
         // Required empty public constructor
