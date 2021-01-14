@@ -6,4 +6,6 @@
     <string name="crea_una_contrase_a_para_entrar_en_el_modo_administrador">Crea una contraseña para entrar en el modo administrador</string>
     <string name="password">Contraseña</string>
     <string name="admin">Admin</string>
+    <string name="tvContactEmail">example@example.com</string>
+    <string name="tvContactName">User</string>
 </resources>
