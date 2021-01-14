@@ -2,4 +2,8 @@
     <string name="app_name">QuiZoo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="confirmar_password">Confirmar Contraseña</string>
+    <string name="crea_una_contrase_a_para_entrar_en_el_modo_administrador">Crea una contraseña para entrar en el modo administrador</string>
+    <string name="password">Contraseña</string>
+    <string name="admin">Admin</string>
 </resources>
