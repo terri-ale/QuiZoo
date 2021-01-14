@@ -8,4 +8,5 @@
     <string name="admin">Admin</string>
     <string name="tvContactEmail">example@example.com</string>
     <string name="tvContactName">User</string>
+    <string name="todo">TODO</string>
 </resources>
