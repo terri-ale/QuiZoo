@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_adminLoginFragment_to_perfilAdminFragment"
             app:destination="@id/perfilAdminFragment" />
+        <action
+            android:id="@+id/action_adminLoginFragment_to_chooseUserFragment"
+            app:destination="@id/chooseUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/createUserFragment"
