@@ -56,7 +56,6 @@ public class ContactsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         contacts.clear();
 
         getContacts(getContext());
@@ -85,7 +84,6 @@ public class ContactsFragment extends Fragment {
             contacts.add(contact);
         }
 
-        //Log.v("xyzyx", nameContact.toString());
         cursor.close();
     }
 
