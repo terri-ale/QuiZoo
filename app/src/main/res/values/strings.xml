@@ -13,4 +13,6 @@
     <string name="bt_entrar">Entrar</string>
     <string name="warning_incorrect_password">Contraseña incorrecta</string>
     <string name="warning_empty_field">Campo vacío</string>
+    <string name="hola_admin">Hola Admin!</string>
+    <string name="InfoAdmin">A partir de ahora estás en modo administrador. Desde el menú lateral de navegación podrás crear, editar y eliminar cartas que verán todas las personas que descargaron QuiZoo. También podras gestionar los usuarios de este dispositvo. A divertirse!</string>
 </resources>

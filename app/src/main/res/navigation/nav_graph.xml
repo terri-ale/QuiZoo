@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/contactsFragment">
+    app:startDestination="@id/perfilAdminFragment">
 
     <fragment
         android:id="@+id/adminLoginFragment"
@@ -11,11 +11,11 @@
         android:label="fragment_admin_login"
         tools:layout="@layout/fragment_admin_login" >
         <action
-            android:id="@+id/action_adminLoginFragment_to_perfilAdminFragment"
-            app:destination="@id/perfilAdminFragment" />
-        <action
             android:id="@+id/action_adminLoginFragment_to_chooseUserFragment"
             app:destination="@id/chooseUserFragment" />
+        <action
+            android:id="@+id/action_adminLoginFragment_to_perfilAdminFragment"
+            app:destination="@id/perfilAdminFragment" />
     </fragment>
     <fragment
         android:id="@+id/createUserFragment"
@@ -61,11 +61,6 @@
         android:label="fragment_create_cards"
         tools:layout="@layout/fragment_create_cards" />
     <fragment
-        android:id="@+id/perfilAdminFragment"
-        android:name="com.example.quizoo.view.fragment.PerfilAdminFragment"
-        android:label="fragment_perfil_admin"
-        tools:layout="@layout/fragment_perfil_admin" />
-    <fragment
         android:id="@+id/contactsFragment"
         android:name="com.example.quizoo.view.fragment.ContactsFragment"
         android:label="fragment_contacts"
@@ -74,4 +69,9 @@
             android:id="@+id/action_contactsFragment_to_perfilFragment"
             app:destination="@id/perfilFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/perfilAdminFragment"
+        android:name="com.example.quizoo.view.fragment.PerfilAdminFragment"
+        android:label="fragment_perfil_admin"
+        tools:layout="@layout/fragment_perfil_admin" />
 </navigation>
