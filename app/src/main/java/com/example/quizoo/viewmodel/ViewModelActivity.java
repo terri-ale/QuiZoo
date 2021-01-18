@@ -5,7 +5,11 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 
 import com.example.quizoo.model.Repository;
+import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.model.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
 
@@ -37,5 +41,14 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
 
     public void setCurrentUser(User currentUser) {
         repository.setCurrentUser(currentUser);
+    }
+
+
+    public boolean contactsPermissionIsGranted() {
+        return repository.contactsPermissionIsGranted();
+    }
+
+    public ArrayList<Contact> getContactsWithMail() {
+        return repository.getContactsWithMail();
     }
 }

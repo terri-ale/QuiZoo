@@ -13,4 +13,7 @@
     <string name="bt_entrar">Entrar</string>
     <string name="warning_incorrect_password">Contraseña incorrecta</string>
     <string name="warning_empty_field">Campo vacío</string>
+    <string name="warning_grant_permission">Para continuar, debes conceder el permiso para leer contactos</string>
+    <string name="bt_grant">Conceder</string>
+
 </resources>
