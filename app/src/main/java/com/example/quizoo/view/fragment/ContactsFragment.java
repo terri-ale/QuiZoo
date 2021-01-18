@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,13 +20,15 @@ import android.view.ViewGroup;
 import com.example.quizoo.R;
 import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.view.adapter.Adapter;
+import com.example.quizoo.viewmodel.ViewModelActivity;
 
 import java.util.ArrayList;
 
 
 public class ContactsFragment extends Fragment {
 
-    private ArrayList<Contact> contacts = new ArrayList<>();
+
+    private ViewModelActivity viewModel;
 
     String[] data = new String[]{ContactsContract.Data.DISPLAY_NAME, ContactsContract.CommonDataKinds.Email.ADDRESS};
     String order = ContactsContract.Data.DISPLAY_NAME + " ASC";
@@ -56,10 +59,11 @@ public class ContactsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setWarning(!viewModel.contactsPermissionIsGranted());
 
-        contacts.clear();
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
+        ArrayList<Contact> contacts = viewModel.getContactsWithMail();
 
-        getContacts(getContext());
 
         RecyclerView recyclerContact = view.findViewById(R.id.recyclerView);
         Adapter adapter = new Adapter(getContext(), getActivity(),contacts);
@@ -69,24 +73,13 @@ public class ContactsFragment extends Fragment {
     }
 
 
-    //----- OBTENER LISTA DE CONTACTOS DE LA AGENDA -----
-    public void getContacts(Context context){
-        Cursor cursor =  context.getContentResolver().query(
-                ContactsContract.Data.CONTENT_URI,
-                data,
-                selectionEmail,
-                null,
-                order);
-        while(cursor.moveToNext()){
-            String name = cursor.getString(0);
-            String email = cursor.getString(1);
 
-            Contact contact = new Contact(name, email);
-            contacts.add(contact);
-        }
-
-        //Log.v("xyzyx", nameContact.toString());
-        cursor.close();
+    private void setWarning(boolean shouldShowWarning){
+        //Mostrar u ocultar los elementos graficos de la advertencia
     }
+
+
+
+
 
 }
