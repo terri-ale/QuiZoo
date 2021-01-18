@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string-array name="opciones">
+        <item>Mi correo</item>
+        <item>Correo de mis contactos</item>
+    </string-array>
 </resources>
