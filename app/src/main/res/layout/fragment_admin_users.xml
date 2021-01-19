@@ -66,11 +66,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
-        android:foregroundTint="#FFFFFF"
+        android:contentDescription="TODO"
         android:src="@android:drawable/ic_input_add"
+        android:tint="#FFFFFF"
         app:backgroundTint="#8F3636"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:rippleColor="#FFFFFF"
-        android:contentDescription="TODO" />
+        app:rippleColor="#FFFFFF" />
 </androidx.constraintlayout.widget.ConstraintLayout>
