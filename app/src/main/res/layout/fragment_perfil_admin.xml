@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bckgadmin"
+    android:elevation="4sp"
     tools:context=".view.fragment.PerfilAdminFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,5 +86,16 @@
             app:layout_constraintTop_toTopOf="@+id/guideline33" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/adminToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8F3636"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
