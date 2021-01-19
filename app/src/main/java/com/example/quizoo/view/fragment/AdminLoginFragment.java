@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.quizoo.R;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,6 +29,7 @@ public class AdminLoginFragment extends Fragment {
     private ViewModelActivity viewModel;
 
     private TextInputLayout tiPassAdmin;
+
 
     public AdminLoginFragment() {
         // Required empty public constructor
@@ -50,6 +52,8 @@ public class AdminLoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
         viewModel=new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
         tiPassAdmin = view.findViewById(R.id.tiPassAdmin);
@@ -68,6 +72,8 @@ public class AdminLoginFragment extends Fragment {
 
 
     private void setUIForFirstRun(){
+        LottieAnimationView backhand = getView().findViewById(R.id.btBackFromAdMinLogin);
+        backhand.setVisibility(View.INVISIBLE);
         TextView tvExplanation = getView().findViewById(R.id.tvExplicacion);
         String explanation = getContext().getString(R.string.crea_una_contrase_a_para_entrar_en_el_modo_administrador);
         tvExplanation.setText(explanation);

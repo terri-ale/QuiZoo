@@ -28,15 +28,16 @@ public class User {
     @ColumnInfo(name = "numResponsesCorrect")
     private int numResponsesCorrect;
 
+
     public User(@NonNull String name, int avatar, int numResponses, int numResponsesCorrect) {
         this.name = name;
         this.avatar = avatar;
         this.numResponses = numResponses;
         this.numResponsesCorrect = numResponsesCorrect;
     }
-
     public User() {
     }
+
 
     public long getId() {
         return id;

@@ -58,10 +58,9 @@ public class ContactsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
         setWarning(!viewModel.contactsPermissionIsGranted());
 
-        viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
         ArrayList<Contact> contacts = viewModel.getContactsWithMail();
 
 
