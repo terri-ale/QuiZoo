@@ -3,6 +3,7 @@ package com.example.quizoo.viewmodel;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 
 import com.example.quizoo.model.Repository;
 import com.example.quizoo.model.entity.Contact;
@@ -50,5 +51,9 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
 
     public ArrayList<Contact> getContactsWithMail() {
         return repository.getContactsWithMail();
+    }
+
+    public LiveData<List<User>> getLiveUserList(){
+        return repository.getLiveUserList();
     }
 }

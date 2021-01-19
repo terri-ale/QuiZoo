@@ -36,6 +36,8 @@ public class Repository {
     private Context context;
     private UserDao userDao;
 
+    private LiveData<List<User>> liveUserList;
+
     private User currentUser;
 
 
@@ -43,6 +45,11 @@ public class Repository {
         this.context = context;
         UserDatabase db = UserDatabase.getDb(context);
         userDao = db.getUserDao();
+        liveUserList = userDao.getAll();
+    }
+
+    public LiveData<List<User>> getLiveUserList(){
+        return liveUserList;
     }
 
 
