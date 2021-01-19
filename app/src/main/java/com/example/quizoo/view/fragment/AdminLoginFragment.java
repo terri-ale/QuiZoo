@@ -29,7 +29,7 @@ public class AdminLoginFragment extends Fragment {
     private ViewModelActivity viewModel;
 
     private TextInputLayout tiPassAdmin;
-
+   private  LottieAnimationView backhand;
 
     public AdminLoginFragment() {
         // Required empty public constructor
@@ -52,7 +52,15 @@ public class AdminLoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        backhand = getView().findViewById(R.id.btBackFromAdMinLogin);
+        final NavController navController = Navigation.findNavController(view);
 
+        backhand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.chooseUserFragment);
+            }
+        });
 
         viewModel=new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
@@ -72,7 +80,7 @@ public class AdminLoginFragment extends Fragment {
 
 
     private void setUIForFirstRun(){
-        LottieAnimationView backhand = getView().findViewById(R.id.btBackFromAdMinLogin);
+
         backhand.setVisibility(View.INVISIBLE);
         TextView tvExplanation = getView().findViewById(R.id.tvExplicacion);
         String explanation = getContext().getString(R.string.crea_una_contrase_a_para_entrar_en_el_modo_administrador);
