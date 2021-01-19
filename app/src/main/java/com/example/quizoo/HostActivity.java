@@ -15,9 +15,6 @@ public class HostActivity extends AppCompatActivity {
 
     private BatteryReceiver batteryReceiver;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +28,6 @@ public class HostActivity extends AppCompatActivity {
         * o mostrar el drawer a nuestro gusto
         *
         * */
-
 
 
     }

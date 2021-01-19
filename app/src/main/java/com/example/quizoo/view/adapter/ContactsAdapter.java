@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizoo.R;
@@ -19,30 +17,28 @@ import com.example.quizoo.model.entity.Contact;
 
 import java.util.ArrayList;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
 
     private ArrayList<Contact> contact;
     private Context context;
     private Activity activity;
 
-    public Adapter(Context context, Activity activity, ArrayList<Contact> contact) {
+    public ContactsAdapter(Context context, Activity activity, ArrayList<Contact> contact) {
         this.contact = contact;
         this.context = context;
         this.activity = activity;
     }
 
-
-
     @NonNull
     @Override
-    public Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler, parent, false);
         ViewHolder holder = new ViewHolder(vista);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ContactsAdapter.ViewHolder holder, int position) {
         holder.tvNameContact.setText(contact.get(position).getName().toString());
         holder.tvEmailContact.setText(contact.get(position).getEmail().toString());
 

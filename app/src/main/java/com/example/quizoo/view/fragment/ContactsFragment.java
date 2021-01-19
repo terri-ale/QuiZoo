@@ -1,7 +1,5 @@
 package com.example.quizoo.view.fragment;
 
-import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +18,7 @@ import android.widget.ImageButton;
 
 import com.example.quizoo.R;
 import com.example.quizoo.model.entity.Contact;
-import com.example.quizoo.view.adapter.Adapter;
+import com.example.quizoo.view.adapter.ContactsAdapter;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 
 import java.util.ArrayList;
@@ -67,7 +64,7 @@ public class ContactsFragment extends Fragment {
 
 
         RecyclerView recyclerContact = view.findViewById(R.id.recyclerView);
-        Adapter adapter = new Adapter(getContext(), getActivity(),contacts);
+        ContactsAdapter adapter = new ContactsAdapter(getContext(), getActivity(),contacts);
 
         recyclerContact.setAdapter(adapter);
         recyclerContact.setLayoutManager(new LinearLayoutManager(getContext()));
