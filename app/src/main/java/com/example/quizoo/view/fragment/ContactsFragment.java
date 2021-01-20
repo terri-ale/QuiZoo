@@ -90,6 +90,10 @@ public class ContactsFragment extends Fragment {
     private void init(){
         ArrayList<Contact> contacts = viewModel.getContactsWithMail();
 
+        if(contacts.isEmpty()){
+            setNoContactsWarning(true);
+        }
+
 
         RecyclerView recyclerContact = getView().findViewById(R.id.recyclerView);
         ContactsAdapter adapter = new ContactsAdapter(getContext(), getActivity(),contacts);
@@ -124,8 +128,23 @@ public class ContactsFragment extends Fragment {
 
 
 
+
+    /*
+    Los componentes gráficos que se usen para la advertencia, importante que por defecto
+    en el XML estén con Visibility GONE
+     */
+
+
+    private void setNoContactsWarning(boolean shouldShowWarning){
+        //Advertencia de que no hay contactos con correo todavía.
+        //Coger de strings.xml la advertencia de "Sin contactos"
+        //Jugar con Visibility VISIBLE y Visibility GONE
+    }
+
+
     private void setPermissionsWarning(boolean shouldShowWarning){
         //Mostrar u ocultar los elementos graficos de la advertencia
+        //Coger de strings.xml la advertencia de "Para continuar, debes conceder los permisos"
     }
 
 

@@ -41,8 +41,6 @@ public class MainActivity extends Activity {
         Timer timer = new Timer();
         timer.schedule(task, 1500);
 
-
-
     }
 
 
