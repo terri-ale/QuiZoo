@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bckgadmin"
-    tools:context=".view.fragment.CreateUserFragment">
+    tools:context=".view.fragment.AdminEditUserFragment">
 
     <ImageButton
-        android:id="@+id/btBackFromContacts"
+        android:id="@+id/btBackFromEditUser"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/btAddUser"
+        android:id="@+id/btEditUser"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="96dp"
@@ -103,7 +103,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiUserCreation"
+        android:id="@+id/tiUserEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -116,7 +116,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tiAdmin">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etAgregarUsuario"
+            android:id="@+id/etEditarUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/roundedcorners"
@@ -211,6 +211,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="106dp" />
+
+    <ImageView
+        android:id="@+id/imgBorrarUser"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:src="@drawable/eliminar"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarCreateUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline41"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline41"
