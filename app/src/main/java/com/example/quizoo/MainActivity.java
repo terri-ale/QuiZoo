@@ -27,10 +27,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(checkPermission()){
-        }else {
-            requestPermission();
-        }
+
 
         TimerTask task = new TimerTask() {
             @Override
@@ -48,35 +45,5 @@ public class MainActivity extends Activity {
 
     }
 
-    //----- PEDIR PERMISOS -----
-    private void requestPermission() {
-        ActivityCompat.requestPermissions(MainActivity.this, new String[]{
-                READ_CONTACTS
-        }, PERMISSION_CODE);
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-
-            case PERMISSION_CODE:
-                if (grantResults.length > 0) {
-
-                    boolean RealCallLogPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-
-                    if (RealCallLogPermission) {
-                        Toast.makeText(this, "Los permisos estan concedidos", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-        }
-    }
-
-    //Me comprueba que tengo todos los permisos, a la hora de realizar una acción
-    public boolean checkPermission() {
-
-        int FirstPermissionResult = ContextCompat.checkSelfPermission(getApplicationContext(), READ_CONTACTS);
-
-        return FirstPermissionResult == PackageManager.PERMISSION_GRANTED;
-    }
 }

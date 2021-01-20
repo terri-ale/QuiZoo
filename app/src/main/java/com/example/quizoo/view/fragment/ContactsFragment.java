@@ -1,5 +1,7 @@
 package com.example.quizoo.view.fragment;
 
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.quizoo.R;
+import com.example.quizoo.model.Repository;
 import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.view.adapter.ContactsAdapter;
 import com.example.quizoo.viewmodel.ViewModelActivity;
@@ -58,18 +61,9 @@ public class ContactsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
-        setWarning(!viewModel.contactsPermissionIsGranted());
-
-        ArrayList<Contact> contacts = viewModel.getContactsWithMail();
 
 
-        RecyclerView recyclerContact = view.findViewById(R.id.recyclerView);
-        ContactsAdapter adapter = new ContactsAdapter(getContext(), getActivity(),contacts);
-
-        recyclerContact.setAdapter(adapter);
-        recyclerContact.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        ImageButton btBackFromContacts = view.findViewById(R.id.btBackFromContacts);
+        ImageButton btBackFromContacts = getView().findViewById(R.id.btBackFromContacts);
         btBackFromContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,11 +71,60 @@ public class ContactsFragment extends Fragment {
                         .navigate(R.id.perfilFragment);
             }
         });
+
+        if(!viewModel.contactsPermissionIsGranted()){
+            setPermissionsWarning(true);
+            requestContactsPermission();
+
+        }else{
+            init();
+        }
+
+
+
     }
 
 
 
-    private void setWarning(boolean shouldShowWarning){
+
+    private void init(){
+        ArrayList<Contact> contacts = viewModel.getContactsWithMail();
+
+
+        RecyclerView recyclerContact = getView().findViewById(R.id.recyclerView);
+        ContactsAdapter adapter = new ContactsAdapter(getContext(), getActivity(),contacts);
+
+        recyclerContact.setAdapter(adapter);
+        recyclerContact.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+    }
+
+
+
+    private void requestContactsPermission() {
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M) return;
+        requestPermissions(Repository.REQUIRED_PERMISSIONS, Repository.PERMISSIONS_CODE);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        int grantedCounter=0;
+        switch (requestCode){
+            case Repository.PERMISSIONS_CODE:
+                for(int result : grantResults){
+                    if(result== PackageManager.PERMISSION_GRANTED) grantedCounter++;
+                }
+                break;
+        }
+        if(grantedCounter==permissions.length){ setPermissionsWarning(false); }
+    }
+
+
+
+    private void setPermissionsWarning(boolean shouldShowWarning){
         //Mostrar u ocultar los elementos graficos de la advertencia
     }
 

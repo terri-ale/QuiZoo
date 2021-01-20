@@ -20,14 +20,15 @@ import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.model.entity.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminUsersAdapter  extends RecyclerView.Adapter<AdminUsersAdapter.ViewHolder> {
 
-    private ArrayList<User> userList;
+    private List<User> userList;
     private Context context;
     private Activity activity;
 
-    public AdminUsersAdapter(ArrayList<User> userList, Context context, Activity activity) {
+    public AdminUsersAdapter(List<User> userList, Activity activity) {
         this.userList = userList;
         this.context = context;
         this.activity = activity;
