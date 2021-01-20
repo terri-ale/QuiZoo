@@ -2,6 +2,7 @@ package com.example.quizoo.model;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 
 import android.content.SharedPreferences;
@@ -11,11 +12,13 @@ import android.os.Build;
 import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import com.example.quizoo.MainActivity;
 import com.example.quizoo.model.dao.UserDao;
 import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.model.entity.User;
@@ -24,10 +27,13 @@ import com.example.quizoo.model.room.UserDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.Manifest.permission.READ_CONTACTS;
+
 
 public class Repository {
 
     public final static String[] REQUIRED_PERMISSIONS = { Manifest.permission.READ_CONTACTS };
+    public final static int PERMISSIONS_CODE = 1;
 
 
     private final static String SHARED_PREFERENCE_NAME = "adminData";
@@ -75,6 +81,15 @@ public class Repository {
         if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M) return true;
         return context.checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
     }
+
+
+    public void requestContactsPermission(){
+
+
+    }
+
+
+
 
 
 
