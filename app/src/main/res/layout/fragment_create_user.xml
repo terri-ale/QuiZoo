@@ -89,7 +89,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/icon_anciano"
         app:layout_constraintBottom_toTopOf="@+id/guideline38"
         app:layout_constraintEnd_toEndOf="parent"
@@ -207,5 +207,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="106dp" />
+
+    <ImageView
+        android:id="@+id/imgBorrar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/eliminar"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarCreateUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline41"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="304dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
