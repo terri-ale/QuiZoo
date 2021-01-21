@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,6 +137,7 @@ public class ContactsFragment extends Fragment {
 
 
     private void setNoContactsWarning(boolean shouldShowWarning){
+        Log.v("xyzyx", "NO CONTACTS YET");
         //Advertencia de que no hay contactos con correo todavía.
         //Coger de strings.xml la advertencia de "Sin contactos"
         //Jugar con Visibility VISIBLE y Visibility GONE
