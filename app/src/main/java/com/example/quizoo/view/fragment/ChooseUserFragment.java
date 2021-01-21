@@ -9,14 +9,24 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.quizoo.R;
+import com.example.quizoo.model.entity.User;
+import com.example.quizoo.view.adapter.AdminUsersAdapter;
+import com.example.quizoo.view.adapter.ChooseUserAdapter;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ChooseUserFragment extends Fragment {
@@ -44,6 +54,24 @@ public class ChooseUserFragment extends Fragment {
         final NavController navController = Navigation.findNavController(view);
 
         viewModel=new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
+
+       ArrayList<User> user = new ArrayList<>();
+       User a = new User("Sergio",R.drawable.icon_nerd,0,0);
+        User b = new User("Pablo",R.drawable.icon_bruja,0,0);
+        User c = new User("Lucas",R.drawable.icon_viking,0,0);
+        User d = new User("Paco",R.drawable.icon_robin,0,0);
+
+       user.add(a);
+       user.add(b);
+        user.add(c);
+        user.add(d);
+
+
+        RecyclerView chooseUser = view.findViewById(R.id.recyclerChoose);
+        ChooseUserAdapter adapter = new ChooseUserAdapter(user, getActivity());
+
+        chooseUser.setAdapter(adapter);
+        chooseUser.setLayoutManager(new GridLayoutManager(getContext(),2));
 
 
         btIrALogin.setOnClickListener(new View.OnClickListener() {
