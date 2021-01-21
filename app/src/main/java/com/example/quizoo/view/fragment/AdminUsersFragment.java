@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -60,6 +61,7 @@ public class AdminUsersFragment extends Fragment {
 
         adminUser.setAdapter(adapter);
         adminUser.setLayoutManager(new LinearLayoutManager(getContext()));
+        ConstraintLayout noUsers = view.findViewById(R.id.noUsersAdvise);
 
         viewModel.getLiveUserList().observe(getActivity(), new Observer<List<User>>() {
             @Override
@@ -67,8 +69,17 @@ public class AdminUsersFragment extends Fragment {
                 user.clear();
                 user.addAll(users);
                 adapter.notifyDataSetChanged();
+
+                if(user.size()==0){
+                    noUsers.setVisibility(View.VISIBLE);
+                }else{
+                    noUsers.setVisibility(View.INVISIBLE);
+                }
+
             }
         });
+
+
 
         FloatingActionButton ftbAddUser = view.findViewById(R.id.ftbAddUser);
         ftbAddUser.setOnClickListener(new View.OnClickListener() {
