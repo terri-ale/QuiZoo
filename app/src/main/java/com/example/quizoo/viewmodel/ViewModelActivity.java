@@ -40,8 +40,8 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
         return repository.getCurrentUser();
     }
 
-    public void setCurrentUser(User currentUser) {
-        repository.setCurrentUser(currentUser);
+    public void setCurrentUser(User user) {
+        repository.setCurrentUser(user);
     }
 
 
@@ -56,4 +56,10 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
     public LiveData<List<User>> getLiveUserList(){
         return repository.getLiveUserList();
     }
+
+    public void insert(User user){
+        repository.insert(user);
+    }
+
+
 }

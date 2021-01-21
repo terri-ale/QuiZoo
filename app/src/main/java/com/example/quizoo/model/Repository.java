@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -23,6 +24,7 @@ import com.example.quizoo.model.dao.UserDao;
 import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.model.room.UserDatabase;
+import com.example.quizoo.util.ThreadPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,7 @@ public class Repository {
 
     private User currentUser;
 
+    private MutableLiveData<Long> liveUserInsertId = new MutableLiveData<>();
 
     public Repository(Context context){
         this.context = context;
@@ -57,7 +60,9 @@ public class Repository {
     public LiveData<List<User>> getLiveUserList(){
         return liveUserList;
     }
-
+    public MutableLiveData<Long> getLiveFriendInsertId() {
+        return liveUserInsertId;
+    }
 
     public boolean checkAdminPassword(String password){
         SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -87,11 +92,6 @@ public class Repository {
 
 
     }
-
-
-
-
-
 
     public ArrayList<Contact>getContactsWithMail(){
 
@@ -132,9 +132,6 @@ public class Repository {
         return contacts;
     }
 
-
-
-
     public User getCurrentUser() {
         return currentUser;
     }
@@ -143,6 +140,13 @@ public class Repository {
         this.currentUser = currentUser;
     }
 
-
+    public void insert(User user) {
+        ThreadPool.threadExecutorPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                userDao.insert(user);
+            }
+        });
+    }
 
 }
