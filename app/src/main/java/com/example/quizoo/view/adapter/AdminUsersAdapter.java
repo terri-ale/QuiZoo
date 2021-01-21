@@ -52,7 +52,7 @@ public class AdminUsersAdapter  extends RecyclerView.Adapter<AdminUsersAdapter.V
             public void onClick(View v) {
                 final NavController navController = Navigation.findNavController(v);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("userBundle",userList.get(position));
+                bundle.putSerializable("editUser",userList.get(position));
                 navController.navigate(R.id.adminEditUserFragment,bundle);
             }
         });

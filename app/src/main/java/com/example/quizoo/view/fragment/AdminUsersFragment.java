@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,7 @@ import com.example.quizoo.R;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.view.adapter.AdminUsersAdapter;
 import com.example.quizoo.viewmodel.ViewModelActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,15 @@ public class AdminUsersFragment extends Fragment {
                 user.clear();
                 user.addAll(users);
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        FloatingActionButton ftbAddUser = view.findViewById(R.id.ftbAddUser);
+        ftbAddUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(AdminUsersFragment.this)
+                        .navigate(R.id.createUserFragment);
             }
         });
     }
