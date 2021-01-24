@@ -99,12 +99,106 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="#000000" />
 
+    <TextView
+        android:id="@+id/tvCuentaAtras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:fontFamily="@font/baloo"
+        android:text="10"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/GameZoneLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline29"/>
+        app:layout_constraintTop_toTopOf="@+id/guideline29" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CardLayout"
+            android:layout_width="310dp"
+            android:layout_height="470dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="76dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="92dp"
+            android:background="@drawable/roundedcorners"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.833">
+
+            <TextView
+                android:id="@+id/tvAnimal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/baloo"
+                android:text="León"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline50"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgAnimalCard"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/roundedcorners"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bckadminland"
+                app:layout_constraintBottom_toTopOf="@+id/guideline51"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline50" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="90dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="244dp" />
+
+            <TextView
+                android:id="@+id/tvDescripcionCard"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="@font/baloo"
+                android:gravity="center"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgAnimalCard" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
