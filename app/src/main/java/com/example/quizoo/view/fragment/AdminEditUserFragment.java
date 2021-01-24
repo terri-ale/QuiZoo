@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.quizoo.R;
@@ -57,7 +58,7 @@ public class AdminEditUserFragment extends Fragment implements View.OnClickListe
         viewModel.getLiveUserList().observe(getActivity(), new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
-                Log.v("xyzyx", users.toString());
+
             }
         });
 
@@ -90,8 +91,7 @@ public class AdminEditUserFragment extends Fragment implements View.OnClickListe
                 Log.v("xyzyx", user.getId() + "");
                 viewModel.update(user);
 
-                NavHostFragment.findNavController(AdminEditUserFragment.this)
-                        .navigate(R.id.adminUsersFragment);
+                NavHostFragment.findNavController(AdminEditUserFragment.this).popBackStack();
             }
         });
 
@@ -100,10 +100,17 @@ public class AdminEditUserFragment extends Fragment implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 viewModel.delete(viewModel.getCurrentUser().getId());
-                NavHostFragment.findNavController(AdminEditUserFragment.this)
-                        .navigate(R.id.adminUsersFragment);
+                NavHostFragment.findNavController(AdminEditUserFragment.this).popBackStack();
             }
         });
+
+       ImageButton imgAtras = view.findViewById(R.id.btBackFromUserCreation);
+       imgAtras.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               NavHostFragment.findNavController(AdminEditUserFragment.this).popBackStack();
+           }
+       });
 
 
     }
