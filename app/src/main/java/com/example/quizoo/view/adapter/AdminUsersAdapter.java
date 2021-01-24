@@ -29,17 +29,17 @@ import java.util.List;
 public class AdminUsersAdapter  extends RecyclerView.Adapter<AdminUsersAdapter.ViewHolder> {
 
     private List<User> userList;
-    private Context context;
     private Activity activity;
+    private OnUserClickListener listener;
 
     private User user;
 
     ViewModelActivity viewModel;
 
-    public AdminUsersAdapter(List<User> userList, Activity activity) {
+    public AdminUsersAdapter(List<User> userList, Activity activity, OnUserClickListener listener) {
         this.userList = userList;
-        this.context = context;
         this.activity = activity;
+        this.listener = listener;
     }
 
     @NonNull
@@ -59,19 +59,7 @@ public class AdminUsersAdapter  extends RecyclerView.Adapter<AdminUsersAdapter.V
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    final NavController navController = Navigation.findNavController(v);
-                    user = new User(userList.get(position).getName(), userList.get(position).getAvatar(),
-                            userList.get(position).getNumResponses(),userList.get(position).getNumResponsesCorrect());
-
-                    Log.v("xyzyx", user.toString() + "Adapter");
-                    viewModel.setCurrentUser(user);
-
-                    navController.navigate(R.id.adminEditUserFragment);
-                }catch(Exception e){
-                    e.getMessage();
-                }
-
+                listener.onClick(userList.get(position));
             }
         });
     }
@@ -92,5 +80,11 @@ public class AdminUsersAdapter  extends RecyclerView.Adapter<AdminUsersAdapter.V
             imgUser = itemView.findViewById(R.id.imgUserItem);
             constraintLayout = itemView.findViewById(R.id.itemCreateUserLayout);
         }
+    }
+
+
+
+    public interface OnUserClickListener{
+        public void onClick(User user);
     }
 }

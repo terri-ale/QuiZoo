@@ -30,7 +30,7 @@ import java.util.List;
 public class AdminEditUserFragment extends Fragment implements View.OnClickListener {
 
     private ViewModelActivity viewModel;
-    private int currentImage = R.drawable.icon_anciano;
+    private int currentImage;
 
     public AdminEditUserFragment() {
         // Required empty public constructor
@@ -55,6 +55,7 @@ public class AdminEditUserFragment extends Fragment implements View.OnClickListe
 
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
+        //DEPURACION - BORRAR
         viewModel.getLiveUserList().observe(getActivity(), new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
@@ -66,7 +67,7 @@ public class AdminEditUserFragment extends Fragment implements View.OnClickListe
         ImageView imgEditUser = view.findViewById(R.id.imgUserAdd);
 
         String name = viewModel.getCurrentUser().getName();
-        int img = viewModel.getCurrentUser().getAvatar();
+        currentImage = viewModel.getCurrentUser().getAvatar();
 
         view.findViewById(R.id.imgS1).setOnClickListener(this);
         view.findViewById(R.id.imgS2).setOnClickListener(this);
@@ -78,17 +79,17 @@ public class AdminEditUserFragment extends Fragment implements View.OnClickListe
         view.findViewById(R.id.imgS8).setOnClickListener(this);
 
         tiUserEdit.getEditText().setText(name);
-        imgEditUser.setImageResource(img);
+        imgEditUser.setImageResource(currentImage);
 
         Button btEditUser = view.findViewById(R.id.btEditUser);
         btEditUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
-                User user = new User(tiUserEdit.getEditText().getText().toString(), currentImage, 0, 0);
-                Log.v("xyzyx", user.toString());
-                user.setId(viewModel.getCurrentUser().getId());
-                Log.v("xyzyx", user.getId() + "");
+
+                User user = viewModel.getCurrentUser();
+                user.setName(tiUserEdit.getEditText().getText().toString());
+                user.setAvatar(currentImage);
                 viewModel.update(user);
 
                 NavHostFragment.findNavController(AdminEditUserFragment.this).popBackStack();

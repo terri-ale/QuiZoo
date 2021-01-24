@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.example.quizoo.model.entity.User;
 import com.example.quizoo.model.room.UserDatabase;
 import com.example.quizoo.util.ThreadPool;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,6 +156,7 @@ public class Repository {
         ThreadPool.threadExecutorPool.execute(new Runnable() {
             @Override
             public void run() {
+                Log.v("xyzyz", "ACTUALIZANDO");
                 userDao.update(user);
             }
         });
@@ -172,6 +175,18 @@ public class Repository {
                 }
             }
         });
+    }
+
+
+    public File getFileFromUri(Uri uri){
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        Cursor cursor = context.getContentResolver().query(uri,
+                filePathColumn, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        return new File(picturePath);
     }
 
     public void mandarCorreo(String correo, String puntuacion){
