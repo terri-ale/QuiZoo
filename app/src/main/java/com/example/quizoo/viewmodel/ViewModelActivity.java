@@ -61,5 +61,12 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
         repository.insert(user);
     }
 
+    public void update(User user) {
+        repository.update(user);
+    }
+
+    public void delete(long id){
+        repository.delete(id);
+    }
 
 }

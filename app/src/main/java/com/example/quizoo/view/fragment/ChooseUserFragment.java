@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.quizoo.R;
 import com.example.quizoo.model.entity.User;
@@ -32,6 +34,7 @@ import java.util.List;
 public class ChooseUserFragment extends Fragment {
 
     private ViewModelActivity viewModel;
+    private List<User> user = new ArrayList<>();
 
     public ChooseUserFragment() { }
 
@@ -52,6 +55,7 @@ public class ChooseUserFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         FloatingActionButton btIrALogin = view.findViewById(R.id.btIrALogin);
         final NavController navController = Navigation.findNavController(view);
+        TextView tvNoUser = view.findViewById(R.id.tvNoUsers);
 
         viewModel=new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
@@ -72,6 +76,22 @@ public class ChooseUserFragment extends Fragment {
 
         chooseUser.setAdapter(adapter);
         chooseUser.setLayoutManager(new GridLayoutManager(getContext(),2));
+
+        viewModel.getLiveUserList().observe(getActivity(), new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> users) {
+                user.clear();
+                user.addAll(users);
+                adapter.notifyDataSetChanged();
+
+                if(user.size()==0){
+                    tvNoUser.setVisibility(View.VISIBLE);
+                }else{
+                    tvNoUser.setVisibility(View.INVISIBLE);
+                }
+
+            }
+        });
 
 
         btIrALogin.setOnClickListener(new View.OnClickListener() {
