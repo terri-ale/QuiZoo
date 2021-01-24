@@ -57,7 +57,14 @@ public class AdminUsersFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
         RecyclerView adminUser = view.findViewById(R.id.recyclerCreateUser);
-        AdminUsersAdapter adapter = new AdminUsersAdapter(user, getActivity());
+        AdminUsersAdapter adapter = new AdminUsersAdapter(user, getActivity(), new AdminUsersAdapter.OnUserClickListener() {
+            @Override
+            public void onClick(User user) {
+                viewModel.setCurrentUser(user);
+                NavHostFragment.findNavController(AdminUsersFragment.this)
+                        .navigate(R.id.action_adminUsersFragment_to_adminEditUserFragment);
+            }
+        });
 
         adminUser.setAdapter(adapter);
         adminUser.setLayoutManager(new LinearLayoutManager(getContext()));
