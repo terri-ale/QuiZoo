@@ -3,12 +3,15 @@ package com.example.quizoo.view.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
@@ -18,7 +21,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.quizoo.R;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -50,16 +55,21 @@ public class PerfilFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
+
         ImageView imgUserProfile = view.findViewById(R.id.imgUserProfile);
         rotarImagen(imgUserProfile);
+        imgUserProfile.setImageResource(viewModel.getCurrentUser().getAvatar());
 
-        ImageView imgShare = view.findViewById(R.id.imgEnviarCorreo);
-        imgShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCreateDialog(savedInstanceState);
-            }
-        });
+        TextView tvUserProfile = view.findViewById(R.id.tvUserProfile);
+        tvUserProfile.setText(viewModel.getCurrentUser().getName());
+
+        TextView tvPuntosProfile = view.findViewById(R.id.tvPuntosProfile);
+        tvPuntosProfile.setText(viewModel.getCurrentUser().getNumResponsesCorrect() * 10 + " Puntos");
+
+        clickBotones(view, savedInstanceState);
+
+
 
 
     }
@@ -73,6 +83,7 @@ public class PerfilFragment extends Fragment {
         animation.setRepeatCount(1);
         animation.setRepeatMode(Animation.REVERSE);
         view.startAnimation(animation);
+
     }
 
     private Dialog onCreateDialog(Bundle savedInstanceState){
@@ -86,12 +97,35 @@ public class PerfilFragment extends Fragment {
                     dialog.dismiss();
                     NavHostFragment.findNavController(PerfilFragment.this)
                             .navigate(R.id.contactsFragment);
+                }else{
+                    dialog.dismiss();
+                    viewModel.mandarCorreo("", String.valueOf(viewModel.getCurrentUser().getNumResponsesCorrect() * 10));
                 }
             }
         });
         builder.show();
         return builder.create();
     }
+
+    private void clickBotones(View view, Bundle savedInstanceState){
+        ImageView imgShare = view.findViewById(R.id.imgEnviarCorreo);
+        imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCreateDialog(savedInstanceState);
+            }
+        });
+
+        LottieAnimationView btBackFromProfile = view.findViewById(R.id.btBackFromProfile);
+        btBackFromProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(PerfilFragment.this).popBackStack();
+            }
+        });
+    }
+
+
 
 
 

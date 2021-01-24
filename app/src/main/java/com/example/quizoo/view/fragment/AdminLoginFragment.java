@@ -91,8 +91,6 @@ public class AdminLoginFragment extends Fragment {
         button.setText(textEnter);
     }
 
-
-
     private void attemptLogin() {
         String insertedPassword = tiPassAdmin.getEditText().getText().toString();
         String error = null;

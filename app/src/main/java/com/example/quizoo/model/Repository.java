@@ -5,9 +5,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -170,6 +172,26 @@ public class Repository {
                 }
             }
         });
+    }
+
+    public void mandarCorreo(String correo, String puntuacion){
+
+        String[] TO = {correo};
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto:"));
+
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Puntuacion QuiZoo");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, puntuacion);
+
+        String title = "Mandar este email con...";
+
+        Intent chooser = Intent.createChooser(emailIntent, title);
+        if(emailIntent.resolveActivity(context.getPackageManager()) != null){
+            context.startActivity(chooser);
+        }
     }
 
 }

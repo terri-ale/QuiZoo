@@ -10,10 +10,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizoo.R;
 import com.example.quizoo.model.entity.User;
+import com.example.quizoo.view.fragment.AdminEditUserFragment;
+import com.example.quizoo.viewmodel.ViewModelActivity;
 
 import java.util.List;
 
@@ -22,6 +29,8 @@ public class ChooseUserAdapter  extends RecyclerView.Adapter<ChooseUserAdapter.V
     private List<User> userList;
     private Context context;
     private Activity activity;
+
+    private ViewModelActivity viewModel;
 
     public ChooseUserAdapter(List<User> userList,Activity activity) {
         this.userList = userList;
@@ -35,6 +44,7 @@ public class ChooseUserAdapter  extends RecyclerView.Adapter<ChooseUserAdapter.V
     public ChooseUserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_choose, parent, false);
         ViewHolder holder = new ViewHolder(vista);
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ViewModelActivity.class);
         return holder;
     }
 
@@ -46,7 +56,9 @@ public class ChooseUserAdapter  extends RecyclerView.Adapter<ChooseUserAdapter.V
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                final NavController navController = Navigation.findNavController(v);
+                viewModel.setCurrentUser(userList.get(position));
+                navController.navigate(R.id.gameFragment);
             }
         });
     }

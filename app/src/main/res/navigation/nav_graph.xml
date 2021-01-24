@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/adminUsersFragment">
+    app:startDestination="@id/chooseUserFragment">
 
     <fragment
         android:id="@+id/adminLoginFragment"
@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_chooseUserFragment_to_adminLoginFragment"
             app:destination="@id/adminLoginFragment" />
+        <action
+            android:id="@+id/action_chooseUserFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
     </fragment>
     <fragment
         android:id="@+id/perfilFragment"
@@ -48,7 +51,11 @@
         android:id="@+id/gameFragment"
         android:name="com.example.quizoo.view.fragment.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" />
+        tools:layout="@layout/fragment_game" >
+        <action
+            android:id="@+id/action_gameFragment_to_perfilFragment"
+            app:destination="@id/perfilFragment" />
+    </fragment>
     <fragment
         android:id="@+id/adminUsersFragment"
         android:name="com.example.quizoo.view.fragment.AdminUsersFragment"

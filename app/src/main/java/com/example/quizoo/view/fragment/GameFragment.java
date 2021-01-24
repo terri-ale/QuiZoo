@@ -11,12 +11,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AlertDialogLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.quizoo.R;
 import com.example.quizoo.viewmodel.ViewModelActivity;
@@ -52,12 +55,24 @@ public class GameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
+
         FloatingActionButton btHlep = view.findViewById(R.id.btHelp);
         btHlep.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 instruccionesDialog(savedInstanceState);
+            }
+        });
+
+        ImageView imgIrAPerfil = view.findViewById(R.id.imgIrAPerfil);
+        imgIrAPerfil.setImageResource(viewModel.getCurrentUser().getAvatar());
+        imgIrAPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(GameFragment.this)
+                        .navigate(R.id.perfilFragment);
             }
         });
 

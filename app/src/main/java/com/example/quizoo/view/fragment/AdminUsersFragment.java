@@ -80,7 +80,6 @@ public class AdminUsersFragment extends Fragment {
         });
 
 
-
         FloatingActionButton ftbAddUser = view.findViewById(R.id.ftbAddUser);
         ftbAddUser.setOnClickListener(new View.OnClickListener() {
             @Override

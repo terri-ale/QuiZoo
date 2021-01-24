@@ -3,6 +3,8 @@ package com.example.quizoo.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizoo.R;
 import com.example.quizoo.model.entity.Contact;
+import com.example.quizoo.viewmodel.ViewModelActivity;
 
 import java.util.ArrayList;
 
@@ -22,6 +27,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     private ArrayList<Contact> contact;
     private Context context;
     private Activity activity;
+
+    private ViewModelActivity viewModel;
 
     public ContactsAdapter(Context context, Activity activity, ArrayList<Contact> contact) {
         this.contact = contact;
@@ -34,6 +41,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     public ContactsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler, parent, false);
         ViewHolder holder = new ViewHolder(vista);
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ViewModelActivity.class);
         return holder;
     }
 
@@ -46,10 +54,11 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
             @Override
             public void onClick(View view) {
-
+                viewModel.mandarCorreo(holder.tvEmailContact.getText().toString(), String.valueOf(viewModel.getCurrentUser().getNumResponsesCorrect() * 10));
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -67,5 +76,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             tvEmailContact = itemView.findViewById(R.id.tvContactEmail);
             constraintLayout = itemView.findViewById(R.id.constraintLayout);
         }
+
     }
+
+
 }

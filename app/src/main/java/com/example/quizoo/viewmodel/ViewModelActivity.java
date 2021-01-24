@@ -69,4 +69,7 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
         repository.delete(id);
     }
 
+    public void mandarCorreo(String correo, String puntuacion) {
+        repository.mandarCorreo(correo, puntuacion);
+    }
 }
