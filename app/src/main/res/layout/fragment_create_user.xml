@@ -134,17 +134,14 @@
         app:layout_constraintGuide_begin="524dp" />
 
     <GridLayout
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
         android:columnCount="4"
         android:rowCount="2"
         app:layout_constraintBottom_toTopOf="@+id/guideline40"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline38"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="@+id/guideline38">
 
         <ImageView
             android:id="@+id/imgS1"
