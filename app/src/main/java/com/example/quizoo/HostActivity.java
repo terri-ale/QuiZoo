@@ -26,7 +26,7 @@ public class HostActivity extends AppCompatActivity {
         /*
         *  Debemos comprobar que fragmento esta siendo siendo visualizado en el navhostfragment para ocultar
         * o mostrar el drawer a nuestro gusto
-        *
+
         * */
 
 
