@@ -148,5 +148,28 @@ public class Repository {
             }
         });
     }
+    public void update(User user) {
+        ThreadPool.threadExecutorPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                userDao.update(user);
+            }
+        });
+    }
+
+    public void delete(long id){
+        ThreadPool.threadExecutorPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    userDao.delete(id);
+                    Log.v("xyzyx", "Borrado");
+                }catch(Exception e){
+                    Log.v("xyzyx", e.toString());
+                    Log.v("xyzyx", "No se ha podido borrar");
+                }
+            }
+        });
+    }
 
 }
