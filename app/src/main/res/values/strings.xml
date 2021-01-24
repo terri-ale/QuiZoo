@@ -35,6 +35,8 @@
     <string name="vacio">El nombre de usuario no puede estar vacío</string>
     <string name="espacio">El nombre de usuario no puede contener espacios</string>
     <string name="todav_a_no_hay_ning_n_usuario_usa_el_bot_n_para_a_adir_uno">Todavía no hay ningún usuario, usa el botón (+) para añadir uno.</string>
+    <string name="nombre_animal">Nombre Animal</string>
+    <string name="actualizar">Actualizar</string>
 
 
 </resources>

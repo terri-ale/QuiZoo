@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bckgadmin"
+    android:background="@drawable/bckadminland"
     tools:context=".view.fragment.AdminEditUserFragment">
 
     <ImageButton
@@ -30,7 +30,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
         android:backgroundTint="#8F3636"
-        android:text="@string/a_adir"
+        android:text="@string/actualizar"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,10 +80,9 @@
 
     <ImageView
         android:id="@+id/imgUserAdd"
-        android:layout_width="235dp"
-        android:layout_height="240dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
         android:src="@drawable/icon_anciano"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -113,11 +112,11 @@
 
     <GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="371dp"
-        android:layout_height="181dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:columnCount="4"
         android:rowCount="2"
+        app:layout_constraintBottom_toTopOf="@+id/guideline49"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/toolbarCreateUser">
@@ -209,7 +208,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="652dp" />
+        app:layout_constraintGuide_begin="670dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -217,5 +216,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="237dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="261dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
