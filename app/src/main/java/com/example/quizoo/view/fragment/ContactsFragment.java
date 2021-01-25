@@ -108,8 +108,8 @@ public class ContactsFragment extends Fragment {
 
 
     private void requestContactsPermission() {
-        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M) return;
-        requestPermissions(Repository.REQUIRED_PERMISSIONS, Repository.PERMISSIONS_CODE);
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M) { return; }
+        requestPermissions(Repository.CONTACTS_PERMISSION, Repository.CONTACTS_PERMISSION_CODE);
     }
 
 
@@ -118,7 +118,7 @@ public class ContactsFragment extends Fragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         int grantedCounter=0;
         switch (requestCode){
-            case Repository.PERMISSIONS_CODE:
+            case Repository.CONTACTS_PERMISSION_CODE:
                 for(int result : grantResults){
                     if(result== PackageManager.PERMISSION_GRANTED) grantedCounter++;
                 }

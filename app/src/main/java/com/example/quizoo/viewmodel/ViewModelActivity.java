@@ -1,14 +1,18 @@
 package com.example.quizoo.viewmodel;
 
 import android.app.Application;
+import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.quizoo.model.Repository;
 import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.model.entity.User;
+import com.example.quizoo.rest.pojo.Card;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,5 +75,27 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
 
     public void mandarCorreo(String correo, String puntuacion) {
         repository.mandarCorreo(correo, puntuacion);
+    }
+
+
+    public MutableLiveData<Long> getLiveFriendInsertId() {
+        return repository.getLiveFriendInsertId();
+    }
+
+    public boolean storagePermissionIsGranted() {
+        return repository.storagePermissionIsGranted();
+    }
+
+    public File getFileFromUri(Uri uri) {
+        return repository.getFileFromUri(uri);
+    }
+
+
+    public MutableLiveData<ArrayList<Card>> getLiveCards() {
+        return repository.getLiveCards();
+    }
+
+    public void loadCards() {
+        repository.loadCards();
     }
 }

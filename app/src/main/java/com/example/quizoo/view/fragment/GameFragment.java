@@ -11,19 +11,24 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AlertDialogLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.quizoo.R;
+import com.example.quizoo.rest.pojo.Card;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 import static android.text.Html.FROM_HTML_MODE_LEGACY;
 
@@ -76,19 +81,47 @@ public class GameFragment extends Fragment {
             }
         });
 
+
+
+
+
+        //OBTENER LAS CARTAS
+        //En principio se va a hacer con MutableLiveData
+
+        viewModel.getLiveCards().observe(getActivity(), new Observer<ArrayList<Card>>() {
+            @Override
+            public void onChanged(ArrayList<Card> cards) {
+                Log.v("xyzyx", "CARTAS "+ cards.toString());
+            }
+        });
+
+
+        //Este método carga en MutableLiveData las cartas.
+        viewModel.loadCards();
+
+
+
+
+
+
+
     }
 
-        @RequiresApi(api = Build.VERSION_CODES.N)
-        public Dialog instruccionesDialog(Bundle savedInstanceState) {
 
-            String text = getString(R.string.instrucciones);
-            Spanned styledText = Html.fromHtml(text, FROM_HTML_MODE_LEGACY);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(styledText);
-            builder.show();
-            return builder.create();
-        }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public Dialog instruccionesDialog(Bundle savedInstanceState) {
+
+        String text = getString(R.string.instrucciones);
+        Spanned styledText = Html.fromHtml(text, FROM_HTML_MODE_LEGACY);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(styledText);
+        builder.show();
+        return builder.create();
+    }
 
 
 }

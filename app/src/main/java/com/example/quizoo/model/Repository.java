@@ -27,28 +27,44 @@ import com.example.quizoo.model.dao.UserDao;
 import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.model.room.UserDatabase;
+import com.example.quizoo.rest.client.CardClient;
+import com.example.quizoo.rest.client.QuestionClient;
+import com.example.quizoo.rest.pojo.Card;
 import com.example.quizoo.util.ThreadPool;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 
 public class Repository {
 
-    public final static String[] REQUIRED_PERMISSIONS = { Manifest.permission.READ_CONTACTS };
-    public final static int PERMISSIONS_CODE = 1;
+    private Context context;
+    private UserDao userDao;
 
+    private final static String REST_URL="https://informatica.ieszaidinvergeles.org:9039/PSP/QuiZoo/public/api/";
+    private Retrofit retrofit;
+    private CardClient cardClient;
+    private QuestionClient questionClient;
+
+    public final static String[] CONTACTS_PERMISSION = { Manifest.permission.READ_CONTACTS };
+    public final static String[] STORAGE_PERMISSION = { Manifest.permission.READ_EXTERNAL_STORAGE };
+    public final static int CONTACTS_PERMISSION_CODE = 1;
+    public final static int STORAGE_PERMISSION_CODE = 2;
 
     private final static String SHARED_PREFERENCE_NAME = "adminData";
     private final static String SHARED_PREFERENCE_KEY = "password";
 
-    private Context context;
-    private UserDao userDao;
-
     private LiveData<List<User>> liveUserList;
+    private MutableLiveData<ArrayList<Card>> liveCards = new MutableLiveData<>();
 
     private User currentUser;
 
@@ -59,6 +75,12 @@ public class Repository {
         UserDatabase db = UserDatabase.getDb(context);
         userDao = db.getUserDao();
         liveUserList = userDao.getAll();
+        retrofit = new Retrofit.Builder()
+                .baseUrl(REST_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        cardClient = retrofit.create(CardClient.class);
+        questionClient = retrofit.create(QuestionClient.class);
     }
 
     public LiveData<List<User>> getLiveUserList(){
@@ -66,6 +88,10 @@ public class Repository {
     }
     public MutableLiveData<Long> getLiveFriendInsertId() {
         return liveUserInsertId;
+    }
+
+    public MutableLiveData<ArrayList<Card>> getLiveCards() {
+        return liveCards;
     }
 
     public boolean checkAdminPassword(String password){
@@ -87,15 +113,16 @@ public class Repository {
 
 
     public boolean contactsPermissionIsGranted(){
-        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M) return true;
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M) { return true; }
         return context.checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
     }
 
-
-    public void requestContactsPermission(){
-
-
+    public boolean storagePermissionIsGranted(){
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M) { return true; }
+        return context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
+
+
 
     public ArrayList<Contact>getContactsWithMail(){
 
@@ -156,7 +183,6 @@ public class Repository {
         ThreadPool.threadExecutorPool.execute(new Runnable() {
             @Override
             public void run() {
-                Log.v("xyzyz", "ACTUALIZANDO");
                 userDao.update(user);
             }
         });
@@ -166,13 +192,7 @@ public class Repository {
         ThreadPool.threadExecutorPool.execute(new Runnable() {
             @Override
             public void run() {
-                try{
-                    userDao.delete(id);
-                    Log.v("xyzyx", "Borrado");
-                }catch(Exception e){
-                    Log.v("xyzyx", e.toString());
-                    Log.v("xyzyx", "No se ha podido borrar");
-                }
+                userDao.delete(id);
             }
         });
     }
@@ -208,6 +228,24 @@ public class Repository {
             context.startActivity(chooser);
         }
     }
+
+
+
+    public void loadCards(){
+        Call<ArrayList<Card>> call = cardClient.getAllCards();
+        call.enqueue(new Callback<ArrayList<Card>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Card>> call, Response<ArrayList<Card>> response) {
+                liveCards.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Card>> call, Throwable t) {
+
+            }
+        });
+    }
+
 
 
 }
