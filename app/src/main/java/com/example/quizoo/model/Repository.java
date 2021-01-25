@@ -2,7 +2,6 @@ package com.example.quizoo.model;
 
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 
 import android.content.Intent;
@@ -13,16 +12,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
-import com.example.quizoo.MainActivity;
 import com.example.quizoo.model.dao.UserDao;
 import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.model.entity.User;
@@ -30,19 +23,21 @@ import com.example.quizoo.model.room.UserDatabase;
 import com.example.quizoo.rest.client.CardClient;
 import com.example.quizoo.rest.client.QuestionClient;
 import com.example.quizoo.rest.pojo.Card;
+import com.example.quizoo.rest.pojo.DBResponse;
 import com.example.quizoo.util.ThreadPool;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 
 public class Repository {
@@ -64,7 +59,8 @@ public class Repository {
     private final static String SHARED_PREFERENCE_KEY = "password";
 
     private LiveData<List<User>> liveUserList;
-    private MutableLiveData<ArrayList<Card>> liveCards = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Card>> liveCards;
+    private MutableLiveData<DBResponse> liveResponse;
 
     private User currentUser;
 
@@ -75,6 +71,9 @@ public class Repository {
         UserDatabase db = UserDatabase.getDb(context);
         userDao = db.getUserDao();
         liveUserList = userDao.getAll();
+
+        liveCards = new MutableLiveData<>();
+        liveResponse = new MutableLiveData<>();
         retrofit = new Retrofit.Builder()
                 .baseUrl(REST_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -93,6 +92,8 @@ public class Repository {
     public MutableLiveData<ArrayList<Card>> getLiveCards() {
         return liveCards;
     }
+
+    public MutableLiveData<DBResponse> getLiveResponse() { return liveResponse; }
 
     public boolean checkAdminPassword(String password){
         SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -231,8 +232,8 @@ public class Repository {
 
 
 
-    public void loadCards(){
-        Call<ArrayList<Card>> call = cardClient.getAllCards();
+    public void loadCardsForGame(){
+        Call<ArrayList<Card>> call = cardClient.getAllCardsWithQuestions();
         call.enqueue(new Callback<ArrayList<Card>>() {
             @Override
             public void onResponse(Call<ArrayList<Card>> call, Response<ArrayList<Card>> response) {
@@ -244,7 +245,36 @@ public class Repository {
 
             }
         });
+
     }
+
+
+    public String saveImage(Uri imageUri){
+        return "";
+    }
+
+
+    public void addCard(Uri imageUri, Card card){
+        if(imageUri != null){
+            if(storagePermissionIsGranted()){
+                File imageFile = getFileFromUri(imageUri);
+                RequestBody requestFile =
+                        RequestBody.create(
+                                MediaType.parse(context.getContentResolver().getType(imageUri)),
+                                imageFile
+                        );
+
+                MultipartBody.Part body =
+                        MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
+
+                Call<DBResponse> request = cardClient.saveImage(body);
+
+            }
+        }
+    }
+
+
+
 
 
 

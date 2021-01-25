@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AlertDialogLayout;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -97,7 +95,7 @@ public class GameFragment extends Fragment {
 
 
         //Este método carga en MutableLiveData las cartas.
-        viewModel.loadCards();
+        viewModel.loadCardsForGame();
 
 
 

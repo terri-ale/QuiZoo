@@ -21,6 +21,9 @@ public interface CardClient {
     @GET("card")
     Call<ArrayList<Card>> getAllCards();
 
+    @GET("card_question")
+    Call<ArrayList<Card>> getAllCardsWithQuestions();
+
     //@GET("card/{id}")
     //Call<Card> getCard(@Path("id") long id);
 
@@ -35,6 +38,6 @@ public interface CardClient {
 
     @Multipart
     @POST("save_image")
-    Call<DBResponse> postTest(@Part MultipartBody.Part image);
+    Call<DBResponse> saveImage(@Part MultipartBody.Part image);
 
 }

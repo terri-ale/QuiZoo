@@ -27,15 +27,12 @@ import java.util.List;
 public class ChooseUserAdapter  extends RecyclerView.Adapter<ChooseUserAdapter.ViewHolder>  {
 
     private List<User> userList;
-    private Context context;
-    private Activity activity;
+    private OnUserClickListener listener;
 
-    private ViewModelActivity viewModel;
 
-    public ChooseUserAdapter(List<User> userList,Activity activity) {
+    public ChooseUserAdapter(List<User> userList, Activity activity, OnUserClickListener listener) {
         this.userList = userList;
-        this.context = context;
-        this.activity = activity;
+        this.listener = listener;
     }
 
 
@@ -44,7 +41,6 @@ public class ChooseUserAdapter  extends RecyclerView.Adapter<ChooseUserAdapter.V
     public ChooseUserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_choose, parent, false);
         ViewHolder holder = new ViewHolder(vista);
-        viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ViewModelActivity.class);
         return holder;
     }
 
@@ -56,9 +52,7 @@ public class ChooseUserAdapter  extends RecyclerView.Adapter<ChooseUserAdapter.V
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final NavController navController = Navigation.findNavController(v);
-                viewModel.setCurrentUser(userList.get(position));
-                navController.navigate(R.id.gameFragment);
+                listener.onClick(userList.get(position));
             }
         });
     }

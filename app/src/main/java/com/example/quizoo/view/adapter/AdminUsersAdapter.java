@@ -29,16 +29,11 @@ import java.util.List;
 public class AdminUsersAdapter  extends RecyclerView.Adapter<AdminUsersAdapter.ViewHolder> {
 
     private List<User> userList;
-    private Activity activity;
     private OnUserClickListener listener;
 
-    private User user;
-
-    ViewModelActivity viewModel;
 
     public AdminUsersAdapter(List<User> userList, Activity activity, OnUserClickListener listener) {
         this.userList = userList;
-        this.activity = activity;
         this.listener = listener;
     }
 
@@ -47,7 +42,7 @@ public class AdminUsersAdapter  extends RecyclerView.Adapter<AdminUsersAdapter.V
     public AdminUsersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_create_user, parent, false);
         ViewHolder holder = new ViewHolder(vista);
-        viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ViewModelActivity.class);
+
         return holder;
     }
 
@@ -84,7 +79,5 @@ public class AdminUsersAdapter  extends RecyclerView.Adapter<AdminUsersAdapter.V
 
 
 
-    public interface OnUserClickListener{
-        public void onClick(User user);
-    }
+
 }

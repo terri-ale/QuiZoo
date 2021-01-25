@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import com.example.quizoo.R;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.view.adapter.AdminUsersAdapter;
+import com.example.quizoo.view.adapter.OnUserClickListener;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -57,7 +58,7 @@ public class AdminUsersFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
         RecyclerView adminUser = view.findViewById(R.id.recyclerCreateUser);
-        AdminUsersAdapter adapter = new AdminUsersAdapter(user, getActivity(), new AdminUsersAdapter.OnUserClickListener() {
+        AdminUsersAdapter adapter = new AdminUsersAdapter(user, getActivity(), new OnUserClickListener() {
             @Override
             public void onClick(User user) {
                 viewModel.setCurrentUser(user);

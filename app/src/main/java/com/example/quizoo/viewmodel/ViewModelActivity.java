@@ -4,6 +4,7 @@ import android.app.Application;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -20,6 +21,8 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
 
     private Repository repository;
 
+    private MutableLiveData<Fragment> currentFragment = new MutableLiveData<>();
+
 
 
     public ViewModelActivity(@NonNull Application application) {
@@ -27,6 +30,7 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
         repository=new Repository(application);
     }
 
+    public MutableLiveData<Fragment> getCurrentFragment(){ return currentFragment; }
 
     public boolean isSetAdminPassword() {
         return repository.isSetAdminPassword();
@@ -95,7 +99,7 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
         return repository.getLiveCards();
     }
 
-    public void loadCards() {
-        repository.loadCards();
+    public void loadCardsForGame() {
+        repository.loadCardsForGame();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.quizoo.view.fragment;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,22 +13,23 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.quizoo.R;
 import com.example.quizoo.model.entity.User;
-import com.example.quizoo.view.adapter.AdminUsersAdapter;
+import com.example.quizoo.rest.pojo.Card;
 import com.example.quizoo.view.adapter.ChooseUserAdapter;
+import com.example.quizoo.view.adapter.OnUserClickListener;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,7 @@ import java.util.List;
 public class ChooseUserFragment extends Fragment {
 
     private ViewModelActivity viewModel;
+    private ProgressDialog dialog;
     private List<User> user = new ArrayList<>();
 
     public ChooseUserFragment() { }
@@ -72,7 +76,15 @@ public class ChooseUserFragment extends Fragment {
 
 
         RecyclerView chooseUser = view.findViewById(R.id.recyclerChoose);
-        ChooseUserAdapter adapter = new ChooseUserAdapter(user, getActivity());
+        ChooseUserAdapter adapter = new ChooseUserAdapter(user, getActivity(), new OnUserClickListener() {
+            @Override
+            public void onClick(User user) {
+                viewModel.setCurrentUser(user);
+
+                //NavHostFragment.findNavController(ChooseUserFragment.this)
+                //       .navigate(R.id.action_chooseUserFragment_to_gameFragment);
+            }
+        });
 
         chooseUser.setAdapter(adapter);
         chooseUser.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -104,7 +116,10 @@ public class ChooseUserFragment extends Fragment {
             NavHostFragment.findNavController(ChooseUserFragment.this)
                     .navigate(R.id.action_chooseUserFragment_to_adminLoginFragment);
         }
-
-
     }
+
+
+
+
+
 }
