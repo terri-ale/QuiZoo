@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bckgadmin"
+    tools:context=".view.fragment.CreateUserFragment">
+
+    <ImageButton
+        android:id="@+id/btBackFromContacts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#8F3636"
+        android:contentDescription="@string/todo"
+        android:elevation="4sp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/x"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarCreateUser"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btAddUser"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:backgroundTint="#8F3636"
+        android:text="@string/a_adir"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline41"
+        app:layout_constraintTop_toBottomOf="@+id/tiUserCreation" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="636dp" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarCreateUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8F3636"
+        android:backgroundTint="#8F3636"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageButton
+        android:id="@+id/btBackFromUserCreation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#00252525"
+        android:backgroundTint="#00FFFFFF"
+        android:clickable="true"
+        android:contentDescription="@string/todo"
+        android:elevation="4sp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/x"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarCreateUser"
+        app:layout_constraintEnd_toStartOf="@+id/guideline39"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbarCreateUser" />
+
+    <ImageView
+        android:id="@+id/imgUserAdd"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/icon_anciano"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline41"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarCreateUser" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tiUserCreation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Usuario"
+        app:layout_constraintBottom_toTopOf="@+id/btAddUser"
+        app:layout_constraintEnd_toEndOf="@+id/gridLayout"
+        app:layout_constraintStart_toStartOf="@+id/gridLayout"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAgregarUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundedcorners"
+            android:backgroundTint="#FFFFFF"
+            android:enabled="true"
+            android:gravity="center"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:columnCount="4"
+        android:rowCount="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline41"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarCreateUser">
+
+        <ImageView
+            android:id="@+id/imgS1"
+            android:layout_width="93dp"
+            android:layout_height="88dp"
+            android:clickable="true"
+            android:src="@drawable/icon_anciano" />
+
+        <ImageView
+            android:id="@+id/imgS2"
+            android:layout_width="93dp"
+            android:layout_height="88dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:clickable="true"
+            android:src="@drawable/icon_bruja" />
+
+        <ImageView
+            android:id="@+id/imgS3"
+            android:layout_width="93dp"
+            android:layout_height="88dp"
+            android:clickable="true"
+            android:src="@drawable/icon_caballero" />
+
+        <ImageView
+            android:id="@+id/imgS4"
+            android:layout_width="93dp"
+            android:layout_height="88dp"
+            android:clickable="true"
+            android:src="@drawable/icon_mago" />
+
+        <ImageView
+            android:id="@+id/imgS5"
+            android:layout_width="93dp"
+            android:layout_height="88dp"
+            android:clickable="true"
+            android:src="@drawable/icon_nerd" />
+
+        <ImageView
+            android:id="@+id/imgS6"
+            android:layout_width="93dp"
+            android:layout_height="88dp"
+            android:clickable="true"
+            android:src="@drawable/icon_robin" />
+
+        <ImageView
+            android:id="@+id/imgS7"
+            android:layout_width="93dp"
+            android:layout_height="88dp"
+            android:clickable="true"
+            android:src="@drawable/icon_vampire" />
+
+        <ImageView
+            android:id="@+id/imgS8"
+            android:layout_width="93dp"
+            android:layout_height="88dp"
+            android:clickable="true"
+            android:src="@drawable/icon_viking" />
+    </GridLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="106dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="276dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline42"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="672dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
