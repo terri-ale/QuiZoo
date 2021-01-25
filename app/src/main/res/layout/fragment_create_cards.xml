@@ -18,44 +18,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tiCardCreation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:hint="@string/nombre_animal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar3">
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAgregarCarta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:background="@drawable/roundedcorners"
+            android:backgroundTint="#FFFFFF"
+            android:enabled="true"
+            android:gravity="center"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiCardCreation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="0dp"
-                android:hint="@string/nombre_animal"
-                app:layout_constraintBottom_toTopOf="@+id/guideline37"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tiAdmin">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etAgregarCarta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/roundedcorners"
-                    android:backgroundTint="#FFFFFF"
-                    android:enabled="true"
-                    android:gravity="center"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
