@@ -108,7 +108,7 @@ public class AdminLoginFragment extends Fragment {
                 viewModel.setAdminPassword(insertedPassword);
             }
             NavHostFragment.findNavController(AdminLoginFragment.this)
-                    .navigate(R.id.perfilAdminFragment);
+                    .navigate(R.id.navAdminFragment);
         }
 
 

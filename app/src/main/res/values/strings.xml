@@ -38,6 +38,9 @@
     <string name="todav_a_no_hay_ning_n_usuario_usa_el_bot_n_para_a_adir_uno">Todavía no hay ningún usuario, usa el botón (+) para añadir uno.</string>
     <string name="nombre_animal">Nombre Animal</string>
     <string name="actualizar">Actualizar</string>
+    <string name="bottom_nav_user">Usuarios</string>
+    <string name="bottom_nav_home">Inicio</string>
+    <string name="botttom_nav_cards">Cartas</string>
 
 
 </resources>

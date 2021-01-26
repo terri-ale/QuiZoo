@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import com.example.quizoo.R;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.viewmodel.ViewModelActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -64,6 +65,8 @@ public class CreateUserFragment extends Fragment implements View.OnClickListener
             }
         });
 
+        viewModel.getNavigationView().setVisibility(View.INVISIBLE);
+
         btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +106,10 @@ public class CreateUserFragment extends Fragment implements View.OnClickListener
                             Log.v("xyzyx", user.toString());
                             viewModel.insert(user);
                             simpleSnackbar(v);
-                            NavHostFragment.findNavController(CreateUserFragment.this).popBackStack();
+                            NavHostFragment.findNavController(CreateUserFragment.this)
+                                    .navigate(R.id.adminUsersFragment2);
+
+                            /* NavHostFragment.findNavController(CreateUserFragment.this).popBackStack();*/
                         }
                     }
 

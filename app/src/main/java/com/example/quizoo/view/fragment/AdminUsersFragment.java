@@ -63,7 +63,7 @@ public class AdminUsersFragment extends Fragment {
             public void onClick(User user) {
                 viewModel.setCurrentUser(user);
                 NavHostFragment.findNavController(AdminUsersFragment.this)
-                        .navigate(R.id.action_adminUsersFragment_to_adminEditUserFragment);
+                        .navigate(R.id.adminEditUserFragment);
             }
         });
 
@@ -93,7 +93,7 @@ public class AdminUsersFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(AdminUsersFragment.this)
-                        .navigate(R.id.createUserFragment);
+                        .navigate(R.id.action_adminUsersFragment2_to_createUserFragment4);
             }
         });
     }
