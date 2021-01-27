@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/adminUsersFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_user"
+        android:title="@string/bottom_nav_user" />
+
+    <item
+        android:id="@+id/perfilAdminFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="@string/bottom_nav_home" />
+    <item
+        android:id="@+id/adminCardsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_poker"
+        android:title="@string/botttom_nav_cards" />
+</menu>

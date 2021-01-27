@@ -12,6 +12,7 @@ import com.example.quizoo.model.Repository;
 import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.rest.pojo.Card;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
 
     private MutableLiveData<Fragment> currentFragment = new MutableLiveData<>();
 
-
+    private BottomNavigationView navigationView;
 
     public ViewModelActivity(@NonNull Application application) {
         super(application);
@@ -101,5 +102,13 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
 
     public void loadCardsForGame() {
         repository.loadCardsForGame();
+    }
+
+    public BottomNavigationView getNavigationView() {
+        return navigationView;
+    }
+
+    public void setNavigationView(BottomNavigationView navigationView) {
+        this.navigationView = navigationView;
     }
 }

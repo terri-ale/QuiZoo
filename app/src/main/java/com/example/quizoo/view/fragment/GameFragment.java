@@ -12,6 +12,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -27,7 +29,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.quizoo.R;
 import com.example.quizoo.rest.pojo.Card;
@@ -43,6 +44,8 @@ import static android.text.Html.FROM_HTML_MODE_LEGACY;
 public class GameFragment extends Fragment {
 
     private ViewModelActivity viewModel;
+
+    private ArrayList<Card> cards;
 
     public GameFragment() {
         // Required empty public constructor
@@ -68,10 +71,6 @@ public class GameFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
-
-
-
-        animacionCarta(view);
 
         FloatingActionButton btHlep = view.findViewById(R.id.btHelp);
         btHlep.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +107,7 @@ public class GameFragment extends Fragment {
 
 
         //Este método carga en MutableLiveData las cartas.
-       // viewModel.loadCardsForGame();
+        viewModel.loadCardsForGame();
 
 
 

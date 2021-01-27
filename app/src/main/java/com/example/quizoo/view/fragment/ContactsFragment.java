@@ -30,15 +30,7 @@ import java.util.ArrayList;
 
 public class ContactsFragment extends Fragment {
 
-
     private ViewModelActivity viewModel;
-
-    String[] data = new String[]{ContactsContract.Data.DISPLAY_NAME, ContactsContract.CommonDataKinds.Email.ADDRESS};
-    String order = ContactsContract.Data.DISPLAY_NAME + " ASC";
-    String selectionEmail = ContactsContract.Data.MIMETYPE + "='" +
-            ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE+ "' AND "
-            + ContactsContract.CommonDataKinds.Email.ADDRESS + " IS NOT NULL";
-
 
     public ContactsFragment() {
         // Required empty public constructor
@@ -69,7 +61,8 @@ public class ContactsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(ContactsFragment.this)
-                        .navigate(R.id.perfilFragment);
+                        .popBackStack();
+                        //.navigate(R.id.perfilFragment);
             }
         });
 

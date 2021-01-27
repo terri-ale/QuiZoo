@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.quizoo.R;
 import com.example.quizoo.viewmodel.ViewModelActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class PerfilAdminFragment extends Fragment {
@@ -48,6 +49,8 @@ public class PerfilAdminFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
         viewModel.getCurrentFragment().setValue(this);
+
+
 
         //viewModel.getCurrentFragment().getValue();
 

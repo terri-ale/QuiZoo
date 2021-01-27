@@ -24,5 +24,11 @@ public interface UserDao {
     @Query("delete from users where id = :id")
     void delete(long id);
 
+    @Query("select numResponsesCorrect from users where id = :id")
+    LiveData<Integer> getUserLiveScore(long id);
+
+    @Query("update users set numResponsesCorrect = numResponsesCorrect + 1 where id = :id")
+    void sumUserScore(long id);
+
 
 }

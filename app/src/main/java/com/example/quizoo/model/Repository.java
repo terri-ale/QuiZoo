@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -61,6 +62,9 @@ public class Repository {
     private LiveData<List<User>> liveUserList;
     private MutableLiveData<ArrayList<Card>> liveCards;
     private MutableLiveData<DBResponse> liveResponse;
+
+
+    public final static int SCORE_MULTIPLIER = 10;
 
     private User currentUser;
 
@@ -242,7 +246,8 @@ public class Repository {
 
             @Override
             public void onFailure(Call<ArrayList<Card>> call, Throwable t) {
-
+                //AQUI SE DA SIN CONEXION A INTERNET
+                Log.v("xyzyx", t.getMessage());
             }
         });
 
@@ -268,6 +273,20 @@ public class Repository {
                         MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
 
                 Call<DBResponse> request = cardClient.saveImage(body);
+
+                request.enqueue(new Callback<DBResponse>() {
+                    @Override
+                    public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<DBResponse> call, Throwable t) {
+
+                    }
+                });
+
+
 
             }
         }
