@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.quizoo.R;
+import com.example.quizoo.model.Repository;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -65,7 +66,7 @@ public class PerfilFragment extends Fragment {
         tvUserProfile.setText(viewModel.getCurrentUser().getName());
 
         TextView tvPuntosProfile = view.findViewById(R.id.tvPuntosProfile);
-        tvPuntosProfile.setText(viewModel.getCurrentUser().getNumResponsesCorrect() * 10 + " Puntos");
+        tvPuntosProfile.setText(viewModel.getCurrentUser().getNumResponsesCorrect() * Repository.SCORE_MULTIPLIER + getActivity().getString(R.string.string_points));
 
         clickBotones(view, savedInstanceState);
 

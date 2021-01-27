@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -63,7 +62,7 @@ public class AdminUsersFragment extends Fragment {
             public void onClick(User user) {
                 viewModel.setCurrentUser(user);
                 NavHostFragment.findNavController(AdminUsersFragment.this)
-                        .navigate(R.id.adminEditUserFragment);
+                    .navigate(R.id.action_adminUsersFragment_to_adminEditUserFragment);
             }
         });
 
@@ -93,7 +92,7 @@ public class AdminUsersFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(AdminUsersFragment.this)
-                        .navigate(R.id.action_adminUsersFragment2_to_createUserFragment4);
+                        .navigate(R.id.action_adminUsersFragment_to_createUserFragment);
             }
         });
     }

@@ -31,6 +31,8 @@ import java.util.List;
 public class CreateUserFragment extends Fragment implements View.OnClickListener {
 
     private ViewModelActivity viewModel;
+
+    TextInputLayout tiUserCreation;
     private int currentImage = R.drawable.icon_anciano;
 
 
@@ -74,7 +76,7 @@ public class CreateUserFragment extends Fragment implements View.OnClickListener
             }
         });
         ImageView imgUser = view.findViewById(R.id.imgUserAdd);
-        TextInputLayout tiUserCreation = view.findViewById(R.id.tiUserCreation);
+        tiUserCreation = view.findViewById(R.id.tiUserCreation);
 
         view.findViewById(R.id.imgS1).setOnClickListener(this);
         view.findViewById(R.id.imgS2).setOnClickListener(this);
@@ -89,42 +91,40 @@ public class CreateUserFragment extends Fragment implements View.OnClickListener
         btAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-
-                    if (tiUserCreation.getEditText().getText().toString().contains(" ")) {
-                        Snackbar.make(view, getString(R.string.espacio), Snackbar.LENGTH_SHORT)
-                                .show();
-                    } else {
-
-                        if (tiUserCreation.getEditText().getText().toString().equals("")) {
-                            Snackbar.make(view, getString(R.string.vacio), Snackbar.LENGTH_SHORT)
-                                    .show();
-
-                        } else {
-                            User user = new User(tiUserCreation.getEditText().getText().toString(), currentImage, 0, 0);
-
-                            Log.v("xyzyx", user.toString());
-                            viewModel.insert(user);
-                            simpleSnackbar(v);
-                            NavHostFragment.findNavController(CreateUserFragment.this)
-                                    .navigate(R.id.adminUsersFragment2);
-
-                            /* NavHostFragment.findNavController(CreateUserFragment.this).popBackStack();*/
-                        }
-                    }
-
-
-                } catch (Exception e) {
-                    Log.v("xyzyx", e.getMessage());
-                }
-
+                attemptAddUser();
             }
         });
     }
 
+
+
+
+    private void attemptAddUser(){
+        if (tiUserCreation.getEditText().getText().toString().contains(" ")) {
+            Snackbar.make(getView(), getString(R.string.espacio), Snackbar.LENGTH_SHORT)
+                    .show();
+        } else {
+
+            if (tiUserCreation.getEditText().getText().toString().equals("")) {
+                Snackbar.make(getView(), getString(R.string.vacio), Snackbar.LENGTH_SHORT)
+                        .show();
+
+            } else {
+                User user = new User(tiUserCreation.getEditText().getText().toString(), currentImage, 0, 0);
+
+                Log.v("xyzyx", user.toString());
+                viewModel.insert(user);
+                Snackbar.make(getView(), getString(R.string.creado), Snackbar.LENGTH_SHORT)
+                        .show();
+                NavHostFragment.findNavController(CreateUserFragment.this).popBackStack();
+            }
+        }
+    }
+
+
+
     public void simpleSnackbar(View view) {
-        Snackbar.make(view, getString(R.string.creado), Snackbar.LENGTH_SHORT)
-                .show();
+
     }
 
     @Override
@@ -158,16 +158,6 @@ public class CreateUserFragment extends Fragment implements View.OnClickListener
         }
         imgUser.setImageResource(currentImage);
     }
-/*
-    public void onClickImg(View view){
-        ImageView imgUser = view.findViewById(R.id.imgUserAdd);
-        ImageView imgS4= view.findViewById(R.id.imgS4);
-        switch ( view.getId() ){
-            case R.id.imgS4:
-                imgUser.setImageResource(R.drawable.icon_anciano);
-                break;
-        }
-    }
-*/
+
 
 }

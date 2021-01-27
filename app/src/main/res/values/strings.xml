@@ -19,11 +19,11 @@
     <string name="bt_grant">Conceder</string>
     <string name="instrucciones">&lt;h3>Bienvenido a QuiZoo.&lt;/h3>&lt;br>&lt;/br>
 
-        QuiZoo es un juego de cartas, sobre animales. Adentrate en la profundida de la selva y descubre todas las características de los animales.
+        QuiZoo es un juego de cartas sobre animales. Adéntrate en la profundidad de la selva y descubre todas las características de los animales.
         Este juego se divide y consta de 3 partes:&lt;br>&lt;/br>
-            &lt;br>&lt;/br>&lt;b>1&lt;/b>. Vision general de la carta&lt;br>&lt;/br>
-            &lt;b>2&lt;/b>. En la carta veremos una imagen del animal y una pequeña descripción sobre el(Atento, tendrás que leer, para poder avanzar)&lt;br>&lt;/br>
-            &lt;b>3&lt;/b>. Por ultimo tenemos una ronda de preguntas que deberas de responder, con los conocimientos aprendidos y pistas dadas&lt;br>&lt;/br>
+            &lt;br>&lt;/br>&lt;b>1.-&lt;/b> Vision general de la carta&lt;br>&lt;/br>
+            &lt;b>2.-&lt;/b> En la carta veremos una imagen del animal y una pequeña descripción sobre él (atento, tendrás que leer para poder avanzar)&lt;br>&lt;/br>
+            &lt;b>3.-&lt;/b> Por último tenemos una ronda de preguntas que deberás responder, con los conocimientos aprendidos y pistas dadas&lt;br>&lt;/br>
 
         &lt;br>&lt;/br>Esperemos que disfrutes y aprendas mucho sobre los animales.
 
@@ -41,6 +41,7 @@
     <string name="bottom_nav_user">Usuarios</string>
     <string name="bottom_nav_home">Inicio</string>
     <string name="botttom_nav_cards">Cartas</string>
+    <string name="string_points">Puntos</string>
 
 
 </resources>

@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -20,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.quizoo.R;
 import com.example.quizoo.rest.pojo.Card;
@@ -34,6 +37,8 @@ import static android.text.Html.FROM_HTML_MODE_LEGACY;
 public class GameFragment extends Fragment {
 
     private ViewModelActivity viewModel;
+
+    private ArrayList<Card> cards;
 
     public GameFragment() {
         // Required empty public constructor
@@ -60,6 +65,14 @@ public class GameFragment extends Fragment {
 
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
+        cards = viewModel.getLiveCards().getValue();
+
+
+        if(cards == null || cards.size() == 0){
+            Toast.makeText(getActivity(), "NO HAY", Toast.LENGTH_SHORT).show();
+        }
+
+
         FloatingActionButton btHlep = view.findViewById(R.id.btHelp);
         btHlep.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -75,7 +88,7 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(GameFragment.this)
-                        .navigate(R.id.perfilFragment);
+                        .navigate(R.id.action_gameFragment_to_perfilFragment);
             }
         });
 
@@ -83,19 +96,13 @@ public class GameFragment extends Fragment {
 
 
 
-        //OBTENER LAS CARTAS
-        //En principio se va a hacer con MutableLiveData
 
-        viewModel.getLiveCards().observe(getActivity(), new Observer<ArrayList<Card>>() {
-            @Override
-            public void onChanged(ArrayList<Card> cards) {
-                Log.v("xyzyx", "CARTAS "+ cards.toString());
-            }
-        });
+
+
 
 
         //Este método carga en MutableLiveData las cartas.
-        viewModel.loadCardsForGame();
+        //viewModel.loadCardsForGame();
 
 
 
