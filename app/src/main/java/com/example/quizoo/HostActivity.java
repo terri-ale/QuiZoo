@@ -41,6 +41,8 @@ public class HostActivity extends AppCompatActivity {
             @Override
             public void onChanged(Fragment fragment) {
                 Log.v("xyzyx", "EL FRAGMENTO ACTUAL ES: "+fragment.getClass());
+
+
             }
         });
 

@@ -1,2 +1,3 @@
+include ':mynav'
 include ':app'
 rootProject.name = "QuiZoo"
