@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bckgadmin"
+    android:background="@drawable/bckadminland"
     tools:context=".view.fragment.CreateCardsFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -22,15 +22,13 @@
         android:id="@+id/tiCardCreation"
         android:layout_width="312dp"
         android:layout_height="0dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="40dp"
         android:hint="@string/string_animal_name"
-        app:layout_constraintBottom_toTopOf="@+id/guideline55"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btElgirFoto">
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar3">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etAgregarCarta"
@@ -47,13 +45,12 @@
         android:id="@+id/tiDescripCreation"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginTop="16dp"
         android:hint="@string/string_animal_description"
-        app:layout_constraintBottom_toTopOf="@+id/guideline54"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline55">
+        app:layout_constraintBottom_toTopOf="@+id/guideline52"
+        app:layout_constraintEnd_toEndOf="@+id/tiCardCreation"
+        app:layout_constraintStart_toStartOf="@+id/tiCardCreation"
+        app:layout_constraintTop_toBottomOf="@+id/tiCardCreation">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etAgregarDescrip"
@@ -71,32 +68,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="293dp" />
+        app:layout_constraintGuide_begin="323dp" />
 
     <Button
         android:id="@+id/btElgirFoto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#8F3636"
         android:text="Elegir Foto"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imgFotoCrearCarta"
+        app:layout_constraintStart_toStartOf="@+id/imgFotoCrearCarta"
         app:layout_constraintTop_toTopOf="@+id/guideline52" />
 
     <ImageView
         android:id="@+id/imgFotoCrearCarta"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="261dp"
+        android:layout_height="240dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="16dp"
         android:src="@drawable/glidepordefecto"
-        app:layout_constraintBottom_toTopOf="@+id/guideline52"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar3" />
 
@@ -125,14 +123,18 @@
         android:id="@+id/btGuardarCarta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="120dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#8F3636"
         android:text="Guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/guideline52"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline54"
@@ -142,10 +144,10 @@
         app:layout_constraintGuide_begin="652dp" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline55"
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="435dp" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="262dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
