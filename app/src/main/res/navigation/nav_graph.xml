@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/adminCardsFragment">
+    app:startDestination="@id/chooseUserFragment">
 
     <fragment
         android:id="@+id/adminLoginFragment"
@@ -90,6 +90,12 @@
         <action
             android:id="@+id/action_adminUsersFragment_to_createUserFragment"
             app:destination="@id/createUserFragment" />
+        <action
+            android:id="@+id/action_adminUsersFragment_to_adminCardsFragment"
+            app:destination="@id/adminCardsFragment" />
+        <action
+            android:id="@+id/action_adminUsersFragment_to_perfilAdminFragment"
+            app:destination="@id/perfilAdminFragment" />
     </fragment>
 
 
@@ -118,6 +124,12 @@
         <action
             android:id="@+id/action_adminCardsFragment_to_adminQuestionsFragment"
             app:destination="@id/adminQuestionsFragment" />
+        <action
+            android:id="@+id/action_adminCardsFragment_to_adminUsersFragment"
+            app:destination="@id/adminUsersFragment" />
+        <action
+            android:id="@+id/action_adminCardsFragment_to_perfilAdminFragment"
+            app:destination="@id/perfilAdminFragment" />
     </fragment>
 
 

@@ -29,6 +29,24 @@ public class HostActivity extends AppCompatActivity {
         batteryReceiver = new BatteryReceiver();
 
 
+        /*
+        *  Debemos comprobar que fragmento esta siendo siendo visualizado en el navhostfragment para ocultar
+        * o mostrar el drawer a nuestro gusto
+
+        * */
+
+        viewModel = new ViewModelProvider(this).get(ViewModelActivity.class);
+
+        viewModel.getCurrentFragment().observe(this, new Observer<Fragment>() {
+            @Override
+            public void onChanged(Fragment fragment) {
+                Log.v("xyzyx", "EL FRAGMENTO ACTUAL ES: "+fragment.getClass());
+
+
+            }
+        });
+
+
     }
 
     @Override
@@ -43,6 +61,26 @@ public class HostActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         unregisterReceiver(batteryReceiver);
+    }
+
+    //código
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideSystemUI();
+        }
+    }
+
+    private void hideSystemUI() {
+        View decorView =getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
 

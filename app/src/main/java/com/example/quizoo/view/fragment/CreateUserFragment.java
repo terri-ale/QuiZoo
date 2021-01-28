@@ -65,7 +65,6 @@ public class CreateUserFragment extends Fragment implements View.OnClickListener
             }
         });
 
-        viewModel.getNavigationView().setVisibility(View.INVISIBLE);
 
         btBack.setOnClickListener(new View.OnClickListener() {
             @Override

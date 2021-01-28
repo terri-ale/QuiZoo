@@ -71,6 +71,7 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
             imgAnimal = itemView.findViewById(R.id.imgAnimalCardRecycler);
             constraintLayout = itemView.findViewById(R.id.recyclerCards);
 
+
         }
     }
 }

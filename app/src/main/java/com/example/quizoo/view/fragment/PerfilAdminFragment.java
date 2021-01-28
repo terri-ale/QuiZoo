@@ -8,10 +8,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.quizoo.R;
 import com.example.quizoo.viewmodel.ViewModelActivity;
@@ -48,11 +50,24 @@ public class PerfilAdminFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
-        //viewModel.getCurrentFragment().setValue(this);
+        ImageView imgCards = view.findViewById(R.id.imgCardsN);
+        ImageView imgUser = view.findViewById(R.id.imgUserN);
 
+        imgCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(PerfilAdminFragment.this)
+                        .navigate(R.id.action_perfilAdminFragment_to_adminCardsFragment);
+            }
+        });
 
-
-        //viewModel.getCurrentFragment().getValue();
+        imgUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(PerfilAdminFragment.this)
+                        .navigate(R.id.action_perfilAdminFragment_to_adminUsersFragment);
+            }
+        });
 
 
     }

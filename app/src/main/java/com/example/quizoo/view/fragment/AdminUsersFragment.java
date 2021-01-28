@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.quizoo.R;
 import com.example.quizoo.model.entity.User;
@@ -95,5 +96,26 @@ public class AdminUsersFragment extends Fragment {
                         .navigate(R.id.action_adminUsersFragment_to_createUserFragment);
             }
         });
+
+
+        ImageView imgCards = view.findViewById(R.id.imgCardsN);
+        ImageView imgHome = view.findViewById(R.id.imgHomeN);
+
+        imgCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(AdminUsersFragment.this)
+                        .navigate(R.id.action_adminUsersFragment_to_adminCardsFragment);
+            }
+        });
+
+        imgHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(AdminUsersFragment.this)
+                        .navigate(R.id.action_adminUsersFragment_to_perfilAdminFragment);
+            }
+        });
+
     }
 }

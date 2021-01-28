@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.quizoo.R;
 import com.example.quizoo.rest.pojo.Card;
@@ -57,6 +59,25 @@ public class AdminCardsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ImageView imgUsers = view.findViewById(R.id.imgUserN);
+        ImageView imgHome = view.findViewById(R.id.imgHomeN);
+
+        imgUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(AdminCardsFragment.this)
+                        .navigate(R.id.action_adminCardsFragment_to_adminUsersFragment);
+            }
+        });
+
+        imgHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(AdminCardsFragment.this)
+                        .navigate(R.id.action_adminCardsFragment_to_perfilAdminFragment);
+            }
+        });
 
 
         init();
