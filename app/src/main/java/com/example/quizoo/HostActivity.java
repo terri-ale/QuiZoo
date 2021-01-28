@@ -28,6 +28,22 @@ public class HostActivity extends AppCompatActivity {
 
         batteryReceiver = new BatteryReceiver();
 
+        View decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener
+                (new View.OnSystemUiVisibilityChangeListener() {
+                    public void onSystemUiVisibilityChange(int visibility) {
+                        // Note that system bars will only be "visible" if none of the
+                        // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                        if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                          hideSystemUI();
+                        } else {
+                            // TODO: The system bars are NOT visible. Make any desired
+                            // adjustments to your UI, such as hiding the action bar or
+                            // other navigational controls.
+                        }
+                    }
+                });
+
 
         /*
         *  Debemos comprobar que fragmento esta siendo siendo visualizado en el navhostfragment para ocultar
@@ -70,6 +86,7 @@ public class HostActivity extends AppCompatActivity {
         if (hasFocus) {
             hideSystemUI();
         }
+
     }
 
     private void hideSystemUI() {
@@ -82,6 +99,8 @@ public class HostActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
+
+
 
 
 }

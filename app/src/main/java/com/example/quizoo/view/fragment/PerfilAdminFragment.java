@@ -53,6 +53,16 @@ public class PerfilAdminFragment extends Fragment {
         ImageView imgCards = view.findViewById(R.id.imgCardsN);
         ImageView imgUser = view.findViewById(R.id.imgUserN);
 
+        ImageView cerrarAdmin = view.findViewById(R.id.imgCerrarAdmin);
+
+        cerrarAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(PerfilAdminFragment.this)
+                        .navigate(R.id.action_perfilAdminFragment_to_chooseUserFragment);
+            }
+        });
+
         imgCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -75,6 +75,9 @@
         <action
             android:id="@+id/action_perfilAdminFragment_to_adminCardsFragment"
             app:destination="@id/adminCardsFragment" />
+        <action
+            android:id="@+id/action_perfilAdminFragment_to_chooseUserFragment"
+            app:destination="@id/chooseUserFragment" />
     </fragment>
 
 

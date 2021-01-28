@@ -89,13 +89,12 @@
         android:id="@+id/imgFotoCrearCarta"
         android:layout_width="261dp"
         android:layout_height="240dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:src="@drawable/glidepordefecto"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline53"
         app:layout_constraintTop_toBottomOf="@+id/toolbar3" />
 
     <ImageButton
@@ -117,7 +116,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="86dp" />
+        app:layout_constraintGuide_begin="32dp" />
 
     <Button
         android:id="@+id/btGuardarCarta"
@@ -148,6 +147,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="262dp" />
+        app:layout_constraintGuide_begin="353dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
