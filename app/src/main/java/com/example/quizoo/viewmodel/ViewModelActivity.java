@@ -55,6 +55,14 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
     }
 
 
+    public LiveData<User> getLiveUser(long id) {
+        return repository.getLiveUser(id);
+    }
+
+    public void sumUserScore(long id) {
+        repository.sumUserScore(id);
+    }
+
     public boolean contactsPermissionIsGranted() {
         return repository.contactsPermissionIsGranted();
     }
@@ -66,6 +74,9 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
     public MutableLiveData<DBResponse> getLiveResponse() {
         return repository.getLiveResponse();
     }
+
+
+
 
     public void addCard(Uri imageUri, Card card) {
         repository.addCard(imageUri, card);

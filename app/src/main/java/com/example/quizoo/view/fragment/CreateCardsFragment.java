@@ -1,6 +1,5 @@
 package com.example.quizoo.view.fragment;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -51,7 +50,7 @@ public class CreateCardsFragment extends Fragment implements Observer<DBResponse
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
-        viewModel.getLiveResponse().observe(getViewLifecycleOwner(), this);
+
     }
 
     @Override
@@ -68,12 +67,12 @@ public class CreateCardsFragment extends Fragment implements Observer<DBResponse
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        viewModel.getLiveResponse().observe(getViewLifecycleOwner(), this);
         setUI();
     }
 
     private void setUI(){
-        getView().findViewById(R.id.btElgirFoto).setOnClickListener(new View.OnClickListener() {
+        getView().findViewById(R.id.btChoosePicture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chooseImage();
@@ -81,7 +80,7 @@ public class CreateCardsFragment extends Fragment implements Observer<DBResponse
         });
 
 
-        getView().findViewById(R.id.btGuardarCarta).setOnClickListener(new View.OnClickListener() {
+        getView().findViewById(R.id.btCreateUpdateCard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 attemptAddCard();
@@ -92,9 +91,9 @@ public class CreateCardsFragment extends Fragment implements Observer<DBResponse
 
 
     private void attemptAddCard(){
-        TextInputLayout tiName = getView().findViewById(R.id.tiCardCreation);
+        TextInputLayout tiName = getView().findViewById(R.id.tiCardName);
         String name = tiName.getEditText().getText().toString();
-        TextInputLayout tiDescription = getView().findViewById(R.id.tiDescripCreation);
+        TextInputLayout tiDescription = getView().findViewById(R.id.tiCardDescription);
         String description = tiDescription.getEditText().getText().toString();
 
         if(name.isEmpty() || description.isEmpty()){
@@ -169,7 +168,7 @@ public class CreateCardsFragment extends Fragment implements Observer<DBResponse
             imageUri = data.getData();
 
             //PONER EL IMAGEVIEW DE PREVISUALIZACION CON LA URI
-            ImageView ivPreview = getView().findViewById(R.id.imgFotoCrearCarta);
+            ImageView ivPreview = getView().findViewById(R.id.imgCreateUpdateCard);
             ivPreview.setImageURI(imageUri);
 
 

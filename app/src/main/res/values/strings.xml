@@ -36,7 +36,7 @@
     <string name="warning_empty_user_field">El nombre de usuario no puede estar vacío</string>
     <string name="warning_spaces_user_field">El nombre de usuario no puede contener espacios</string>
     <string name="warning_no_users">Todavía no hay ningún usuario, usa el botón (+) para añadir uno.</string>
-    <string name="string_animal_name">Nombre Animal</string>
+    <string name="hint_animal_name">Nombre Animal</string>
     <string name="string_update">Actualizar</string>
     <string name="string_points">Puntos</string>
     <string name="message_card_added_successfully">Carta añadida correctamente</string>

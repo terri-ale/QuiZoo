@@ -16,6 +16,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Query;
 
 import com.example.quizoo.model.dao.UserDao;
 import com.example.quizoo.model.entity.Contact;
@@ -99,6 +100,23 @@ public class Repository {
     }
 
     public MutableLiveData<DBResponse> getLiveResponse() { return liveResponse; }
+
+
+
+    public LiveData<User> getLiveUser(long id) {
+        return userDao.getLiveUser(id);
+    }
+
+
+    public void sumUserScore(long id) {
+        ThreadPool.threadExecutorPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                userDao.sumUserScore(id);
+            }
+        });
+
+    }
 
     public boolean checkAdminPassword(String password){
         SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -273,6 +291,9 @@ public class Repository {
     public String saveImage(Uri imageUri){
         return "";
     }
+
+
+
 
 
 

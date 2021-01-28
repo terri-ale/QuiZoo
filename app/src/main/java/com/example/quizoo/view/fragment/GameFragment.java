@@ -30,6 +30,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.quizoo.R;
+import com.example.quizoo.model.Repository;
+import com.example.quizoo.model.entity.User;
 import com.example.quizoo.rest.pojo.Card;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -71,6 +73,23 @@ public class GameFragment extends Fragment {
 
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
+        TextView tvScore = view.findViewById(R.id.tvGamePuntos);
+        ImageView ivProfile = view.findViewById(R.id.imgIrAPerfil);
+        ivProfile.setImageResource(viewModel.getCurrentUser().getAvatar());
+
+
+
+        //SE OBTIENE UN LIVE USER Y SE MUESTRA EN TIEMPO REAL SU PUNTUACION
+        viewModel.getLiveUser(viewModel.getCurrentUser().getId()).observe(getActivity(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                tvScore.setText(String.valueOf(user.getNumResponsesCorrect() * Repository.SCORE_MULTIPLIER));
+            }
+        });
+
+        //CUANDO EL USUARIO ACIERTE UNA PREGUNTA, SE SUMA EN LA BASE DE DATOS CON:
+        //viewModel.sumUserScore(viewModel.getCurrentUser().getId());
+
 
 
         //ESTE MÉTODO SE DEBE LLAMAR DESDE EL BOTÓN DE JUGAR.
@@ -103,19 +122,6 @@ public class GameFragment extends Fragment {
 
 
 
-        //OBTENER LAS CARTAS
-        //En principio se va a hacer con MutableLiveData
-
-        viewModel.getLiveCards().observe(getActivity(), new Observer<ArrayList<Card>>() {
-            @Override
-            public void onChanged(ArrayList<Card> cards) {
-                Log.v("xyzyx", "CARTAS "+ cards.toString());
-            }
-        });
-
-
-        //Este método carga en MutableLiveData las cartas.
-        viewModel.loadCardsForGame();
 
 
 
@@ -142,12 +148,17 @@ public class GameFragment extends Fragment {
                     //MOSTRAR ERROR DE QUE NO HAY CARTAS AÑADIDAS TODAVÍA
                 }else{
                     gameCards = cards;
+                    Log.v("xyzyx CARGADAS", cards.toString());
                     gameLoop();
                 }
 
 
             }
         });
+
+
+        //Este método carga en MutableLiveData las cartas.
+        viewModel.loadCardsForGame();
 
     }
 
@@ -226,6 +237,7 @@ public class GameFragment extends Fragment {
                 CountDownTimer countDownTimer = new CountDownTimer(11000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvCount.setText(String.format(Locale.getDefault(), "%d", millisUntilFinished / 1000L));
+
                     }
 
                     public void onFinish() {
