@@ -105,8 +105,11 @@ public class AdminCardsFragment extends Fragment {
         viewModel.getLiveCards().observe(getViewLifecycleOwner(), new Observer<ArrayList<Card>>() {
             @Override
             public void onChanged(ArrayList<Card> cards) {
+
+
                 if(cards == null){
                     //ERROR - INTERNET
+
                     Log.v("xyzyx", "NO INTERNET ");
                 }else if(cards.size() == 0){
                     //NO HAY CARTAS
@@ -117,6 +120,8 @@ public class AdminCardsFragment extends Fragment {
                     cardList.addAll(cards);
                     adapter.notifyDataSetChanged();
                 }
+
+
             }
         });
 

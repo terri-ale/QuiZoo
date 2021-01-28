@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,7 +26,6 @@ import java.util.List;
 public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.ViewHolder>{
 
     private List<Card> cardList;
-    private Context context;
     private Activity activity;
     private OnCardClickListener listener;
 
@@ -50,12 +50,15 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
                 holder.tvAnimalName.setText(cardList.get(position).getName());
 
+try {
+    Glide.with(activity)
+            .load(cardList.get(position).getPictureUrl())
+            .placeholder(R.drawable.glidepordefecto)
+            .into(holder.imgAnimal);
+        }catch(Exception e){
+         Toast.makeText(activity,"No se ha podido conectar con el servidor, prueba más tarde",Toast.LENGTH_SHORT).show();
 
-        Glide.with(context)
-                .load(cardList.get(position).getPictureUrl())
-                .placeholder(R.drawable.glidepordefecto)
-                .into(holder.imgAnimal);
-
+}
 
                 holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override

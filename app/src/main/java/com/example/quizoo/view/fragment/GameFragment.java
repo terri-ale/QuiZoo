@@ -43,7 +43,7 @@ import static android.text.Html.FROM_HTML_MODE_LEGACY;
 
 
 public class GameFragment extends Fragment {
-
+    ConstraintLayout card ;
     private ViewModelActivity viewModel;
 
     private ArrayList<Card> gameCards;
@@ -70,12 +70,28 @@ public class GameFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
         TextView tvScore = view.findViewById(R.id.tvGamePuntos);
         ImageView ivProfile = view.findViewById(R.id.imgIrAPerfil);
         ivProfile.setImageResource(viewModel.getCurrentUser().getAvatar());
+         card = view.findViewById(R.id.CardLayout);
+         card.setVisibility(View.INVISIBLE);
+
+
+
+        ConstraintLayout beginScreen = view.findViewById(R.id.constraintStart);
+
+        beginScreen.setVisibility(View.VISIBLE);
+
+        beginScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                beginScreen.setVisibility(View.GONE);
+                animacionCarta(view);
+            }
+        });
+
 
 
 
@@ -168,7 +184,7 @@ public class GameFragment extends Fragment {
     private void gameLoop(){
 
         Log.v("xyzyx", "ANIMANDO");
-        animacionCarta(getView());
+       // animacionCarta(getView());
 
         Log.v("xyzyx", "ANIMANDO 2");
 
@@ -204,9 +220,11 @@ public class GameFragment extends Fragment {
 
     public void animacionCarta(View v){
 
-        ConstraintLayout card = v.findViewById(R.id.CardLayout);
+         card = v.findViewById(R.id.CardLayout);
         TextView tvCount = v.findViewById(R.id.tvCuentaAtras);
         card.setY(2000f);
+        card.setVisibility(View.VISIBLE);
+
 
         float width;
         float height;
@@ -215,15 +233,15 @@ public class GameFragment extends Fragment {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB_MR1) {  // > API 12
             Point size = new Point();
             display.getSize(size);
+
             width = size.x;
             height = size.y;
         } else {
             width   = display.getWidth();
             height  = display.getHeight();
         }
-        card.setX(width/70f);
-        Log.v("xyz",String.valueOf(height));
-
+        card.setX(width/7);
+        card.setY(height);
         ObjectAnimator animation = ObjectAnimator.ofFloat(card, "translationY", height/30f);
         animation.setDuration(2000);
         animation.start();
@@ -252,6 +270,14 @@ public class GameFragment extends Fragment {
 
             }
         }, 2000);
+
+    }
+
+    public void initGame(View v){
+
+
+
+
 
     }
 
