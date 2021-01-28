@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -106,7 +107,7 @@ public class AdminCardsFragment extends Fragment {
             public void onChanged(ArrayList<Card> cards) {
                 if(cards == null){
                     //ERROR - INTERNET
-                    Log.v("xyzyx", "NO INTERNTE ");
+                    Log.v("xyzyx", "NO INTERNET ");
                 }else if(cards.size() == 0){
                     //NO HAY CARTAS
                     Log.v("xyzyx", "NO CARGADAS ");

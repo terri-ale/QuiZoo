@@ -93,14 +93,14 @@ public class GameFragment extends Fragment {
 
 
         //ESTE MÉTODO SE DEBE LLAMAR DESDE EL BOTÓN DE JUGAR.
-        attemptLoadGame();
+     //   attemptLoadGame();
 
 
 
 
 
-        FloatingActionButton btHlep = view.findViewById(R.id.btHelp);
-        btHlep.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton btHelp = view.findViewById(R.id.btHelp);
+        btHelp.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {

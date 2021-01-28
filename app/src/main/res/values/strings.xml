@@ -35,6 +35,8 @@
     <string name="message_user_successfuly_created">Usuario creado correctamente</string>
     <string name="warning_empty_user_field">El nombre de usuario no puede estar vacío</string>
     <string name="warning_spaces_user_field">El nombre de usuario no puede contener espacios</string>
+    <string name="warning_user_resfreshed">Usuario actualizado</string>
+    <string name="warning_user_deleted">Usuario eliminado</string>
     <string name="warning_no_users">Todavía no hay ningún usuario, usa el botón (+) para añadir uno.</string>
     <string name="hint_animal_name">Nombre Animal</string>
     <string name="string_update">Actualizar</string>

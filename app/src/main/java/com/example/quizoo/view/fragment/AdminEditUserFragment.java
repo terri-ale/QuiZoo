@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import com.example.quizoo.R;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.viewmodel.ViewModelActivity;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
@@ -92,6 +93,8 @@ public class AdminEditUserFragment extends Fragment implements View.OnClickListe
                 user.setAvatar(currentImage);
                 viewModel.update(user);
 
+                Snackbar.make(getView(), getString(R.string.warning_user_resfreshed), Snackbar.LENGTH_SHORT)
+                        .show();
                 NavHostFragment.findNavController(AdminEditUserFragment.this).popBackStack();
             }
         });
@@ -101,6 +104,8 @@ public class AdminEditUserFragment extends Fragment implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 viewModel.delete(viewModel.getCurrentUser().getId());
+                Snackbar.make(getView(), getString(R.string.warning_user_deleted), Snackbar.LENGTH_SHORT)
+                        .show();
                 NavHostFragment.findNavController(AdminEditUserFragment.this).popBackStack();
             }
         });

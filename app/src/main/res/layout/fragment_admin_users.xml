@@ -104,7 +104,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -168,8 +168,8 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline61"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="670dp" />
 

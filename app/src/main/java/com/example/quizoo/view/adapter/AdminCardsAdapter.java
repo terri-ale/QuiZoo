@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.quizoo.R;
 import com.example.quizoo.rest.pojo.Card;
 import com.example.quizoo.viewmodel.ViewModelActivity;
@@ -47,8 +49,15 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
                 holder.tvAnimalName.setText(cardList.get(position).getName());
-                //holder.imgAnimal.setImageResource(cardList.get(position).getPictureUrl());
-        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+
+
+        Glide.with(context)
+                .load(cardList.get(position).getPictureUrl())
+                .placeholder(R.drawable.glidepordefecto)
+                .into(holder.imgAnimal);
+
+
+                holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -64,11 +73,13 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvAnimalName;
         ImageView imgAnimal;
+        Button btPreguntas;
         ConstraintLayout constraintLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvAnimalName = itemView.findViewById(R.id.tvAnimalRecycler);
             imgAnimal = itemView.findViewById(R.id.imgAnimalCardRecycler);
+            btPreguntas = itemView.findViewById(R.id.btVerPreguntas);
             constraintLayout = itemView.findViewById(R.id.recyclerCards);
 
 
