@@ -81,8 +81,8 @@ public class ChooseUserFragment extends Fragment {
             public void onClick(User user) {
                 viewModel.setCurrentUser(user);
 
-                //NavHostFragment.findNavController(ChooseUserFragment.this)
-                //       .navigate(R.id.action_chooseUserFragment_to_gameFragment);
+                NavHostFragment.findNavController(ChooseUserFragment.this)
+                       .navigate(R.id.action_chooseUserFragment_to_gameFragment);
             }
         });
 
@@ -112,6 +112,10 @@ public class ChooseUserFragment extends Fragment {
                 navController.navigate(R.id.adminLoginFragment);
             }
         });
+
+
+
+
         if(!viewModel.isSetAdminPassword()){
             NavHostFragment.findNavController(ChooseUserFragment.this)
                     .navigate(R.id.action_chooseUserFragment_to_adminLoginFragment);

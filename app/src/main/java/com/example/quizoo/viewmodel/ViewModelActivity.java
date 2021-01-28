@@ -12,6 +12,7 @@ import com.example.quizoo.model.Repository;
 import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.rest.pojo.Card;
+import com.example.quizoo.rest.pojo.DBResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
@@ -62,6 +63,15 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
         return repository.getContactsWithMail();
     }
 
+    public MutableLiveData<DBResponse> getLiveResponse() {
+        return repository.getLiveResponse();
+    }
+
+    public void addCard(Uri imageUri, Card card) {
+        repository.addCard(imageUri, card);
+    }
+
+
     public LiveData<List<User>> getLiveUserList(){
         return repository.getLiveUserList();
     }
@@ -102,6 +112,10 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
 
     public void loadCardsForGame() {
         repository.loadCardsForGame();
+    }
+
+    public void loadCards() {
+        repository.loadCards();
     }
 
     public BottomNavigationView getNavigationView() {

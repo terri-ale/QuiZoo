@@ -29,24 +29,6 @@ public class HostActivity extends AppCompatActivity {
         batteryReceiver = new BatteryReceiver();
 
 
-        /*
-        *  Debemos comprobar que fragmento esta siendo siendo visualizado en el navhostfragment para ocultar
-        * o mostrar el drawer a nuestro gusto
-
-        * */
-
-        viewModel = new ViewModelProvider(this).get(ViewModelActivity.class);
-
-        viewModel.getCurrentFragment().observe(this, new Observer<Fragment>() {
-            @Override
-            public void onChanged(Fragment fragment) {
-                Log.v("xyzyx", "EL FRAGMENTO ACTUAL ES: "+fragment.getClass());
-
-
-            }
-        });
-
-
     }
 
     @Override

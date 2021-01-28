@@ -21,6 +21,10 @@ public class Card {
     public Card(){ }
 
 
+    public Card(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
     public long getId() {
         return id;

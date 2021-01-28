@@ -25,12 +25,14 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
     private List<Card> cardList;
     private Context context;
     private Activity activity;
+    private OnCardClickListener listener;
 
     private ViewModelActivity viewModel;
 
-    public AdminCardsAdapter(List<Card> cardList, Activity activity) {
+    public AdminCardsAdapter(List<Card> cardList, Activity activity, OnCardClickListener listener) {
         this.cardList = cardList;
         this.activity = activity;
+        this.listener = listener;
     }
 
     @NonNull
@@ -56,7 +58,7 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return cardList.size();
+        return cardList != null ? cardList.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

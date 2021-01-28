@@ -48,7 +48,7 @@ public class PerfilAdminFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
-        viewModel.getCurrentFragment().setValue(this);
+        //viewModel.getCurrentFragment().setValue(this);
 
 
 

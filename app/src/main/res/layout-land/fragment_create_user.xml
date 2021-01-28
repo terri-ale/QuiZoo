@@ -30,7 +30,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
         android:backgroundTint="#8F3636"
-        android:text="@string/a_adir"
+        android:text="@string/bt_add"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

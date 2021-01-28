@@ -2,6 +2,7 @@ package com.example.quizoo.view.fragment;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,8 +13,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -22,7 +21,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -46,7 +44,7 @@ public class GameFragment extends Fragment {
 
     private ViewModelActivity viewModel;
 
-    private ArrayList<Card> cards;
+    private ArrayList<Card> gameCards;
 
     public GameFragment() {
         // Required empty public constructor
@@ -72,6 +70,15 @@ public class GameFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
+
+
+
+        //ESTE MÉTODO SE DEBE LLAMAR DESDE EL BOTÓN DE JUGAR.
+        attemptLoadGame();
+
+
+
+
 
         FloatingActionButton btHlep = view.findViewById(R.id.btHelp);
         btHlep.setOnClickListener(new View.OnClickListener() {
@@ -120,12 +127,61 @@ public class GameFragment extends Fragment {
 
 
 
+    private void attemptLoadGame(){
+
+        ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Cargando", "Estamos cargando las cartas");
+
+        viewModel.getLiveCards().observe(getActivity(), new Observer<ArrayList<Card>>() {
+            @Override
+            public void onChanged(ArrayList<Card> cards) {
+                progressDialog.dismiss();
+
+                if(cards == null){
+                    //MOSTRAR ERROR DE QUE NO SE HAN PODIDO RECUPERAR LAS CARTAS (CONEXIÓN A INTERNET)
+                }else if(cards.size() == 0){
+                    //MOSTRAR ERROR DE QUE NO HAY CARTAS AÑADIDAS TODAVÍA
+                }else{
+                    gameCards = cards;
+                    gameLoop();
+                }
+
+
+            }
+        });
+
+    }
+
+
+
+
+    private void gameLoop(){
+
+        Log.v("xyzyx", "ANIMANDO");
+        animacionCarta(getView());
+
+        Log.v("xyzyx", "ANIMANDO 2");
+
+
+        for (int i = 0; i < gameCards.size(); i++) {
+
+
+
+
+            //for (int j = 0; j < gameCards.get(i).getQuestions().size(); j++) {
+            //
+            //}
+        }
+    }
+
+
+
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Dialog instruccionesDialog(Bundle savedInstanceState) {
 
-        String text = getString(R.string.instrucciones);
+        String text = getString(R.string.instructions_game);
         Spanned styledText = Html.fromHtml(text, FROM_HTML_MODE_LEGACY);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -136,6 +192,7 @@ public class GameFragment extends Fragment {
 
 
     public void animacionCarta(View v){
+
         ConstraintLayout card = v.findViewById(R.id.CardLayout);
         TextView tvCount = v.findViewById(R.id.tvCuentaAtras);
         card.setY(2000f);
@@ -176,22 +233,13 @@ public class GameFragment extends Fragment {
                         ObjectAnimator animation2 = ObjectAnimator.ofFloat(card, "translationX", -width);
                         animation2.setDuration(2000);
                         animation2.start();
+
                     }
                 }.start();
 
 
             }
         }, 2000);
-
-
-
-
-
-
-
-
-
-
 
     }
 

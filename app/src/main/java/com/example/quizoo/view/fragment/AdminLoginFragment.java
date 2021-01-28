@@ -19,8 +19,6 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.quizoo.R;
 import com.example.quizoo.viewmodel.ViewModelActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 
@@ -83,11 +81,11 @@ public class AdminLoginFragment extends Fragment {
 
         backhand.setVisibility(View.INVISIBLE);
         TextView tvExplanation = getView().findViewById(R.id.tvExplicacion);
-        String explanation = getContext().getString(R.string.crea_una_contrase_a_para_entrar_en_el_modo_administrador);
+        String explanation = getContext().getString(R.string.string_create_password);
         tvExplanation.setText(explanation);
 
         Button button = getView().findViewById(R.id.btConfirmarAdmin);
-        String textEnter = getContext().getString(R.string.confirmar_password);
+        String textEnter = getContext().getString(R.string.bt_confirm_password);
         button.setText(textEnter);
     }
 

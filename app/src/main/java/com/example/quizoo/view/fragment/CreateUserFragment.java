@@ -1,6 +1,5 @@
 package com.example.quizoo.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,7 +20,6 @@ import android.widget.ImageView;
 import com.example.quizoo.R;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.viewmodel.ViewModelActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -101,12 +99,12 @@ public class CreateUserFragment extends Fragment implements View.OnClickListener
 
     private void attemptAddUser(){
         if (tiUserCreation.getEditText().getText().toString().contains(" ")) {
-            Snackbar.make(getView(), getString(R.string.espacio), Snackbar.LENGTH_SHORT)
+            Snackbar.make(getView(), getString(R.string.warning_spaces_user_field), Snackbar.LENGTH_SHORT)
                     .show();
         } else {
 
             if (tiUserCreation.getEditText().getText().toString().equals("")) {
-                Snackbar.make(getView(), getString(R.string.vacio), Snackbar.LENGTH_SHORT)
+                Snackbar.make(getView(), getString(R.string.warning_empty_user_field), Snackbar.LENGTH_SHORT)
                         .show();
 
             } else {
@@ -114,7 +112,7 @@ public class CreateUserFragment extends Fragment implements View.OnClickListener
 
                 Log.v("xyzyx", user.toString());
                 viewModel.insert(user);
-                Snackbar.make(getView(), getString(R.string.creado), Snackbar.LENGTH_SHORT)
+                Snackbar.make(getView(), getString(R.string.message_user_successfuly_created), Snackbar.LENGTH_SHORT)
                         .show();
                 NavHostFragment.findNavController(CreateUserFragment.this).popBackStack();
             }

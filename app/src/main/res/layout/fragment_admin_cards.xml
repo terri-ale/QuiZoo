@@ -15,7 +15,8 @@
         app:layout_constraintGuide_begin="670dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="411dp"
+        android:id="@+id/constraintLayout5"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#FFFFFF"
         android:elevation="4sp"
@@ -76,6 +77,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCards"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline58"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

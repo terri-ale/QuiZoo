@@ -61,6 +61,7 @@ public class Repository {
 
     private LiveData<List<User>> liveUserList;
     private MutableLiveData<ArrayList<Card>> liveCards;
+
     private MutableLiveData<DBResponse> liveResponse;
 
 
@@ -246,11 +247,26 @@ public class Repository {
 
             @Override
             public void onFailure(Call<ArrayList<Card>> call, Throwable t) {
-                //AQUI SE DA SIN CONEXION A INTERNET
-                Log.v("xyzyx", t.getMessage());
+                liveCards.setValue(null);
             }
         });
 
+    }
+
+
+    public void loadCards(){
+        Call<ArrayList<Card>> call = cardClient.getAllCards();
+        call.enqueue(new Callback<ArrayList<Card>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Card>> call, Response<ArrayList<Card>> response) {
+                liveCards.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Card>> call, Throwable t) {
+                liveCards.setValue(null);
+            }
+        });
     }
 
 
@@ -259,9 +275,31 @@ public class Repository {
     }
 
 
+
+    private void addCard(Card card){
+        Call<DBResponse> request = cardClient.addCard(card);
+
+        request.enqueue(new Callback<DBResponse>() {
+            @Override
+            public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
+                liveResponse.setValue(response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<DBResponse> call, Throwable t) {
+                liveResponse.setValue(null);
+            }
+        });
+    }
+
+
+
     public void addCard(Uri imageUri, Card card){
-        if(imageUri != null){
-            if(storagePermissionIsGranted()){
+        if(imageUri == null){
+            addCard(card);
+        }else {
+            if (storagePermissionIsGranted()) {
                 File imageFile = getFileFromUri(imageUri);
                 RequestBody requestFile =
                         RequestBody.create(
@@ -277,24 +315,21 @@ public class Repository {
                 request.enqueue(new Callback<DBResponse>() {
                     @Override
                     public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
-
+                        if (response.body() != null && response.body().getResult() == true) {
+                            card.setPictureUrl(response.body().getUrl());
+                        }
+                        addCard(card);
                     }
 
                     @Override
                     public void onFailure(Call<DBResponse> call, Throwable t) {
-
+                        //Si ha fallado subir la imagen al servidor, se sube sin imagen
+                        addCard(card);
                     }
+
                 });
-
-
-
             }
         }
+
     }
-
-
-
-
-
-
 }
