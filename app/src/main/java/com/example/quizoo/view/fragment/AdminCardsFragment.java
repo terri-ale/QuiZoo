@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.quizoo.R;
 import com.example.quizoo.rest.pojo.Card;
@@ -111,6 +112,7 @@ public class AdminCardsFragment extends Fragment {
                     //ERROR - INTERNET
 
                     Log.v("xyzyx", "NO INTERNET ");
+                     Toast.makeText(getActivity(),"Algo fue mal, inténtalo más tarde",Toast.LENGTH_LONG).show();
                 }else if(cards.size() == 0){
                     //NO HAY CARTAS
                     Log.v("xyzyx", "NO CARGADAS ");
