@@ -46,6 +46,9 @@ public class GameFragment extends Fragment {
     ConstraintLayout card ;
     private ViewModelActivity viewModel;
 
+    ConstraintLayout beginScreen;
+    TextView tvInstructions;
+
     private ArrayList<Card> gameCards;
 
     public GameFragment() {
@@ -73,6 +76,7 @@ public class GameFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
         TextView tvScore = view.findViewById(R.id.tvGamePuntos);
+        tvInstructions = view.findViewById(R.id.tvInstructionsBeforeGame);
         ImageView ivProfile = view.findViewById(R.id.imgIrAPerfil);
         ivProfile.setImageResource(viewModel.getCurrentUser().getAvatar());
          card = view.findViewById(R.id.CardLayout);
@@ -80,15 +84,16 @@ public class GameFragment extends Fragment {
 
 
 
-        ConstraintLayout beginScreen = view.findViewById(R.id.constraintStart);
+        beginScreen = view.findViewById(R.id.constraintStart);
 
         beginScreen.setVisibility(View.VISIBLE);
 
         beginScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                beginScreen.setVisibility(View.GONE);
-                animacionCarta(view);
+                attemptLoadGame();
+                //beginScreen.setVisibility(View.GONE);
+                //animacionCarta(view);
             }
         });
 
@@ -160,10 +165,13 @@ public class GameFragment extends Fragment {
 
                 if(cards == null){
                     //MOSTRAR ERROR DE QUE NO SE HAN PODIDO RECUPERAR LAS CARTAS (CONEXIÓN A INTERNET)
+                    tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
                 }else if(cards.size() == 0){
                     //MOSTRAR ERROR DE QUE NO HAY CARTAS AÑADIDAS TODAVÍA
+                    tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
                 }else{
                     gameCards = cards;
+                    beginScreen.setVisibility(View.GONE);
                     Log.v("xyzyx CARGADAS", cards.toString());
                     gameLoop();
                 }
@@ -184,7 +192,7 @@ public class GameFragment extends Fragment {
     private void gameLoop(){
 
         Log.v("xyzyx", "ANIMANDO");
-       // animacionCarta(getView());
+        animacionCarta(getView());
 
         Log.v("xyzyx", "ANIMANDO 2");
 

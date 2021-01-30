@@ -47,6 +47,13 @@
     <string name="string_loading">Cargando</string>
     <string name="string_adding_card">Añadiendo carta</string>
     <string name="string_animal_description">Descripción del animal</string>
+    <string name="warning_cards_not_retrieved">No se pudieron recuperar las cartas.\nComprueba tu conexión a internet.\n\nPulsa para reintentar</string>
+    <string name="warning_no_cards_yet">No hay cartas para mostrar</string>
+    <string name="instructions_touch_screen">Toca la pantalla para empezar</string>
+    <string name="string_updating_card">Actualizando carta</string>
+    <string name="message_changes_successfully_applied">Cambios guardados correctamente</string>
+    <string name="warning_changes_not_applied">No se pudieron aplicar los cambios</string>
+    <string name="string_deleting_card">Eliminando carta...</string>
 
 
 </resources>

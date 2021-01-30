@@ -190,7 +190,7 @@
         app:layout_constraintGuide_begin="71dp" />
 
     <ImageView
-        android:id="@+id/imgBorrarUser"
+        android:id="@+id/imgDeleteUser"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"

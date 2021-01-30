@@ -13,6 +13,7 @@ import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.rest.pojo.Card;
 import com.example.quizoo.rest.pojo.DBResponse;
+import com.example.quizoo.util.OnDBResponseListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
@@ -25,7 +26,7 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
 
     private MutableLiveData<Fragment> currentFragment = new MutableLiveData<>();
 
-    private BottomNavigationView navigationView;
+
 
     public ViewModelActivity(@NonNull Application application) {
         super(application);
@@ -71,17 +72,27 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
         return repository.getContactsWithMail();
     }
 
-    public MutableLiveData<DBResponse> getLiveResponse() {
+    public LiveData<DBResponse> getLiveResponse() {
         return repository.getLiveResponse();
     }
 
 
-
+    public void setResponseListener(OnDBResponseListener listener) {
+        repository.setResponseListener(listener);
+    }
 
     public void addCard(Uri imageUri, Card card) {
         repository.addCard(imageUri, card);
     }
 
+
+    public void updateCard(Uri imageUri, Card card) {
+        repository.updateCard(imageUri, card);
+    }
+
+    public void deleteCard(Card card) {
+        repository.deleteCard(card);
+    }
 
     public LiveData<List<User>> getLiveUserList(){
         return repository.getLiveUserList();
@@ -108,6 +119,11 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
         return repository.getLiveFriendInsertId();
     }
 
+
+    public void getQuestionsOf(Card card) {
+        repository.getQuestionsOf(card);
+    }
+
     public boolean storagePermissionIsGranted() {
         return repository.storagePermissionIsGranted();
     }
@@ -129,11 +145,12 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
         repository.loadCards();
     }
 
-    public BottomNavigationView getNavigationView() {
-        return navigationView;
+
+    public Card getCurrentCard() {
+        return repository.getCurrentCard();
     }
 
-    public void setNavigationView(BottomNavigationView navigationView) {
-        this.navigationView = navigationView;
+    public void setCurrentCard(Card currentCard) {
+        repository.setCurrentCard(currentCard);
     }
 }

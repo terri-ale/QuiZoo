@@ -42,7 +42,7 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_cards, parent, false);
         ViewHolder holder = new ViewHolder(vista);
-        viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ViewModelActivity.class);
+        //viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ViewModelActivity.class);
         return holder;
     }
 
@@ -50,20 +50,27 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
                 holder.tvAnimalName.setText(cardList.get(position).getName());
 
-try {
-    Glide.with(activity)
-            .load(cardList.get(position).getPictureUrl())
-            .placeholder(R.drawable.glidepordefecto)
-            .into(holder.imgAnimal);
+        try {
+            Glide.with(activity)
+                    .load(cardList.get(position).getPictureUrl())
+                    .placeholder(R.drawable.glidepordefecto)
+                    .into(holder.imgAnimal);
         }catch(Exception e){
-         Toast.makeText(activity,"No se ha podido conectar con el servidor, prueba más tarde",Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity,"No se ha podido conectar con el servidor, prueba más tarde",Toast.LENGTH_SHORT).show();
+        }
 
-}
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onEditCardClick(cardList.get(position));
+            }
+        });
 
-                holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+        holder.btPreguntas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                listener.onShowQuestionsClick(cardList.get(position));
             }
         });
     }
