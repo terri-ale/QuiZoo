@@ -29,7 +29,6 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
     private Activity activity;
     private OnCardClickListener listener;
 
-    private ViewModelActivity viewModel;
 
     public AdminCardsAdapter(List<Card> cardList, Activity activity, OnCardClickListener listener) {
         this.cardList = cardList;
@@ -71,7 +70,6 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
             public void onClick(View v) {
 
                 listener.onShowQuestionsClick(cardList.get(position));
-                viewModel.setCurrentCard(cardList.get(position));
             }
         });
     }
