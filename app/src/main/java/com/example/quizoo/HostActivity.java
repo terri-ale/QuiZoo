@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,9 @@ public class HostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host);
+
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.robotboogie);
+        mediaPlayer.start(); // no need to call prepare(); create() does that for you
 
         batteryReceiver = new BatteryReceiver();
 
