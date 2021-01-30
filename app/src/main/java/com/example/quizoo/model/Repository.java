@@ -80,6 +80,7 @@ public class Repository {
 
     private User currentUser;
     private Card currentCard;
+    private Question currentQuestion;
 
     private MutableLiveData<Long> liveUserInsertId = new MutableLiveData<>();
 
@@ -221,6 +222,14 @@ public class Repository {
 
     public void setCurrentCard(Card currentCard) {
         this.currentCard = currentCard;
+    }
+
+    public Question getCurrentQuestion() {
+        return currentQuestion;
+    }
+
+    public void setCurrentQuestion(Question currentQuestion) {
+        this.currentQuestion = currentQuestion;
     }
 
     public void insert(User user) {
@@ -443,12 +452,6 @@ public class Repository {
             }
         }
     }
-
-
-
-
-
-
 
     public void deleteCard(Card card){
         Call<DBResponse> request = cardClient.deleteCard(card.getId());

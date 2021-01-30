@@ -51,6 +51,9 @@ public class GameFragment extends Fragment {
 
     private ArrayList<Card> gameCards;
 
+    TextView tvCount;
+    Display display;
+
     public GameFragment() {
         // Required empty public constructor
     }
@@ -76,6 +79,9 @@ public class GameFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
         TextView tvScore = view.findViewById(R.id.tvGamePuntos);
+
+        display = getActivity().getWindowManager().getDefaultDisplay();
+        tvCount = view.findViewById(R.id.tvCuentaAtras);
         tvInstructions = view.findViewById(R.id.tvInstructionsBeforeGame);
         ImageView ivProfile = view.findViewById(R.id.imgIrAPerfil);
         ivProfile.setImageResource(viewModel.getCurrentUser().getAvatar());
@@ -91,7 +97,7 @@ public class GameFragment extends Fragment {
         beginScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attemptLoadGame();
+                attemptLoadGame(v);
                 //beginScreen.setVisibility(View.GONE);
                 //animacionCarta(view);
             }
@@ -154,7 +160,7 @@ public class GameFragment extends Fragment {
 
 
 
-    private void attemptLoadGame(){
+    private void attemptLoadGame(View v){
 
         ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Cargando", "Estamos cargando las cartas");
 
@@ -199,9 +205,6 @@ public class GameFragment extends Fragment {
 
         for (int i = 0; i < gameCards.size(); i++) {
 
-
-
-
             //for (int j = 0; j < gameCards.get(i).getQuestions().size(); j++) {
             //
             //}
@@ -228,8 +231,6 @@ public class GameFragment extends Fragment {
 
     public void animacionCarta(){
 
-        card = getActivity().findViewById(R.id.CardLayout);
-        TextView tvCount = getActivity().findViewById(R.id.tvCuentaAtras);
         card.setY(2000f);
         card.setVisibility(View.VISIBLE);
 
@@ -237,7 +238,7 @@ public class GameFragment extends Fragment {
         float width;
         float height;
 
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
+
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB_MR1) {  // > API 12
             Point size = new Point();
             display.getSize(size);
