@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/perfilAdminFragment">
+    app:startDestination="@id/chooseUserFragment">
 
     <fragment
         android:id="@+id/adminLoginFragment"
@@ -23,7 +23,8 @@
         android:id="@+id/chooseUserFragment"
         android:name="com.example.quizoo.view.fragment.ChooseUserFragment"
         android:label="fragment_choose_user"
-        tools:layout="@layout/fragment_choose_user" >
+        tools:layout="@layout/fragment_choose_user"
+        app:startDestination="@id/action_chooseUserFragment_to_adminLoginFragment">
         <action
             android:id="@+id/action_chooseUserFragment_to_adminLoginFragment"
             app:destination="@id/adminLoginFragment" />
