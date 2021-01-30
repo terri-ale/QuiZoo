@@ -39,13 +39,13 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-                        holder.tvPregunta.setText(questionList.get(position).getText());
-                        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+        holder.tvPregunta.setText(questionList.get(position).getText());
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                            }
-                        });
+            }
+        });
     }
 
     @Override
