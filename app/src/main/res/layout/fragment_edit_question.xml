@@ -183,7 +183,7 @@
         app:layout_constraintTop_toTopOf="@+id/etRespuesta4" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imgDeleteQuestion"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

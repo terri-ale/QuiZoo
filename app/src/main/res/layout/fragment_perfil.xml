@@ -51,15 +51,14 @@
             android:id="@+id/imgEnviarCorreo"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="TODO"
             android:foregroundGravity="center"
             android:src="@drawable/email"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toTopOf="@+id/guideline8"
-            android:contentDescription="TODO" />
+            app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline6"
@@ -101,17 +100,15 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="3dp"
+            android:contentDescription="TODO"
             android:src="@drawable/icon_anciano"
             app:layout_constraintBottom_toTopOf="@+id/tvUserProfile"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toTopOf="@+id/guideline2"
-            app:layout_constraintVertical_bias="1.0"
-            android:contentDescription="TODO" />
+            app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
         <TextView
             android:id="@+id/tvUserProfile"
@@ -127,9 +124,25 @@
             android:textSize="64sp"
             app:layout_constraintBottom_toTopOf="@+id/tvPuntosProfile"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+        <com.airbnb.lottie.LottieAnimationView
+
+            android:id="@+id/logOut"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvTitleProfile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="logout.json"
+            app:lottie_imageAssetsFolder="assets"
+            app:lottie_loop="true" />
+
 
         <TextView
             android:id="@+id/tvPuntosProfile"
