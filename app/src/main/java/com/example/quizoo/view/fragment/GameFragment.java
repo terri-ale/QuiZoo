@@ -192,7 +192,7 @@ public class GameFragment extends Fragment {
     private void gameLoop(){
 
         Log.v("xyzyx", "ANIMANDO");
-        animacionCarta(getView());
+        animacionCarta();
 
         Log.v("xyzyx", "ANIMANDO 2");
 
@@ -226,10 +226,10 @@ public class GameFragment extends Fragment {
     }
 
 
-    public void animacionCarta(View v){
+    public void animacionCarta(){
 
-         card = v.findViewById(R.id.CardLayout);
-        TextView tvCount = v.findViewById(R.id.tvCuentaAtras);
+        card = getActivity().findViewById(R.id.CardLayout);
+        TextView tvCount = getActivity().findViewById(R.id.tvCuentaAtras);
         card.setY(2000f);
         card.setVisibility(View.VISIBLE);
 
