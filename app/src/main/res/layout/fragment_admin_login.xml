@@ -67,6 +67,8 @@
             android:id="@+id/tvExplicacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:gravity="center"
             android:text="@string/tv_login_admin"
             android:textColor="#000000"
@@ -147,7 +149,7 @@
     <TextView
         android:id="@+id/tvTitleAdminLogin"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/brightons"
         android:gravity="center"
