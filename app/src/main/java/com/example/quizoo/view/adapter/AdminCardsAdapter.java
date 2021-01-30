@@ -71,6 +71,7 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
             public void onClick(View v) {
 
                 listener.onShowQuestionsClick(cardList.get(position));
+                viewModel.setCurrentCard(cardList.get(position));
             }
         });
     }

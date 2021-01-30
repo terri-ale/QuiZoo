@@ -99,7 +99,7 @@ public class GameFragment extends Fragment {
             public void onClick(View v) {
                 attemptLoadGame(v);
                 //beginScreen.setVisibility(View.GONE);
-                //animacionCarta(view);
+                //animacionCarta();
             }
         });
 
@@ -145,17 +145,6 @@ public class GameFragment extends Fragment {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -177,14 +166,15 @@ public class GameFragment extends Fragment {
                     tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
                 }else{
                     gameCards = cards;
-                    beginScreen.setVisibility(View.GONE);
-                    Log.v("xyzyx CARGADAS", cards.toString());
-                    gameLoop();
+
                 }
 
-
             }
+
         });
+        beginScreen.setVisibility(View.GONE);
+        //Log.v("xyzyx CARGADAS", cards.toString());
+        gameLoop();
 
 
         //Este método carga en MutableLiveData las cartas.
@@ -203,12 +193,12 @@ public class GameFragment extends Fragment {
         Log.v("xyzyx", "ANIMANDO 2");
 
 
-        for (int i = 0; i < gameCards.size(); i++) {
+        //for (int i = 0; i < gameCards.size(); i++) {
 
             //for (int j = 0; j < gameCards.get(i).getQuestions().size(); j++) {
             //
             //}
-        }
+        //}
     }
 
 
@@ -234,10 +224,8 @@ public class GameFragment extends Fragment {
         card.setY(2000f);
         card.setVisibility(View.VISIBLE);
 
-
         float width;
         float height;
-
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB_MR1) {  // > API 12
             Point size = new Point();
@@ -287,9 +275,6 @@ public class GameFragment extends Fragment {
     }
 
     public void initGame(View v){
-
-
-
 
 
     }
