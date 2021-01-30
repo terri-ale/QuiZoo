@@ -123,11 +123,31 @@
         app:layout_constraintTop_toTopOf="@+id/guideline29">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/questionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="96dp"
+            android:background="@drawable/roundedcorners"
+            android:backgroundTint="#ECE4DA"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintStart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#B23C3C3C"
             android:clickable="true"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -170,7 +190,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.833"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <TextView
                 android:id="@+id/tvAnimal"
