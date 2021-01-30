@@ -80,7 +80,7 @@ public class GameFragment extends Fragment {
         ImageView ivProfile = view.findViewById(R.id.imgIrAPerfil);
         ivProfile.setImageResource(viewModel.getCurrentUser().getAvatar());
          card = view.findViewById(R.id.CardLayout);
-         card.setVisibility(View.INVISIBLE);
+         card.setVisibility(View.GONE);
 
 
 
@@ -248,11 +248,15 @@ public class GameFragment extends Fragment {
             width   = display.getWidth();
             height  = display.getHeight();
         }
-        card.setX(width/7);
+        card.setX((width/2f)-(width/2f));
         card.setY(height);
-        ObjectAnimator animation = ObjectAnimator.ofFloat(card, "translationY", height/30f);
+        float halfCard = (height/2f);
+
+        ObjectAnimator animation = ObjectAnimator.ofFloat(card, "translationY", (height/2f)-halfCard);
         animation.setDuration(2000);
         animation.start();
+
+
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
