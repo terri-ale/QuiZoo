@@ -24,15 +24,19 @@
     <TextView
         android:id="@+id/tvWhoPlays"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/roundedcorners"
         android:backgroundTint="#E6F6F6F6"
         android:fontFamily="@font/brightons"
+        android:foregroundGravity="center"
+        android:gravity="center"
         android:padding="10sp"
         android:text="¿Quién va a jugar?"
         android:textColor="#000000"
         android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline73"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,4 +98,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline73"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="243dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
