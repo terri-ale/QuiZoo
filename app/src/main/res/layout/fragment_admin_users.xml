@@ -98,12 +98,13 @@
         android:src="@android:drawable/ic_input_add"
         android:tint="#FFFFFF"
         app:backgroundTint="#8F3636"
-        app:layout_constraintBottom_toTopOf="@+id/guideline61"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout7"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="#FFFFFF" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
