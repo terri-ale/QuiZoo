@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiCardCreation"
+        android:id="@+id/tiCardName"
         android:layout_width="312dp"
         android:layout_height="0dp"
         android:layout_marginStart="40dp"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar3">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etAgregarCarta"
+            android:id="@+id/etCardName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/roundedcorners"
@@ -42,18 +42,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiDescripCreation"
+        android:id="@+id/tiCardDescription"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:hint="@string/string_animal_description"
         app:layout_constraintBottom_toTopOf="@+id/guideline52"
-        app:layout_constraintEnd_toEndOf="@+id/tiCardCreation"
-        app:layout_constraintStart_toStartOf="@+id/tiCardCreation"
-        app:layout_constraintTop_toBottomOf="@+id/tiCardCreation">
+        app:layout_constraintEnd_toEndOf="@+id/tiCardName"
+        app:layout_constraintStart_toStartOf="@+id/tiCardName"
+        app:layout_constraintTop_toBottomOf="@+id/tiCardName">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etAgregarDescrip"
+            android:id="@+id/etCardDescription"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/roundedcorners"
@@ -71,7 +71,7 @@
         app:layout_constraintGuide_begin="323dp" />
 
     <Button
-        android:id="@+id/btElgirFoto"
+        android:id="@+id/btChoosePicture"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -81,12 +81,12 @@
         android:backgroundTint="#8F3636"
         android:text="Elegir Foto"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imgFotoCrearCarta"
-        app:layout_constraintStart_toStartOf="@+id/imgFotoCrearCarta"
+        app:layout_constraintEnd_toEndOf="@+id/imgPreview"
+        app:layout_constraintStart_toStartOf="@+id/imgPreview"
         app:layout_constraintTop_toTopOf="@+id/guideline52" />
 
     <ImageView
-        android:id="@+id/imgFotoCrearCarta"
+        android:id="@+id/imgPreview"
         android:layout_width="261dp"
         android:layout_height="240dp"
         android:layout_marginTop="24dp"
@@ -119,7 +119,7 @@
         app:layout_constraintGuide_begin="32dp" />
 
     <Button
-        android:id="@+id/btGuardarCarta"
+        android:id="@+id/btCreateUpdateCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"

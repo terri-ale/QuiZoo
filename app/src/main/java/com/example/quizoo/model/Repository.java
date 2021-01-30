@@ -2,6 +2,8 @@ package com.example.quizoo.model;
 
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 
 import android.content.Intent;
@@ -14,8 +16,11 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.room.Query;
 
 import com.example.quizoo.model.dao.UserDao;
@@ -26,6 +31,8 @@ import com.example.quizoo.rest.client.CardClient;
 import com.example.quizoo.rest.client.QuestionClient;
 import com.example.quizoo.rest.pojo.Card;
 import com.example.quizoo.rest.pojo.DBResponse;
+import com.example.quizoo.rest.pojo.Question;
+import com.example.quizoo.util.OnDBResponseListener;
 import com.example.quizoo.util.ThreadPool;
 
 import java.io.File;
@@ -43,6 +50,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Repository {
+
+    private OnDBResponseListener responseListener;
 
     private Context context;
     private UserDao userDao;
@@ -62,6 +71,7 @@ public class Repository {
 
     private LiveData<List<User>> liveUserList;
     private MutableLiveData<ArrayList<Card>> liveCards;
+    private MutableLiveData<ArrayList<Question>> liveQuestions;
 
     private MutableLiveData<DBResponse> liveResponse;
 
@@ -69,6 +79,7 @@ public class Repository {
     public final static int SCORE_MULTIPLIER = 10;
 
     private User currentUser;
+    private Card currentCard;
 
     private MutableLiveData<Long> liveUserInsertId = new MutableLiveData<>();
 
@@ -78,6 +89,7 @@ public class Repository {
         userDao = db.getUserDao();
         liveUserList = userDao.getAll();
 
+        liveQuestions = new MutableLiveData<>();
         liveCards = new MutableLiveData<>();
         liveResponse = new MutableLiveData<>();
         retrofit = new Retrofit.Builder()
@@ -86,7 +98,12 @@ public class Repository {
                 .build();
         cardClient = retrofit.create(CardClient.class);
         questionClient = retrofit.create(QuestionClient.class);
+
+
+
     }
+
+    public void setResponseListener(OnDBResponseListener listener){ this.responseListener = listener; }
 
     public LiveData<List<User>> getLiveUserList(){
         return liveUserList;
@@ -99,7 +116,10 @@ public class Repository {
         return liveCards;
     }
 
-    public MutableLiveData<DBResponse> getLiveResponse() { return liveResponse; }
+    public LiveData<DBResponse> getLiveResponse() {
+
+        return liveResponse;
+    }
 
 
 
@@ -193,6 +213,14 @@ public class Repository {
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
+    }
+
+    public Card getCurrentCard() {
+        return currentCard;
+    }
+
+    public void setCurrentCard(Card currentCard) {
+        this.currentCard = currentCard;
     }
 
     public void insert(User user) {
@@ -297,19 +325,24 @@ public class Repository {
 
 
 
+
+
     private void addCard(Card card){
         Call<DBResponse> request = cardClient.addCard(card);
 
         request.enqueue(new Callback<DBResponse>() {
             @Override
             public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
-                liveResponse.setValue(response.body());
-
+                //liveResponse.postValue(response.body());
+                //liveResponse.
+                if(response.body().getResult()) responseListener.onSuccess(response.body());
+                else responseListener.onFailed();
             }
 
             @Override
             public void onFailure(Call<DBResponse> call, Throwable t) {
-                liveResponse.setValue(null);
+                //liveResponse.setValue(null);
+                responseListener.onFailed();
             }
         });
     }
@@ -353,4 +386,104 @@ public class Repository {
         }
 
     }
+
+
+    private void updateCard(Card card){
+        Call<DBResponse> request = cardClient.updateCard(card.getId(), card);
+
+        request.enqueue(new Callback<DBResponse>() {
+            @Override
+            public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
+                //liveResponse.setValue(response.body());
+                //Log.v("xyzyx", "RESPONSE UPDATE CARD");
+                responseListener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<DBResponse> call, Throwable t) {
+                //liveResponse.setValue(null);
+                responseListener.onFailed();
+            }
+        });
+    }
+
+
+    public void updateCard(Uri imageUri, Card card){
+        if(imageUri == null){
+            updateCard(card);
+        }else {
+            if (storagePermissionIsGranted()) {
+                File imageFile = getFileFromUri(imageUri);
+                RequestBody requestFile =
+                        RequestBody.create(
+                                MediaType.parse(context.getContentResolver().getType(imageUri)),
+                                imageFile
+                        );
+
+                MultipartBody.Part body =
+                        MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
+
+                Call<DBResponse> request = cardClient.saveImage(body);
+
+                request.enqueue(new Callback<DBResponse>() {
+                    @Override
+                    public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
+                        if (response.body() != null && response.body().getResult() == true) {
+                            card.setPictureUrl(response.body().getUrl());
+                        }
+                        updateCard(card);
+                    }
+
+                    @Override
+                    public void onFailure(Call<DBResponse> call, Throwable t) {
+                        //Si ha fallado subir la imagen al servidor, se sube sin imagen
+                        updateCard(card);
+                    }
+
+                });
+            }
+        }
+    }
+
+
+
+
+
+
+
+    public void deleteCard(Card card){
+        Call<DBResponse> request = cardClient.deleteCard(card.getId());
+
+        request.enqueue(new Callback<DBResponse>() {
+            @Override
+            public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
+                //liveResponse.setValue(response.body());
+                responseListener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<DBResponse> call, Throwable t) {
+                //liveResponse.setValue(null);
+                responseListener.onFailed();
+            }
+        });
+    }
+
+
+    public void getQuestionsOf(Card card){
+        Call<ArrayList<Question>> request = questionClient.getQuestionsOf(card.getId());
+
+        request.enqueue(new Callback<ArrayList<Question>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Question>> call, Response<ArrayList<Question>> response) {
+                liveQuestions.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Question>> call, Throwable t) {
+                liveQuestions.setValue(null);
+            }
+        });
+    }
+
 }

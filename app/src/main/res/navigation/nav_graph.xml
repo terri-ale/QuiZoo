@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/perfilAdminFragment">
+    app:startDestination="@id/chooseUserFragment">
 
     <fragment
         android:id="@+id/adminLoginFragment"
@@ -133,6 +133,9 @@
         <action
             android:id="@+id/action_adminCardsFragment_to_perfilAdminFragment"
             app:destination="@id/perfilAdminFragment" />
+        <action
+            android:id="@+id/action_adminCardsFragment_to_editCardFragment"
+            app:destination="@id/editCardFragment" />
     </fragment>
 
 
@@ -163,6 +166,10 @@
         android:name="com.example.quizoo.view.fragment.CreateQuestionFragment"
         android:label="fragment_create_question"
         tools:layout="@layout/fragment_create_question" />
+    <fragment
+        android:id="@+id/editCardFragment"
+        android:name="com.example.quizoo.view.fragment.EditCardFragment"
+        android:label="EditCardFragment" />
 
 
 </navigation>

@@ -1,6 +1,7 @@
 package com.example.quizoo.view.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -23,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.quizoo.R;
 import com.example.quizoo.model.Repository;
-import com.example.quizoo.rest.pojo.Card;
 import com.example.quizoo.rest.pojo.DBResponse;
 import com.example.quizoo.util.OnDBResponseListener;
 import com.example.quizoo.viewmodel.ViewModelActivity;
@@ -32,102 +32,155 @@ import com.google.android.material.textfield.TextInputLayout;
 import static android.app.Activity.RESULT_OK;
 
 
-public class CreateCardsFragment extends Fragment implements View.OnClickListener, OnDBResponseListener{
+public class EditCardFragment extends Fragment implements View.OnClickListener, OnDBResponseListener {
 
     private static final int INTENT_IMAGE_CODE = 100;
-    private Uri imageUri = null;
 
     private ViewModelActivity viewModel;
 
-    ProgressDialog progressDialog;
+    private Context context;
 
-    Button btCreateUpdateCard;
+    private Uri imageUri = null;
+
+    private TextInputLayout tiCardName;
+    private TextInputLayout tiCardDescription;
 
 
-    public CreateCardsFragment() {
-        // Required empty public constructor
-    }
+    private Button btCreateUpdateCard;
+    private ImageView btDeleteCard;
+
+
+
+
+    private ProgressDialog progressDialog;
+
+
+
+    public EditCardFragment() { }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
-
+        //progressDialog = new ProgressDialog(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_cards, container, false);
+        return inflater.inflate(R.layout.fragment_edit_card, container, false);
     }
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
 
-        //viewModel.getLiveResponse().observe(getViewLifecycleOwner(), this);
+        context = getContext();
 
-        viewModel.setResponseListener(this);
+        tiCardName = view.findViewById(R.id.tiCardName);
+        tiCardDescription = view.findViewById(R.id.tiCardDescription);
+        btCreateUpdateCard = view.findViewById(R.id.btCreateUpdateCard);
+        btDeleteCard = view.findViewById(R.id.imgDeleteCard);
 
 
         setUI();
     }
 
+
     private void setUI(){
+        tiCardName.getEditText().setText(viewModel.getCurrentCard().getName());
+        tiCardDescription.getEditText().setText(viewModel.getCurrentCard().getDescription());
+
+        btCreateUpdateCard.setOnClickListener(this);
+        btDeleteCard.setOnClickListener(this);
+
+        getView().findViewById(R.id.btBackFromCreateEditCard).setOnClickListener(this);
+
+        viewModel.setResponseListener(this);
+
         getView().findViewById(R.id.btChoosePicture).setOnClickListener(this);
 
-        btCreateUpdateCard = getView().findViewById(R.id.btCreateUpdateCard);
-        btCreateUpdateCard.setOnClickListener(this);
     }
 
 
 
-    private void attemptAddCard(){
+    private void attemptEditCard(){
         //As soon as the user presses the button, the ClickListener is removed so it can't be pressed
         //twice, avoiding errors or duplicates at the DB.
         btCreateUpdateCard.setOnClickListener(null);
 
-        TextInputLayout tiName = getView().findViewById(R.id.tiCardName);
-        String name = tiName.getEditText().getText().toString();
-        TextInputLayout tiDescription = getView().findViewById(R.id.tiCardDescription);
-        String description = tiDescription.getEditText().getText().toString();
+        String name = tiCardName.getEditText().getText().toString();
+        String description = tiCardDescription.getEditText().getText().toString();
+
 
         if(name.isEmpty() || description.isEmpty()){
             Toast.makeText(getContext(), getContext().getString(R.string.warning_empty_fields), Toast.LENGTH_SHORT).show();
         }else{
-            progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.string_adding_card), "", true, false);
+            progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.string_updating_card), "", true, false);
+            viewModel.getCurrentCard().setName(name);
+            viewModel.getCurrentCard().setDescription(description);
 
-            Card card = new Card(name, description);
 
-            viewModel.addCard(imageUri, card);
+            viewModel.updateCard(imageUri, viewModel.getCurrentCard());
         }
     }
+
+
+
+    private void attemptDeleteCard() {
+        btDeleteCard.setOnClickListener(null);
+
+        progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.string_deleting_card), "", true, false);
+
+        viewModel.deleteCard(viewModel.getCurrentCard());
+    }
+
 
 
     @Override
     public void onSuccess(DBResponse response) {
         progressDialog.dismiss();
-        NavHostFragment.findNavController(CreateCardsFragment.this).popBackStack();
-        Toast.makeText(getContext(), getContext().getString(R.string.message_card_added_successfully), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getContext().getString(R.string.message_changes_successfully_applied), Toast.LENGTH_SHORT).show();
+        NavHostFragment.findNavController(EditCardFragment.this).popBackStack();
     }
 
     @Override
     public void onFailed() {
         progressDialog.dismiss();
-        btCreateUpdateCard.setOnClickListener(CreateCardsFragment.this);
-        Toast.makeText(getContext(), getContext().getString(R.string.warning_card_not_added), Toast.LENGTH_SHORT).show();
+        btCreateUpdateCard.setOnClickListener(EditCardFragment.this);
+        Toast.makeText(getContext(), getContext().getString(R.string.warning_changes_not_applied), Toast.LENGTH_SHORT).show();
     }
 
 
 
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btBackFromCreateEditCard:
+                NavHostFragment.findNavController(EditCardFragment.this).popBackStack();
+                break;
+
+            case R.id.btCreateUpdateCard:
+                attemptEditCard();
+                break;
+
+            case R.id.imgDeleteCard:
+                attemptDeleteCard();
+                break;
+
+            case R.id.btChoosePicture:
+                chooseImage();
+                break;
+        }
+    }
 
 
-    //LLAMAR A ESTE MÉTODO DESDE EL BOTÓN DE SELECCIONAR IMAGEN
+
+
     private void chooseImage(){
         if(viewModel.storagePermissionIsGranted()) {
             Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
@@ -145,8 +198,8 @@ public class CreateCardsFragment extends Fragment implements View.OnClickListene
             imageUri = data.getData();
 
             //PONER EL IMAGEVIEW DE PREVISUALIZACION CON LA URI
-            ImageView imgPreview = getView().findViewById(R.id.imgPreview);
-            imgPreview.setImageURI(imageUri);
+            ImageView ivPreview = getView().findViewById(R.id.imgPreview);
+            ivPreview.setImageURI(imageUri);
 
 
         }
@@ -172,24 +225,6 @@ public class CreateCardsFragment extends Fragment implements View.OnClickListene
         if(grantedCounter==permissions.length){ chooseImage(); }
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btBackFromCreateEditCard:
-                NavHostFragment.findNavController(CreateCardsFragment.this).popBackStack();
-                break;
-
-            case R.id.btCreateUpdateCard:
-                attemptAddCard();
-                break;
-
-            case R.id.btChoosePicture:
-                chooseImage();
-                break;
-
-        }
-    }
 
 
 }

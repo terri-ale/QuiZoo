@@ -1,9 +1,12 @@
 package com.example.quizoo.view.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quizoo.R;
@@ -35,6 +39,12 @@ public class AdminCardsFragment extends Fragment {
 
     private ViewModelActivity viewModel;
     private List<Card> cardList = new ArrayList<>();
+    private ProgressDialog progressDialog;
+    private AdminCardsAdapter adapter;
+
+    private ConstraintLayout constraintWarning;
+    private TextView tvWarning;
+
 
     public AdminCardsFragment() {
         // Required empty public constructor
@@ -80,44 +90,89 @@ public class AdminCardsFragment extends Fragment {
             }
         });
 
+        constraintWarning = view.findViewById(R.id.constraintWarning);
+        tvWarning = view.findViewById(R.id.tvWarning);
+
+
+        constraintWarning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("xyzyx", "REINTENTAR");
+                attemptLoadCards();
+            }
+        });
 
         init();
+
+    }
+
+
+
+    private void setUI(){
 
     }
 
     private void init() {
 
         RecyclerView recyclerView = getView().findViewById(R.id.rvCards);
-        AdminCardsAdapter adapter = new AdminCardsAdapter(cardList, getActivity(), new OnCardClickListener() {
+        adapter = new AdminCardsAdapter(cardList, getActivity(), new OnCardClickListener() {
             @Override
             public void onShowQuestionsClick(Card card) {
-
+                viewModel.setCurrentCard(card);
+                NavHostFragment.findNavController(AdminCardsFragment.this)
+                        .navigate(R.id.action_adminCardsFragment_to_adminQuestionsFragment);
             }
 
             @Override
             public void onEditCardClick(Card card) {
-
+                viewModel.setCurrentCard(card);
+                NavHostFragment.findNavController(AdminCardsFragment.this)
+                        .navigate(R.id.action_adminCardsFragment_to_editCardFragment);
             }
         });
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        viewModel.getLiveCards().observe(getViewLifecycleOwner(), new Observer<ArrayList<Card>>() {
+        attemptLoadCards();
+
+        getView().findViewById(R.id.fabAddCard).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(AdminCardsFragment.this).navigate(R.id.action_adminCardsFragment_to_createCardsFragment);
+            }
+        });
+
+    }
+
+
+
+
+    private void attemptLoadCards(){
+        progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.string_loading), "", false);
+
+        viewModel.getLiveCards().observe((AppCompatActivity)getContext(), new Observer<ArrayList<Card>>() {
             @Override
             public void onChanged(ArrayList<Card> cards) {
 
+                progressDialog.dismiss();
 
                 if(cards == null){
                     //ERROR - INTERNET
-
+                    constraintWarning.setVisibility(View.VISIBLE);
+                    tvWarning.setText(getContext().getString(R.string.warning_cards_not_retrieved));
+                    //Toast.makeText(getContext(), getContext().getString(R.string.warning_cards_not_retrieved), Toast.LENGTH_SHORT).show();
                     Log.v("xyzyx", "NO INTERNET ");
-                     Toast.makeText(getActivity(),"Algo fue mal, inténtalo más tarde",Toast.LENGTH_LONG).show();
                 }else if(cards.size() == 0){
                     //NO HAY CARTAS
+                    constraintWarning.setVisibility(View.VISIBLE);
+                    tvWarning.setText(getContext().getString(R.string.warning_no_cards_yet));
+                    //Toast.makeText(getContext(), getContext().getString(R.string.warning_no_cards_yet), Toast.LENGTH_SHORT).show();
                     Log.v("xyzyx", "NO CARGADAS ");
                 }else{
+                    //viewModel.getLiveCards().removeObservers((AppCompatActivity)getContext());
                     Log.v("xyzyx", "CARGADAS "+cards.toString());
+                    constraintWarning.setVisibility(View.GONE);
                     cardList.clear();
                     cardList.addAll(cards);
                     adapter.notifyDataSetChanged();
@@ -129,14 +184,7 @@ public class AdminCardsFragment extends Fragment {
 
 
         viewModel.loadCards();
-
-
-
-
-
-
     }
-
 
 
 
