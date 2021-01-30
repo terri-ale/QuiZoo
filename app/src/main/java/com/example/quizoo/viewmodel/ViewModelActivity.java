@@ -13,6 +13,7 @@ import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.rest.pojo.Card;
 import com.example.quizoo.rest.pojo.DBResponse;
+import com.example.quizoo.rest.pojo.Question;
 import com.example.quizoo.util.OnDBResponseListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -152,5 +153,13 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
 
     public void setCurrentCard(Card currentCard) {
         repository.setCurrentCard(currentCard);
+    }
+
+    public Question getCurrentQuestion() {
+        return repository.getCurrentQuestion();
+    }
+
+    public void setCurrentQuestion(Question currentQuestion) {
+        repository.setCurrentQuestion(currentQuestion);
     }
 }
