@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -43,7 +44,10 @@ import static android.text.Html.FROM_HTML_MODE_LEGACY;
 
 
 public class GameFragment extends Fragment {
-    ConstraintLayout card ;
+    ConstraintLayout card;
+    ConstraintLayout pregunta1;
+    ConstraintLayout pregunta2;
+
     private ViewModelActivity viewModel;
 
     ConstraintLayout beginScreen;
@@ -63,6 +67,9 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
+        viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
+
 
     }
 
@@ -76,7 +83,7 @@ public class GameFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
+
 
         TextView tvScore = view.findViewById(R.id.tvGamePuntos);
 
@@ -88,6 +95,11 @@ public class GameFragment extends Fragment {
          card = view.findViewById(R.id.CardLayout);
          card.setVisibility(View.GONE);
 
+         pregunta1 = view.findViewById(R.id.questionLayout1);
+         pregunta1.setVisibility(View.GONE);
+         pregunta2 = view.findViewById(R.id.questionLayout2);
+         pregunta2.setVisibility(View.GONE);
+
 
 
         beginScreen = view.findViewById(R.id.constraintStart);
@@ -98,8 +110,6 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 attemptLoadGame(v);
-                //beginScreen.setVisibility(View.GONE);
-                //animacionCarta();
             }
         });
 
@@ -153,7 +163,7 @@ public class GameFragment extends Fragment {
 
         ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Cargando", "Estamos cargando las cartas");
 
-        viewModel.getLiveCards().observe(getActivity(), new Observer<ArrayList<Card>>() {
+        viewModel.getLiveCards().observe((AppCompatActivity) getContext(), new Observer<ArrayList<Card>>() {
             @Override
             public void onChanged(ArrayList<Card> cards) {
                 progressDialog.dismiss();
@@ -166,15 +176,14 @@ public class GameFragment extends Fragment {
                     tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
                 }else{
                     gameCards = cards;
-
+                    beginScreen.setVisibility(View.GONE);
+                    gameLoop();
                 }
 
             }
 
         });
-        beginScreen.setVisibility(View.GONE);
-        //Log.v("xyzyx CARGADAS", cards.toString());
-        gameLoop();
+
 
 
         //Este método carga en MutableLiveData las cartas.
@@ -187,18 +196,60 @@ public class GameFragment extends Fragment {
 
     private void gameLoop(){
 
-        Log.v("xyzyx", "ANIMANDO");
+        for (int i = 0; i <gameCards.size() ; i++) {
+
+            nextCard(gameCards.get(i));
+
+        }
+    }
+
+
+    public void nextCard(Card carta){
+        float width;
+        Point size = new Point();
+        display.getSize(size);
+        width = size.x;
+        final Handler handler = new Handler();
+        ObjectAnimator animation1 = ObjectAnimator.ofFloat(pregunta1, "translationX", (width/2f)-(width/2f));
+        animation1.setDuration(2000);
+
+        ObjectAnimator animation2 = ObjectAnimator.ofFloat(pregunta2, "translationX", (width/2f)-(width/2f));
+        animation2.setDuration(2000);
+
         animacionCarta();
 
-        Log.v("xyzyx", "ANIMANDO 2");
+        pregunta1.setX(width);
+        pregunta2.setX(width);
+
+        pregunta1.setVisibility(View.VISIBLE);
+        pregunta2.setVisibility(View.VISIBLE);
 
 
-        //for (int i = 0; i < gameCards.size(); i++) {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+             for (int i = 0; i < carta.getQuestions().size(); i++) {
 
-            //for (int j = 0; j < gameCards.get(i).getQuestions().size(); j++) {
-            //
-            //}
-        //}
+                    //Si es par
+                    if(i%2==0){
+                        Log.v("xyzyx",carta.getQuestions().get(i).toString());
+                        animation2.start();
+
+
+                    }else{
+                        animation1.start();
+
+                    }
+
+                }
+
+            }
+        }, 14000);
+
+
+
+
+
     }
 
 
@@ -221,23 +272,20 @@ public class GameFragment extends Fragment {
 
     public void animacionCarta(){
 
-        card.setY(2000f);
+
         card.setVisibility(View.VISIBLE);
 
         float width;
         float height;
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB_MR1) {  // > API 12
             Point size = new Point();
             display.getSize(size);
 
             width = size.x;
             height = size.y;
-        } else {
-            width   = display.getWidth();
-            height  = display.getHeight();
-        }
+
         card.setX((width/2f)-(width/2f));
+
         card.setY(height);
         float halfCard = (height/2f);
 

@@ -123,21 +123,262 @@
         app:layout_constraintTop_toTopOf="@+id/guideline29">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/questionLayout"
+            android:id="@+id/questionLayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="36dp"
             android:layout_marginTop="72dp"
             android:layout_marginEnd="36dp"
-            android:layout_marginBottom="96dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/roundedcorners"
             android:backgroundTint="#ECE4DA"
             android:elevation="4dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:visibility="visible">
+
+            <RadioGroup
+                android:id="@+id/radiogroup1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPregunta1"
+                tools:visibility="visible">
+
+                <RadioButton
+                    android:id="@+id/respuestaA1"
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/radiobutton"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/baloo"
+                    android:paddingStart="25dp"
+                    android:text="RadioButton"
+                    android:textColor="#DADADA"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/respuestaB1"
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/radiobutton"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/baloo"
+                    android:paddingStart="25dp"
+                    android:text="RadioButton"
+                    android:textColor="#DADADA"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/respuestaC1"
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/radiobutton"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/baloo"
+                    android:paddingStart="25dp"
+                    android:text="RadioButton"
+                    android:textColor="#DADADA"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/respuestaD1"
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radiobutton"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/baloo"
+                    android:paddingStart="25dp"
+                    android:text="RadioButton"
+                    android:textColor="#DADADA"
+                    android:textSize="18sp" />
+
+            </RadioGroup>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline74"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="96dp" />
+
+            <TextView
+                android:id="@+id/tvNumPregunta1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/baloo"
+                android:text="0/0"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline74"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPregunta1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="@font/baloo"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline77"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline74" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline77"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="274dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/questionLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/roundedcorners"
+            android:backgroundTint="#ECE4DA"
+            android:elevation="4dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
+
+            <RadioGroup
+                android:id="@+id/radiogroup2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPregunta2">
+
+                <RadioButton
+                    android:id="@+id/respuestaA2"
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/radiobutton"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/baloo"
+                    android:paddingStart="25dp"
+                    android:text="RadioButton"
+                    android:textColor="#DADADA"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/respuestaB2"
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/radiobutton"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/baloo"
+                    android:paddingStart="25dp"
+                    android:text="RadioButton"
+                    android:textColor="#DADADA"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/respuestaC2"
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/radiobutton"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/baloo"
+                    android:paddingStart="25dp"
+                    android:text="RadioButton"
+                    android:textColor="#DADADA"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/respuestaD2"
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radiobutton"
+                    android:button="@android:color/transparent"
+                    android:fontFamily="@font/baloo"
+                    android:paddingStart="25dp"
+                    android:text="RadioButton"
+                    android:textColor="#DADADA"
+                    android:textSize="18sp" />
+
+            </RadioGroup>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="96dp" />
+
+            <TextView
+                android:id="@+id/tvNumPregunta2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/baloo"
+                android:text="0/0"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline75"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPregunta2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="@font/baloo"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline78"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline75" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline78"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="274dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
