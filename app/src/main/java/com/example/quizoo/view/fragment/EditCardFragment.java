@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,9 +108,6 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
 
 
     private void attemptEditCard(){
-        //As soon as the user presses the button, the ClickListener is removed so it can't be pressed
-        //twice, avoiding errors or duplicates at the DB.
-        btCreateUpdateCard.setOnClickListener(null);
 
         String name = tiCardName.getEditText().getText().toString();
         String description = tiCardDescription.getEditText().getText().toString();
@@ -118,6 +116,10 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
         if(name.isEmpty() || description.isEmpty()){
             Toast.makeText(getContext(), getContext().getString(R.string.warning_empty_fields), Toast.LENGTH_SHORT).show();
         }else{
+            //As soon as the user presses the button, the ClickListener is removed so it can't be pressed
+            //twice, avoiding errors or duplicates at the DB.
+            btCreateUpdateCard.setOnClickListener(null);
+
             progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.string_updating_card), "", true, false);
             viewModel.getCurrentCard().setName(name);
             viewModel.getCurrentCard().setDescription(description);
@@ -131,9 +133,7 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
 
     private void attemptDeleteCard() {
         btDeleteCard.setOnClickListener(null);
-
         progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.string_deleting_card), "", true, false);
-
         viewModel.deleteCard(viewModel.getCurrentCard());
     }
 
@@ -149,8 +149,10 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onFailed() {
         progressDialog.dismiss();
-        btCreateUpdateCard.setOnClickListener(EditCardFragment.this);
         Toast.makeText(getContext(), getContext().getString(R.string.warning_changes_not_applied), Toast.LENGTH_SHORT).show();
+        btCreateUpdateCard.setOnClickListener(EditCardFragment.this);
+        btDeleteCard.setOnClickListener(EditCardFragment.this);
+
     }
 
 
