@@ -275,9 +275,8 @@ public class Repository {
 
         String title = "Mandar este email con...";
 
-        Intent chooser = Intent.createChooser(emailIntent, title);
         if(emailIntent.resolveActivity(context.getPackageManager()) != null){
-            context.startActivity(chooser);
+            context.startActivity(Intent.createChooser(emailIntent, title).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
 

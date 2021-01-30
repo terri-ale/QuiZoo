@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 public class ContactsFragment extends Fragment {
 
     private ViewModelActivity viewModel;
+    ConstraintLayout mensajeNoContactos;
 
     public ContactsFragment() {
         // Required empty public constructor
@@ -54,7 +56,8 @@ public class ContactsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
-
+      mensajeNoContactos = getActivity().findViewById(R.id.mensajeNoContactos);
+      mensajeNoContactos.setVisibility(View.GONE);
 
         ImageButton btBackFromContacts = getView().findViewById(R.id.btBackFromContacts);
         btBackFromContacts.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +137,9 @@ public class ContactsFragment extends Fragment {
         //Advertencia de que no hay contactos con correo todavía.
         //Coger de strings.xml la advertencia de "Sin contactos"
         //Jugar con Visibility VISIBLE y Visibility GONE
+
+
+        mensajeNoContactos.setVisibility(View.VISIBLE);
     }
 
 
