@@ -131,6 +131,15 @@ public class Repository {
 
     }
 
+    public void sumUserResponses(long id){
+        ThreadPool.threadExecutorPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                userDao.sumUserResponses(id);
+            }
+        });
+    }
+
     public User getCurrentUser() {
         return currentUser;
     }
@@ -255,6 +264,7 @@ public class Repository {
             context.startActivity(Intent.createChooser(emailIntent, title).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
+
 
     /* ---- OBTENCIÓN Y ASIGNACIÓN DE CARTAS Y PREGUNTAS GLOBALES ---- */
 

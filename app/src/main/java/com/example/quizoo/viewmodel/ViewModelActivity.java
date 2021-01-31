@@ -65,6 +65,8 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
         repository.sumUserScore(id);
     }
 
+    public void sumUserResponses(long id) { repository.sumUserResponses(id); }
+
     public boolean contactsPermissionIsGranted() {
         return repository.contactsPermissionIsGranted();
     }

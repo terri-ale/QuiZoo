@@ -64,6 +64,7 @@
     <string name="string_no">No</string>
     <string name="string_yes">Si</string>
     <string name="dialog_confirm_exit">¿Seguro que quieres salir del juego?</string>
+    <string name="string_hits">aciertos</string>
 
 
 </resources>

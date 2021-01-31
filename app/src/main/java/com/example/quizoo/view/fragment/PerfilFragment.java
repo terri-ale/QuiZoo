@@ -68,6 +68,17 @@ public class PerfilFragment extends Fragment {
         TextView tvPuntosProfile = view.findViewById(R.id.tvPuntosProfile);
         tvPuntosProfile.setText(viewModel.getCurrentUser().getNumResponsesCorrect() * Repository.SCORE_MULTIPLIER + getActivity().getString(R.string.string_points));
 
+
+
+        TextView tvPercentage = view.findViewById(R.id.tvPercentage);
+
+        if( viewModel.getCurrentUser().getNumResponsesCorrect() == 0){
+            tvPercentage.setVisibility(View.GONE);
+        }else{
+            int percentage = (viewModel.getCurrentUser().getNumResponses() * 100) / viewModel.getCurrentUser().getNumResponsesCorrect();
+            tvPercentage.setText(percentage + "% " + getContext().getString(R.string.string_hits));
+        }
+
         clickBotones(view, savedInstanceState);
 
     }

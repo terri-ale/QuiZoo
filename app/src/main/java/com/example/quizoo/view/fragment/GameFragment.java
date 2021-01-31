@@ -61,12 +61,15 @@ import java.util.Locale;
 import static android.text.Html.FROM_HTML_MODE_LEGACY;
 
 
-public class GameFragment extends Fragment {
+public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
     MediaPlayer mpAcierto;
     MediaPlayer mpFallo;
     ConstraintLayout card;
     ConstraintLayout pregunta1;
     ConstraintLayout pregunta2;
+
+    private ProgressDialog progressDialog;
+
 
     int checked1;
     int checked2;
@@ -85,9 +88,7 @@ public class GameFragment extends Fragment {
     TextView tvCount;
     Display display;
 
-    public GameFragment() {
-        // Required empty public constructor
-    }
+    public GameFragment() { }
 
 
 
@@ -95,7 +96,7 @@ public class GameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
-        viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
+        //viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -105,14 +106,11 @@ public class GameFragment extends Fragment {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return inflater.inflate(R.layout.fragment_game, container, false);
     }
@@ -157,6 +155,8 @@ public class GameFragment extends Fragment {
                 attemptLoadGame(v);
             }
         });
+
+        viewModel.getLiveCards().observe((AppCompatActivity) getContext(), this);
 
 
         view.findViewById(R.id.btExit).setOnClickListener(new View.OnClickListener() {
@@ -207,43 +207,57 @@ public class GameFragment extends Fragment {
 
     private void attemptLoadGame(View v){
 
-        if(viewModel.getSessionCards() != null){
+        progressDialog = ProgressDialog.show(getActivity(), "Cargando", "Estamos cargando las cartas");
 
-            this.gameCards = viewModel.getSessionCards();
-            beginScreen.setVisibility(View.GONE);
-            pruebaJuego();
-        }else{
-            ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Cargando", "Estamos cargando las cartas");
+        /*
 
-            viewModel.getLiveCards().observe((AppCompatActivity) getContext(), new Observer<ArrayList<Card>>() {
-                @Override
-                public void onChanged(ArrayList<Card> cards) {
-                    progressDialog.dismiss();
+        viewModel.getLiveCards().observe((AppCompatActivity) getContext(), new Observer<ArrayList<Card>>() {
+            @Override
+            public void onChanged(ArrayList<Card> cards) {
+                progressDialog.dismiss();
 
-                    if(cards == null){
-                        //MOSTRAR ERROR DE QUE NO SE HAN PODIDO RECUPERAR LAS CARTAS (CONEXIÓN A INTERNET)
-                        tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
-                    }else if(cards.size() == 0){
-                        //MOSTRAR ERROR DE QUE NO HAY CARTAS AÑADIDAS TODAVÍA
-                        tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
-                    }else{
-                        gameCards = cards;
-                        viewModel.setSessionCards(cards);
+                if(cards == null){
+                    //MOSTRAR ERROR DE QUE NO SE HAN PODIDO RECUPERAR LAS CARTAS (CONEXIÓN A INTERNET)
+                    tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
+                }else if(cards.size() == 0){
+                    //MOSTRAR ERROR DE QUE NO HAY CARTAS AÑADIDAS TODAVÍA
+                    tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
+                }else{
+                    gameCards = cards;
+                    viewModel.setSessionCards(cards);
 
-                        beginScreen.setVisibility(View.GONE);
-                        pruebaJuego();
-                    }
-
-                    viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
-
+                    beginScreen.setVisibility(View.GONE);
+                    pruebaJuego();
                 }
 
-            });
+                //viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
+            }
+        });
 
 
+         */
+        //Este método carga en MutableLiveData las cartas.
+        viewModel.loadCardsForGame();
+    }
 
-            //Este método carga en MutableLiveData las cartas.
-            viewModel.loadCardsForGame();
+
+    @Override
+    public void onChanged(ArrayList<Card> cards) {
+        progressDialog.dismiss();
+
+        if(cards == null){
+            //MOSTRAR ERROR DE QUE NO SE HAN PODIDO RECUPERAR LAS CARTAS (CONEXIÓN A INTERNET)
+            tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
+        }else if(cards.size() == 0){
+            //MOSTRAR ERROR DE QUE NO HAY CARTAS AÑADIDAS TODAVÍA
+            tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
+        }else{
+            gameCards = cards;
+            viewModel.setSessionCards(cards);
+
+            beginScreen.setVisibility(View.GONE);
+            pruebaJuego();
+
         }
     }
 
@@ -798,7 +812,6 @@ public class GameFragment extends Fragment {
 
 
     private void requestExitConfirmation(){
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialog_confirm_exit)
                 .setPositiveButton(R.string.string_no, new DialogInterface.OnClickListener() {
@@ -813,13 +826,9 @@ public class GameFragment extends Fragment {
                         getActivity().finish();
                     }
                 });
-
         builder.create();
         builder.show();
-
     }
-
-
 
 
 }

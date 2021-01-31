@@ -30,5 +30,8 @@ public interface UserDao {
     @Query("update users set numResponsesCorrect = numResponsesCorrect + 1 where id = :id")
     void sumUserScore(long id);
 
+    @Query("update users set numResponses = numResponses + 1 where id = :id")
+    void sumUserResponses(long id);
+
 
 }
