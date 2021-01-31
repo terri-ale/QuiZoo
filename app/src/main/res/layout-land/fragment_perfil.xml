@@ -41,16 +41,15 @@
             android:id="@+id/imgEnviarCorreo"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:contentDescription="TODO"
             android:foregroundGravity="center"
             android:src="@drawable/email"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline8" />
+            app:layout_constraintStart_toStartOf="@+id/guideline11"
+            app:layout_constraintTop_toBottomOf="@+id/tvPorcentaje" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline6"
@@ -103,19 +102,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.104" />
 
-        <TextView
-            android:id="@+id/tvPuntosProfile"
-            android:layout_width="299dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/brightons"
-            android:gravity="center"
-            android:text="XXXXXX puntos"
-            android:textColor="#090909"
-            android:textSize="36sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline82" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline71"
             android:layout_width="wrap_content"
@@ -142,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="258dp" />
+            app:layout_constraintGuide_begin="333dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline82"
@@ -155,14 +141,14 @@
             android:id="@+id/tvPorcentaje"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/baloo"
             android:text="xx% acierto"
             android:textColor="#000000"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/imgEnviarCorreo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPuntosProfile" />
+            app:layout_constraintStart_toStartOf="@+id/guideline11"
+            app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
         <TextView
             android:id="@+id/tvUserProfile"
@@ -179,6 +165,29 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <TextView
+            android:id="@+id/tvPuntosProfile"
+            android:layout_width="299dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/brightons"
+            android:gravity="center"
+            android:text="XXXXXX puntos"
+            android:textColor="#090909"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline11"
+            app:layout_constraintTop_toTopOf="@+id/guideline70" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
