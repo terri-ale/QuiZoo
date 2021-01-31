@@ -30,7 +30,10 @@
             app:destination="@id/adminLoginFragment" />
         <action
             android:id="@+id/action_chooseUserFragment_to_gameFragment"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/perfilFragment"

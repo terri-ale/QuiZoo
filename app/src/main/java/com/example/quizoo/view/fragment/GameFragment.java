@@ -48,6 +48,7 @@ public class GameFragment extends Fragment {
     ConstraintLayout pregunta1;
     ConstraintLayout pregunta2;
 
+    CountDownTimer countDownTimer;
     private ViewModelActivity viewModel;
 
     ConstraintLayout beginScreen;
@@ -180,6 +181,8 @@ public class GameFragment extends Fragment {
                     gameLoop();
                 }
 
+                viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
+
             }
 
         });
@@ -301,9 +304,10 @@ public class GameFragment extends Fragment {
             public void run() {
               //Contador 10 secs (+1 por delay)
                 tvCount.setVisibility(View.VISIBLE);
-                CountDownTimer countDownTimer = new CountDownTimer(11000, 1000) {
+                 countDownTimer = new CountDownTimer(11000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvCount.setText(String.format(Locale.getDefault(), "%d", millisUntilFinished / 1000L));
+
 
                     }
 
@@ -326,8 +330,6 @@ public class GameFragment extends Fragment {
 
 
     }
-
-
 
 
 }
