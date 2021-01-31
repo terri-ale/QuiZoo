@@ -103,7 +103,7 @@ public class EditQuestionFragment extends Fragment implements OnDBResponseListen
         String wrongAnswer1 = etWrongAnswer1.getText().toString();
 
         if( question.isEmpty() || correctAnswer.isEmpty() || wrongAnswer1.isEmpty()){
-            //Campos obligatorios
+
             Toast.makeText(getContext(), R.string.warning_empty_fields, Toast.LENGTH_SHORT).show();
         }else{
             btAddEditQuestion.setOnClickListener(null);

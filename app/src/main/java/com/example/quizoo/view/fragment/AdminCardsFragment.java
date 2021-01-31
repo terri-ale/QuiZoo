@@ -47,7 +47,7 @@ public class AdminCardsFragment extends Fragment {
 
 
     public AdminCardsFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -161,17 +161,14 @@ public class AdminCardsFragment extends Fragment {
                     //ERROR - INTERNET
                     constraintWarning.setVisibility(View.VISIBLE);
                     tvWarning.setText(getContext().getString(R.string.warning_cards_not_retrieved));
-                    //Toast.makeText(getContext(), getContext().getString(R.string.warning_cards_not_retrieved), Toast.LENGTH_SHORT).show();
-                    Log.v("xyzyx", "NO INTERNET ");
+
                 }else if(cards.size() == 0){
                     //NO HAY CARTAS
                     constraintWarning.setVisibility(View.VISIBLE);
                     tvWarning.setText(getContext().getString(R.string.warning_no_cards_yet));
-                    //Toast.makeText(getContext(), getContext().getString(R.string.warning_no_cards_yet), Toast.LENGTH_SHORT).show();
-                    Log.v("xyzyx", "NO CARGADAS ");
+
                 }else{
-                    //viewModel.getLiveCards().removeObservers((AppCompatActivity)getContext());
-                    Log.v("xyzyx", "CARGADAS "+cards.toString());
+
                     constraintWarning.setVisibility(View.GONE);
                     cardList.clear();
                     cardList.addAll(cards);
@@ -185,9 +182,6 @@ public class AdminCardsFragment extends Fragment {
 
         viewModel.loadCards();
     }
-
-
-
 
 
 }

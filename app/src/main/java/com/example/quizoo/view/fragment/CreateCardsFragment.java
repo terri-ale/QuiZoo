@@ -95,8 +95,7 @@ public class CreateCardsFragment extends Fragment implements View.OnClickListene
         if(name.isEmpty() || description.isEmpty()){
             Toast.makeText(getContext(), getContext().getString(R.string.warning_empty_fields), Toast.LENGTH_SHORT).show();
         }else{
-            //As soon as the user presses the button, the ClickListener is removed so it can't be pressed
-            //twice, avoiding errors or duplicates at the DB.
+            /* Cuando el usuario pulsa el click del boton, se elimina el listener, para evitar errores de pulsacion doble*/
             btCreateUpdateCard.setOnClickListener(null);
 
             progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.string_adding_card), "", true, false);

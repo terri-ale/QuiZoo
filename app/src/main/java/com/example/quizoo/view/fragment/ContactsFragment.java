@@ -65,7 +65,7 @@ public class ContactsFragment extends Fragment {
             public void onClick(View v) {
                 NavHostFragment.findNavController(ContactsFragment.this)
                         .popBackStack();
-                        //.navigate(R.id.perfilFragment);
+
             }
         });
 
@@ -133,10 +133,7 @@ public class ContactsFragment extends Fragment {
 
 
     private void setNoContactsWarning(boolean shouldShowWarning){
-        Log.v("xyzyx", "NO CONTACTS YET");
-        //Advertencia de que no hay contactos con correo todavía.
-        //Coger de strings.xml la advertencia de "Sin contactos"
-        //Jugar con Visibility VISIBLE y Visibility GONE
+
 
 
         mensajeNoContactos.setVisibility(View.VISIBLE);

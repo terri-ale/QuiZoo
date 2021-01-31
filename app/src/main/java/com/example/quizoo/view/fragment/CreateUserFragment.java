@@ -109,7 +109,7 @@ public class CreateUserFragment extends Fragment implements View.OnClickListener
             } else {
                 User user = new User(tiUserCreation.getEditText().getText().toString(), currentImage, 0, 0);
 
-                Log.v("xyzyx", user.toString());
+
                 viewModel.insert(user);
                 Snackbar.make(getView(), getString(R.string.message_user_successfuly_created), Snackbar.LENGTH_SHORT)
                         .show();

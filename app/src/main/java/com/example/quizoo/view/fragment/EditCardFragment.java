@@ -95,8 +95,6 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
     private void setUI(){
         tiCardName.getEditText().setText(viewModel.getCurrentCard().getName());
         tiCardDescription.getEditText().setText(viewModel.getCurrentCard().getDescription());
-        //imgPreview.setImageResource(Integer.parseInt(viewModel.getCurrentCard().getPictureUrl()));
-
 
         Glide.with(getActivity())
                 .load(viewModel.getCurrentCard().getPictureUrl())
