@@ -189,37 +189,44 @@ public class GameFragment extends Fragment {
 
     private void attemptLoadGame(View v){
 
-        ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Cargando", "Estamos cargando las cartas");
+        if(viewModel.getSessionCards() != null){
 
-        viewModel.getLiveCards().observe((AppCompatActivity) getContext(), new Observer<ArrayList<Card>>() {
-            @Override
-            public void onChanged(ArrayList<Card> cards) {
-                progressDialog.dismiss();
+            this.gameCards = viewModel.getSessionCards();
+            beginScreen.setVisibility(View.GONE);
+            pruebaJuego();
+        }else{
+            ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Cargando", "Estamos cargando las cartas");
 
-                if(cards == null){
-                    //MOSTRAR ERROR DE QUE NO SE HAN PODIDO RECUPERAR LAS CARTAS (CONEXIÓN A INTERNET)
-                    tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
-                }else if(cards.size() == 0){
-                    //MOSTRAR ERROR DE QUE NO HAY CARTAS AÑADIDAS TODAVÍA
-                    tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
-                }else{
-                    gameCards = cards;
-                    beginScreen.setVisibility(View.GONE);
+            viewModel.getLiveCards().observe((AppCompatActivity) getContext(), new Observer<ArrayList<Card>>() {
+                @Override
+                public void onChanged(ArrayList<Card> cards) {
+                    progressDialog.dismiss();
 
-                    pruebaJuego();
+                    if(cards == null){
+                        //MOSTRAR ERROR DE QUE NO SE HAN PODIDO RECUPERAR LAS CARTAS (CONEXIÓN A INTERNET)
+                        tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
+                    }else if(cards.size() == 0){
+                        //MOSTRAR ERROR DE QUE NO HAY CARTAS AÑADIDAS TODAVÍA
+                        tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
+                    }else{
+                        gameCards = cards;
+                        viewModel.setSessionCards(cards);
+
+                        beginScreen.setVisibility(View.GONE);
+                        pruebaJuego();
+                    }
+
+                    viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
+
                 }
 
-                viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
-
-            }
-
-        });
+            });
 
 
 
-        //Este método carga en MutableLiveData las cartas.
-        viewModel.loadCardsForGame();
-
+            //Este método carga en MutableLiveData las cartas.
+            viewModel.loadCardsForGame();
+        }
     }
 
 
@@ -746,6 +753,13 @@ public class GameFragment extends Fragment {
 
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+
+    }
 
 
 }

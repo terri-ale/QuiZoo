@@ -77,6 +77,8 @@ public class Repository {
 
     private MutableLiveData<DBResponse> liveResponse;
 
+    private ArrayList<Card> sessionCards;
+
 
     public final static int SCORE_MULTIPLIER = 10;
 
@@ -114,22 +116,6 @@ public class Repository {
     public MutableLiveData<Long> getLiveFriendInsertId() {
         return liveUserInsertId;
     }
-
-    public MutableLiveData<ArrayList<Card>> getLiveCards() {
-        return liveCards;
-    }
-
-    public MutableLiveData<ArrayList<Question>> getLiveQuestions() {
-        return liveQuestions;
-    }
-
-    public LiveData<DBResponse> getLiveResponse() {
-
-        return liveResponse;
-    }
-
-
-
     public LiveData<User> getLiveUser(long id) {
         return userDao.getLiveUser(id);
     }
@@ -306,7 +292,27 @@ public class Repository {
         return "";
     }
 
+
+
+
+
     /* ---- METODOS QUE CARGAN LAS CARTAS PARA LA VISUALIZACION Y PARA EL JUEGO ---- */
+
+    public ArrayList<Card> getSessionCards() {
+        return sessionCards;
+    }
+
+    public void setSessionCards(ArrayList<Card> sessionCards) {
+        this.sessionCards = sessionCards;
+    }
+
+    public MutableLiveData<ArrayList<Card>> getLiveCards() {
+        return liveCards;
+    }
+
+
+
+    public LiveData<DBResponse> getLiveResponse() { return liveResponse; }
 
     public void loadCardsForGame(){
         Call<ArrayList<Card>> call = cardClient.getAllCardsWithQuestions();
@@ -489,6 +495,12 @@ public class Repository {
     }
 
     /* ---- INSERCIÓN, ACTUALIZACION, BORRADO Y OBTENCIÓN DE LAS PREGUNTAS DEL SERVIDOR ---- */
+
+
+    public MutableLiveData<ArrayList<Question>> getLiveQuestions() {
+        return liveQuestions;
+    }
+
 
     public void addQuestion(Question question){
         Call<DBResponse> request = questionClient.addQuestion(question);

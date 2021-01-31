@@ -140,8 +140,13 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
     }
 
 
+    public ArrayList<Card> getSessionCards() {
+        return repository.getSessionCards();
+    }
 
-
+    public void setSessionCards(ArrayList<Card> sessionCards) {
+        repository.setSessionCards(sessionCards);
+    }
 
     public void loadQuestionsOf(Card card) {
         repository.loadQuestionsOf(card);
