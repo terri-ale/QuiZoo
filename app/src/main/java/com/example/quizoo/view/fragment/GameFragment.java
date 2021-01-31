@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.hardware.SensorAdditionalInfo;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -61,6 +62,8 @@ import static android.text.Html.FROM_HTML_MODE_LEGACY;
 
 
 public class GameFragment extends Fragment {
+    MediaPlayer mpAcierto;
+    MediaPlayer mpFallo;
     ConstraintLayout card;
     ConstraintLayout pregunta1;
     ConstraintLayout pregunta2;
@@ -446,6 +449,8 @@ public class GameFragment extends Fragment {
                 public void onClick(View v) {
                         btSiguiente.setEnabled(false);
                         btSiguiente.setBackgroundColor(Color.GRAY);
+                        mpAcierto = MediaPlayer.create(getActivity(),R.raw.acierto);
+                        mpFallo = MediaPlayer.create(getActivity(),R.raw.fallo);
 
                         if(indicePregunta%2==0 || indicePregunta==0){
 
@@ -457,13 +462,14 @@ public class GameFragment extends Fragment {
                                 radio = (RadioButton) rg2.getChildAt(idx);
                                  radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestacorrecta));
                                  viewModel.sumUserScore(viewModel.getCurrentUser().getId());
+                                 mpAcierto.start();
 
 
                              }else{
 
                                   radio = (RadioButton) rg2.getChildAt(idx);
                                  radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestafallida));
-
+                                mpFallo.start();
 
                              }
                             animation4.start();
@@ -481,13 +487,13 @@ public class GameFragment extends Fragment {
                             radio = (RadioButton) rg1.getChildAt(idx);
                                 radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestacorrecta));
                                 viewModel.sumUserScore(viewModel.getCurrentUser().getId());
-
+                                mpAcierto.start();
 
                             }else{
 
                             radio = (RadioButton) rg1.getChildAt(idx);
                                 radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestafallida));
-
+                                mpFallo.start();
 
                             }
                             animation3.start();
