@@ -535,6 +535,7 @@ public class Repository {
         request.enqueue(new Callback<DBResponse>() {
             @Override
             public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
+                //if(response.body()==null) Log.v("xyzyx", "RESPUESTA DELETE "+response.body().toString());
                 if(response.body() == null || response.body().getResult() == false){
                     responseListener.onFailed();
                 }else{
