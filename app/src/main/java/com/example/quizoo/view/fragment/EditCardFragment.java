@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.quizoo.R;
 import com.example.quizoo.model.Repository;
 import com.example.quizoo.rest.pojo.DBResponse;
@@ -49,9 +50,7 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
 
     private Button btCreateUpdateCard;
     private ImageView btDeleteCard;
-
-
-
+    private ImageView imgPreview;
 
     private ProgressDialog progressDialog;
 
@@ -84,7 +83,7 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
         tiCardDescription = view.findViewById(R.id.tiCardDescription);
         btCreateUpdateCard = view.findViewById(R.id.btCreateUpdateCard);
         btDeleteCard = view.findViewById(R.id.imgDeleteCard);
-
+        imgPreview = view.findViewById(R.id.imgPreview);
 
         setUI();
     }
@@ -93,6 +92,9 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
     private void setUI(){
         tiCardName.getEditText().setText(viewModel.getCurrentCard().getName());
         tiCardDescription.getEditText().setText(viewModel.getCurrentCard().getDescription());
+        //imgPreview.setImageResource(Integer.parseInt(viewModel.getCurrentCard().getPictureUrl()));
+
+        Glide.with(getActivity()).load(viewModel.getCurrentCard().getPictureUrl()).into(imgPreview);
 
         btCreateUpdateCard.setOnClickListener(this);
         btDeleteCard.setOnClickListener(this);
