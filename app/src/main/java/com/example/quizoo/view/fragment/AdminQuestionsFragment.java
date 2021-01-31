@@ -151,6 +151,8 @@ public class AdminQuestionsFragment extends Fragment {
 
                 }else{
                     Log.v("xyzyx", "LAS PREGUNTAS SON "+questions.toString());
+
+                    btAddQuestion.setVisibility(View.VISIBLE);
                     if(questions.size() >= Repository.MAX_QUESTIONS_PER_CARD){ btAddQuestion.setVisibility(View.GONE); }
                     constraintWarning.setVisibility(View.GONE);
                     questionList.clear();

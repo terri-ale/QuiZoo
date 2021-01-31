@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -73,6 +74,14 @@ public class CreateCardsFragment extends Fragment implements View.OnClickListene
         getView().findViewById(R.id.btChoosePicture).setOnClickListener(this);
         btCreateUpdateCard.setOnClickListener(this);
         viewModel.setResponseListener(this);
+
+        ImageButton btAtrasDesdeCrearCarta = view.findViewById(R.id.btAtrasDesdeCrearCarta);
+        btAtrasDesdeCrearCarta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(CreateCardsFragment.this).popBackStack();
+            }
+        });
     }
 
 
