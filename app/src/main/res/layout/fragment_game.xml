@@ -133,13 +133,13 @@
             android:background="@drawable/roundedcorners"
             android:backgroundTint="#ECE4DA"
             android:elevation="4dp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <RadioGroup
                 android:id="@+id/radiogroup1"
@@ -436,7 +436,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.833"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <TextView
                 android:id="@+id/tvAnimal"
@@ -492,12 +492,16 @@
                 android:backgroundTint="#FAF9F9"
                 android:fontFamily="@font/baloo"
                 android:gravity="center"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:scrollbars="vertical"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgAnimalCard" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button

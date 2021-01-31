@@ -28,6 +28,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -653,6 +654,7 @@ public class GameFragment extends Fragment {
 
         TextView tvAnimal = getActivity().findViewById(R.id.tvAnimal);
         TextView tvDescripcion = getActivity().findViewById(R.id.tvDescripcionCard);
+        tvDescripcion.setMovementMethod(new ScrollingMovementMethod());
         ImageView imgAnimal = getActivity().findViewById(R.id.imgAnimalCard);
 
         tvAnimal.setText(gameCards.get(indiceCarta).getName());
