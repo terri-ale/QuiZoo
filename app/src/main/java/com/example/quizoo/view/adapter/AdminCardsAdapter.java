@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
     private OnCardClickListener listener;
 
 
-    public AdminCardsAdapter(List<Card> cardList, Activity activity, OnCardClickListener listener) {
+    public AdminCardsAdapter(List<Card> cardList, Activity activity, OnCardClickListener listener){
         this.cardList = cardList;
         this.activity = activity;
         this.listener = listener;
@@ -38,7 +39,7 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_cards, parent, false);
         ViewHolder holder = new ViewHolder(vista);
         //viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ViewModelActivity.class);
@@ -46,7 +47,7 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position){
                 holder.tvAnimalName.setText(cardList.get(position).getName());
 
         try {
@@ -82,7 +83,7 @@ public class AdminCardsAdapter extends RecyclerView.Adapter<AdminCardsAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvAnimalName;
         ImageView imgAnimal;
-        Button btPreguntas;
+        ImageButton btPreguntas;
         ConstraintLayout constraintLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
