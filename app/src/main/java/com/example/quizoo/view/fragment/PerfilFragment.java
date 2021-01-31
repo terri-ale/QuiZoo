@@ -70,9 +70,6 @@ public class PerfilFragment extends Fragment {
 
         clickBotones(view, savedInstanceState);
 
-
-
-
     }
 
     private void rotarImagen(View view){
@@ -125,7 +122,13 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-
+        view.findViewById(R.id.btStartGame).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(PerfilFragment.this)
+                        .navigate(R.id.action_perfilFragment_to_gameFragment);
+            }
+        });
 
     }
 

@@ -61,6 +61,9 @@
     <string name="string_adding_question">Añadiendo pregunta...</string>
     <string name="string_updating_question">Actualizando pregunta...</string>
     <string name="warning_question_not_added">No se pudo crear la pregunta</string>
+    <string name="string_no">No</string>
+    <string name="string_yes">Si</string>
+    <string name="dialog_confirm_exit">¿Seguro que quieres salir del juego?</string>
 
 
 </resources>

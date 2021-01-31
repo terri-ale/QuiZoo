@@ -80,9 +80,8 @@ public class ChooseUserFragment extends Fragment {
             @Override
             public void onClick(User user) {
                 viewModel.setCurrentUser(user);
-
                 NavHostFragment.findNavController(ChooseUserFragment.this)
-                       .navigate(R.id.action_chooseUserFragment_to_gameFragment);
+                       .navigate(R.id.action_chooseUserFragment_to_perfilFragment);
             }
         });
 

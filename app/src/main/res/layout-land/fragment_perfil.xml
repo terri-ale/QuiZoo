@@ -237,7 +237,7 @@
         app:layout_constraintGuide_begin="97dp" />
 
     <Button
-        android:id="@+id/btJugar"
+        android:id="@+id/btStartGame"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="175dp"

@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.hardware.SensorAdditionalInfo;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -92,6 +94,15 @@ public class GameFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
         viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requestExitConfirmation();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+
 
     }
 
@@ -141,6 +152,14 @@ public class GameFragment extends Fragment {
                 indiceCarta=0;
                 indicePregunta=0;
                 attemptLoadGame(v);
+            }
+        });
+
+
+        view.findViewById(R.id.btExit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestExitConfirmation();
             }
         });
 
@@ -750,6 +769,30 @@ public class GameFragment extends Fragment {
 
 
 
+
+    }
+
+
+
+    private void requestExitConfirmation(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.dialog_confirm_exit)
+                .setPositiveButton(R.string.string_no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton(R.string.string_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getActivity().finish();
+                    }
+                });
+
+        builder.create();
+        builder.show();
 
     }
 
