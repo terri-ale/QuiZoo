@@ -45,7 +45,7 @@
     <string name="warning_card_not_added">No se pudo añadir la carta</string>
     <string name="warning_empty_fields">Debes rellenar los campos</string>
     <string name="string_loading">Cargando</string>
-    <string name="string_adding_card">Añadiendo carta</string>
+    <string name="string_adding_card">Añadiendo carta...</string>
     <string name="string_animal_description">Descripción del animal</string>
     <string name="warning_cards_not_retrieved">No se pudieron recuperar las cartas.\nComprueba tu conexión a internet.\n\nPulsa para reintentar</string>
     <string name="warning_no_cards_yet">No hay cartas para mostrar</string>
@@ -54,6 +54,13 @@
     <string name="message_changes_successfully_applied">Cambios guardados correctamente</string>
     <string name="warning_changes_not_applied">No se pudieron aplicar los cambios</string>
     <string name="string_deleting_card">Eliminando carta...</string>
+    <string name="warning_questions_not_retrieved">No se pudieron recuperar las preguntas.\nComprueba tu conexión a internet.\n\nPulsa para reintentar</string>
+    <string name="warning_no_questions_yet">Esta carta no tiene preguntas\n\nAñade con el botón +</string>
+    <string name="string_deleting_quesiton">Eliminando pregunta...</string>
+    <string name="message_question_created_successfully">Pregunta creada correctamente</string>
+    <string name="string_adding_question">Añadiendo pregunta...</string>
+    <string name="string_updating_question">Actualizando pregunta...</string>
+    <string name="warning_question_not_added">No se pudo crear la pregunta</string>
 
 
 </resources>

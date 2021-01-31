@@ -69,6 +69,8 @@ public class Repository {
     private final static String SHARED_PREFERENCE_NAME = "adminData";
     private final static String SHARED_PREFERENCE_KEY = "password";
 
+    public final static int MAX_QUESTIONS_PER_CARD = 5;
+
     private LiveData<List<User>> liveUserList;
     private MutableLiveData<ArrayList<Card>> liveCards;
     private MutableLiveData<ArrayList<Question>> liveQuestions;
@@ -115,6 +117,10 @@ public class Repository {
 
     public MutableLiveData<ArrayList<Card>> getLiveCards() {
         return liveCards;
+    }
+
+    public MutableLiveData<ArrayList<Question>> getLiveQuestions() {
+        return liveQuestions;
     }
 
     public LiveData<DBResponse> getLiveResponse() {
@@ -343,8 +349,11 @@ public class Repository {
             public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
                 //liveResponse.postValue(response.body());
                 //liveResponse.
-                if(response.body().getResult()) responseListener.onSuccess(response.body());
-                else responseListener.onFailed();
+                if(response.body() == null || response.body().getResult() == false){
+                    responseListener.onFailed();
+                }else{
+                    responseListener.onSuccess(response.body());
+                }
             }
 
             @Override
@@ -404,7 +413,11 @@ public class Repository {
             public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
                 //liveResponse.setValue(response.body());
                 //Log.v("xyzyx", "RESPONSE UPDATE CARD");
-                responseListener.onSuccess(response.body());
+                if(response.body() == null || response.body().getResult() == false){
+                    responseListener.onFailed();
+                }else{
+                    responseListener.onSuccess(response.body());
+                }
             }
 
             @Override
@@ -459,8 +472,11 @@ public class Repository {
         request.enqueue(new Callback<DBResponse>() {
             @Override
             public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
-                //liveResponse.setValue(response.body());
-                responseListener.onSuccess(response.body());
+                if(response.body() == null || response.body().getResult() == false){
+                    responseListener.onFailed();
+                }else{
+                    responseListener.onSuccess(response.body());
+                }
             }
 
             @Override
@@ -471,13 +487,77 @@ public class Repository {
         });
     }
 
+    public void addQuestion(Question question){
+        Call<DBResponse> request = questionClient.addQuestion(question);
 
-    public void getQuestionsOf(Card card){
+        request.enqueue(new Callback<DBResponse>() {
+            @Override
+            public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
+                if(response.body()!=null) Log.v("xyzyx", "MENSAJE "+response.body().toString());
+                if(response.body() == null || response.body().getResult() == false){
+                    responseListener.onFailed();
+                }else{
+                    responseListener.onSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DBResponse> call, Throwable t) {
+                responseListener.onFailed();
+            }
+        });
+    }
+
+
+    public void updateQuestion(Question question){
+        Call<DBResponse> request = questionClient.updateQuestion(question.getId(), question);
+
+        request.enqueue(new Callback<DBResponse>() {
+            @Override
+            public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
+                if(response.body() == null || response.body().getResult() == false){
+                    responseListener.onFailed();
+                }else{
+                    responseListener.onSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DBResponse> call, Throwable t) {
+                responseListener.onFailed();
+            }
+        });
+    }
+
+    public void deleteQuestion(Question question){
+        Call<DBResponse> request = questionClient.deleteQuestion(question.getId());
+
+        request.enqueue(new Callback<DBResponse>() {
+            @Override
+            public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
+                if(response.body() == null || response.body().getResult() == false){
+                    responseListener.onFailed();
+                }else{
+                    responseListener.onSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DBResponse> call, Throwable t) {
+                responseListener.onFailed();
+            }
+        });
+    }
+
+
+
+    public void loadQuestionsOf(Card card){
         Call<ArrayList<Question>> request = questionClient.getQuestionsOf(card.getId());
 
         request.enqueue(new Callback<ArrayList<Question>>() {
             @Override
             public void onResponse(Call<ArrayList<Question>> call, Response<ArrayList<Question>> response) {
+                //Log.v("xyzyx", "CARGADO "+response.body().toString());
                 liveQuestions.setValue(response.body());
             }
 

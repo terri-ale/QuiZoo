@@ -8,7 +8,7 @@
     tools:context=".view.fragment.CreateQuestionFragment">
 
     <Button
-        android:id="@+id/btAgregarCarta"
+        android:id="@+id/btAddEditQuestion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline57" />
 
     <EditText
-        android:id="@+id/etRespuestaCorrecta"
+        android:id="@+id/etCorrectAnswer"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline64" />
 
     <EditText
-        android:id="@+id/etRespuesta2"
+        android:id="@+id/etWrongAnswer1"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
@@ -47,12 +47,12 @@
         android:inputType="textPersonName"
         android:paddingStart="10dp"
         android:text="Opción 2 *"
-        app:layout_constraintEnd_toEndOf="@+id/etRespuestaCorrecta"
-        app:layout_constraintStart_toStartOf="@+id/etRespuestaCorrecta"
-        app:layout_constraintTop_toBottomOf="@+id/etRespuestaCorrecta" />
+        app:layout_constraintEnd_toEndOf="@+id/etCorrectAnswer"
+        app:layout_constraintStart_toStartOf="@+id/etCorrectAnswer"
+        app:layout_constraintTop_toBottomOf="@+id/etCorrectAnswer" />
 
     <EditText
-        android:id="@+id/etRespuesta3"
+        android:id="@+id/etWrongAnswer2"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
@@ -61,12 +61,12 @@
         android:inputType="textPersonName"
         android:paddingStart="10dp"
         android:text="Opción 3"
-        app:layout_constraintEnd_toEndOf="@+id/etRespuesta2"
-        app:layout_constraintStart_toStartOf="@+id/etRespuesta2"
-        app:layout_constraintTop_toBottomOf="@+id/etRespuesta2" />
+        app:layout_constraintEnd_toEndOf="@+id/etWrongAnswer1"
+        app:layout_constraintStart_toStartOf="@+id/etWrongAnswer1"
+        app:layout_constraintTop_toBottomOf="@+id/etWrongAnswer1" />
 
     <EditText
-        android:id="@+id/etRespuesta4"
+        android:id="@+id/etWrongAnswer3"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
@@ -75,9 +75,9 @@
         android:inputType="textPersonName"
         android:paddingStart="10dp"
         android:text="Opción 4"
-        app:layout_constraintEnd_toEndOf="@+id/etRespuesta3"
-        app:layout_constraintStart_toStartOf="@+id/etRespuesta3"
-        app:layout_constraintTop_toBottomOf="@+id/etRespuesta3" />
+        app:layout_constraintEnd_toEndOf="@+id/etWrongAnswer2"
+        app:layout_constraintStart_toStartOf="@+id/etWrongAnswer2"
+        app:layout_constraintTop_toBottomOf="@+id/etWrongAnswer2" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline57"
@@ -87,7 +87,7 @@
         app:layout_constraintGuide_begin="608dp" />
 
     <EditText
-        android:id="@+id/etPregunta"
+        android:id="@+id/etQuestion"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="50dp"
@@ -126,13 +126,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/check"
-        app:layout_constraintBottom_toBottomOf="@+id/etRespuestaCorrecta"
+        app:layout_constraintBottom_toBottomOf="@+id/etCorrectAnswer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/etRespuestaCorrecta"
-        app:layout_constraintTop_toTopOf="@+id/etRespuestaCorrecta" />
+        app:layout_constraintStart_toEndOf="@+id/etCorrectAnswer"
+        app:layout_constraintTop_toTopOf="@+id/etCorrectAnswer" />
 
     <ImageButton
-        android:id="@+id/btCerrarCrearPregunta"
+        android:id="@+id/imgBackFromCreateEditQuestion"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -157,28 +157,28 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/remove"
-        app:layout_constraintBottom_toBottomOf="@+id/etRespuesta2"
+        app:layout_constraintBottom_toBottomOf="@+id/etWrongAnswer1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/etRespuesta2"
-        app:layout_constraintTop_toTopOf="@+id/etRespuesta2" />
+        app:layout_constraintStart_toEndOf="@+id/etWrongAnswer1"
+        app:layout_constraintTop_toTopOf="@+id/etWrongAnswer1" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/remove"
-        app:layout_constraintBottom_toBottomOf="@+id/etRespuesta3"
+        app:layout_constraintBottom_toBottomOf="@+id/etWrongAnswer2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/etRespuesta3"
-        app:layout_constraintTop_toTopOf="@+id/etRespuesta3" />
+        app:layout_constraintStart_toEndOf="@+id/etWrongAnswer2"
+        app:layout_constraintTop_toTopOf="@+id/etWrongAnswer2" />
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/remove"
-        app:layout_constraintBottom_toBottomOf="@+id/etRespuesta4"
+        app:layout_constraintBottom_toBottomOf="@+id/etWrongAnswer3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/etRespuesta4"
-        app:layout_constraintTop_toTopOf="@+id/etRespuesta4" />
+        app:layout_constraintStart_toEndOf="@+id/etWrongAnswer3"
+        app:layout_constraintTop_toTopOf="@+id/etWrongAnswer3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

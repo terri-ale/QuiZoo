@@ -87,6 +87,7 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
     }
 
 
+
     public void updateCard(Uri imageUri, Card card) {
         repository.updateCard(imageUri, card);
     }
@@ -95,8 +96,26 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
         repository.deleteCard(card);
     }
 
+
+    public void addQuestion(Question question) {
+        repository.addQuestion(question);
+    }
+
+
+    public void updateQuestion(Question question) {
+        repository.updateQuestion(question);
+    }
+
+    public void deleteQuestion(Question question){
+        repository.deleteQuestion(question);
+    }
+
     public LiveData<List<User>> getLiveUserList(){
         return repository.getLiveUserList();
+    }
+
+    public MutableLiveData<ArrayList<Question>> getLiveQuestions() {
+        return repository.getLiveQuestions();
     }
 
     public void insert(User user){
@@ -121,8 +140,11 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
     }
 
 
-    public void getQuestionsOf(Card card) {
-        repository.getQuestionsOf(card);
+
+
+
+    public void loadQuestionsOf(Card card) {
+        repository.loadQuestionsOf(card);
     }
 
     public boolean storagePermissionIsGranted() {

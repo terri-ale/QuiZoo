@@ -49,6 +49,13 @@ public class Question {
         this.wrongAnswer3 = wrongAnswer3;
     }
 
+    public Question(long cardId, String text, String rightAnswer, String wrongAnswer1) {
+        this.cardId = cardId;
+        this.text = text;
+        this.rightAnswer = rightAnswer;
+        this.wrongAnswer1 = wrongAnswer1;
+    }
+
     public boolean checkAnswer(String answer){
         return answer.equalsIgnoreCase(this.rightAnswer);
     }

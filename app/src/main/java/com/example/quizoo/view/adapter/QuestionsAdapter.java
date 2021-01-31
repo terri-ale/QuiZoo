@@ -22,18 +22,20 @@ import java.util.List;
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.ViewHolder> {
 
     private List<Question> questionList;
+    private OnQuestionClickListener listener;
     private Activity activity;
 
-    public QuestionsAdapter(List<Question> questionList, Activity activity) {
+    public QuestionsAdapter(List<Question> questionList, Activity activity, OnQuestionClickListener listener) {
         this.questionList = questionList;
         this.activity = activity;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_question_recycler, parent, false);
-       ViewHolder holder = new ViewHolder(vista);
+        ViewHolder holder = new ViewHolder(vista);
         return holder;
     }
 
@@ -43,14 +45,14 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                listener.onQuestionClick(questionList.get(position));
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return questionList.size();
+        return questionList != null ? questionList.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,5 +1,6 @@
 package com.example.quizoo.view.fragment;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -199,7 +200,7 @@ public class GameFragment extends Fragment {
 
     private void gameLoop(){
 
-        for (int i = 0; i <gameCards.size() ; i++) {
+        for (int i = 0; i < gameCards.size() ; i++) {
 
             nextCard(gameCards.get(i));
 
@@ -316,7 +317,6 @@ public class GameFragment extends Fragment {
                         ObjectAnimator animation2 = ObjectAnimator.ofFloat(card, "translationX", -width);
                         animation2.setDuration(2000);
                         animation2.start();
-
                     }
                 }.start();
 

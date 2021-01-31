@@ -68,28 +68,16 @@ public class CreateCardsFragment extends Fragment implements View.OnClickListene
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //viewModel.getLiveResponse().observe(getViewLifecycleOwner(), this);
-
-        viewModel.setResponseListener(this);
-
-
-        setUI();
-    }
-
-    private void setUI(){
-        getView().findViewById(R.id.btChoosePicture).setOnClickListener(this);
-
         btCreateUpdateCard = getView().findViewById(R.id.btCreateUpdateCard);
+
+        getView().findViewById(R.id.btChoosePicture).setOnClickListener(this);
         btCreateUpdateCard.setOnClickListener(this);
+        viewModel.setResponseListener(this);
     }
 
 
 
     private void attemptAddCard(){
-        //As soon as the user presses the button, the ClickListener is removed so it can't be pressed
-        //twice, avoiding errors or duplicates at the DB.
-        btCreateUpdateCard.setOnClickListener(null);
-
         TextInputLayout tiName = getView().findViewById(R.id.tiCardName);
         String name = tiName.getEditText().getText().toString();
         TextInputLayout tiDescription = getView().findViewById(R.id.tiCardDescription);
@@ -98,6 +86,10 @@ public class CreateCardsFragment extends Fragment implements View.OnClickListene
         if(name.isEmpty() || description.isEmpty()){
             Toast.makeText(getContext(), getContext().getString(R.string.warning_empty_fields), Toast.LENGTH_SHORT).show();
         }else{
+            //As soon as the user presses the button, the ClickListener is removed so it can't be pressed
+            //twice, avoiding errors or duplicates at the DB.
+            btCreateUpdateCard.setOnClickListener(null);
+
             progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.string_adding_card), "", true, false);
 
             Card card = new Card(name, description);
@@ -123,8 +115,22 @@ public class CreateCardsFragment extends Fragment implements View.OnClickListene
 
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btBackFromCreateEditCard:
+                NavHostFragment.findNavController(CreateCardsFragment.this).popBackStack();
+                break;
 
+            case R.id.btCreateUpdateCard:
+                attemptAddCard();
+                break;
 
+            case R.id.btChoosePicture:
+                chooseImage();
+                break;
+        }
+    }
 
 
     //LLAMAR A ESTE MÉTODO DESDE EL BOTÓN DE SELECCIONAR IMAGEN
@@ -171,25 +177,4 @@ public class CreateCardsFragment extends Fragment implements View.OnClickListene
         }
         if(grantedCounter==permissions.length){ chooseImage(); }
     }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btBackFromCreateEditCard:
-                NavHostFragment.findNavController(CreateCardsFragment.this).popBackStack();
-                break;
-
-            case R.id.btCreateUpdateCard:
-                attemptAddCard();
-                break;
-
-            case R.id.btChoosePicture:
-                chooseImage();
-                break;
-
-        }
-    }
-
-
 }
