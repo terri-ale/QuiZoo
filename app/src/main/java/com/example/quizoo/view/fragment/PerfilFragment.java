@@ -125,14 +125,8 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-        LottieAnimationView btLogOut = view.findViewById(R.id.logOut);
-        btLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(PerfilFragment.this)
-                        .navigate(R.id.chooseUserFragment);
-            }
-        });
+
+
     }
 
 

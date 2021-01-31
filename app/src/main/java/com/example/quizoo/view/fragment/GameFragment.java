@@ -2,8 +2,10 @@ package com.example.quizoo.view.fragment;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -97,6 +99,7 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return inflater.inflate(R.layout.fragment_game, container, false);
     }
 
@@ -110,8 +113,8 @@ public class GameFragment extends Fragment {
         display = getActivity().getWindowManager().getDefaultDisplay();
         tvCount = view.findViewById(R.id.tvCuentaAtras);
         tvInstructions = view.findViewById(R.id.tvInstructionsBeforeGame);
-        ImageView ivProfile = view.findViewById(R.id.imgIrAPerfil);
-        ivProfile.setImageResource(viewModel.getCurrentUser().getAvatar());
+
+
          card = view.findViewById(R.id.CardLayout);
          card.setVisibility(View.GONE);
 
@@ -173,16 +176,8 @@ public class GameFragment extends Fragment {
             }
         });
 
-        ImageView imgIrAPerfil = view.findViewById(R.id.imgIrAPerfil);
-        imgIrAPerfil.setImageResource(viewModel.getCurrentUser().getAvatar());
-        imgIrAPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                countDownTimer.cancel();
-                NavHostFragment.findNavController(GameFragment.this)
-                        .navigate(R.id.perfilFragment);
-            }
-        });
+
+
 
     }
 
@@ -759,12 +754,6 @@ public class GameFragment extends Fragment {
     }
 
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-
-    }
 
 
 }
