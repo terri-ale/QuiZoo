@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.quizoo.R;
 import com.example.quizoo.model.Repository;
 import com.example.quizoo.rest.pojo.DBResponse;
@@ -43,13 +44,13 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
 
     private Uri imageUri = null;
 
+    private ImageView imgPreview;
     private TextInputLayout tiCardName;
     private TextInputLayout tiCardDescription;
 
 
     private Button btCreateUpdateCard;
     private ImageView btDeleteCard;
-
 
 
 
@@ -80,11 +81,12 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
 
         context = getContext();
 
+        imgPreview = view.findViewById(R.id.imgPreview);
         tiCardName = view.findViewById(R.id.tiCardName);
         tiCardDescription = view.findViewById(R.id.tiCardDescription);
         btCreateUpdateCard = view.findViewById(R.id.btCreateUpdateCard);
         btDeleteCard = view.findViewById(R.id.imgDeleteCard);
-
+        imgPreview = view.findViewById(R.id.imgPreview);
 
         setUI();
     }
@@ -93,6 +95,13 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
     private void setUI(){
         tiCardName.getEditText().setText(viewModel.getCurrentCard().getName());
         tiCardDescription.getEditText().setText(viewModel.getCurrentCard().getDescription());
+
+        Glide.with(getActivity())
+                .load(viewModel.getCurrentCard().getPictureUrl())
+                .placeholder(R.drawable.glidepordefecto)
+                .centerCrop()
+                .into(imgPreview);
+
 
         btCreateUpdateCard.setOnClickListener(this);
         btDeleteCard.setOnClickListener(this);
@@ -200,8 +209,7 @@ public class EditCardFragment extends Fragment implements View.OnClickListener, 
             imageUri = data.getData();
 
             //PONER EL IMAGEVIEW DE PREVISUALIZACION CON LA URI
-            ImageView ivPreview = getView().findViewById(R.id.imgPreview);
-            ivPreview.setImageURI(imageUri);
+            imgPreview.setImageURI(imageUri);
 
 
         }

@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -73,6 +74,14 @@ public class CreateCardsFragment extends Fragment implements View.OnClickListene
         getView().findViewById(R.id.btChoosePicture).setOnClickListener(this);
         btCreateUpdateCard.setOnClickListener(this);
         viewModel.setResponseListener(this);
+
+        ImageButton btAtrasDesdeCrearCarta = view.findViewById(R.id.btAtrasDesdeCrearCarta);
+        btAtrasDesdeCrearCarta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(CreateCardsFragment.this).popBackStack();
+            }
+        });
     }
 
 
@@ -86,8 +95,7 @@ public class CreateCardsFragment extends Fragment implements View.OnClickListene
         if(name.isEmpty() || description.isEmpty()){
             Toast.makeText(getContext(), getContext().getString(R.string.warning_empty_fields), Toast.LENGTH_SHORT).show();
         }else{
-            //As soon as the user presses the button, the ClickListener is removed so it can't be pressed
-            //twice, avoiding errors or duplicates at the DB.
+            /* Cuando el usuario pulsa el click del boton, se elimina el listener, para evitar errores de pulsacion doble*/
             btCreateUpdateCard.setOnClickListener(null);
 
             progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.string_adding_card), "", true, false);

@@ -84,7 +84,7 @@ public class AdminQuestionsFragment extends Fragment {
     }
 
     private void init() {
-        //viewModel.getLiveQuestions().removeObservers((AppCompatActivity) getContext());
+
 
         RecyclerView questionsRecycler = getView().findViewById(R.id.questionsRecycler);
         adapter = new QuestionsAdapter(questionList, getActivity(), new OnQuestionClickListener() {
@@ -135,14 +135,14 @@ public class AdminQuestionsFragment extends Fragment {
                 progressDialog.dismiss();
 
                 if(questions == null){
-                    //No internet connection
+                    // No hay conexion a internet
                     constraintWarning.setVisibility(View.VISIBLE);
                     constraintWarning.setOnClickListener(null);
                     tvWarning.setText(R.string.warning_questions_not_retrieved);
                     btAddQuestion.setVisibility(View.GONE);
 
                 }else if(questions.size() == 0){
-                    //No cards yet
+                    // Todavia no hay cartas
                     constraintWarning.setOnClickListener(null);
                     constraintWarning.setVisibility(View.VISIBLE);
                     btAddQuestion.setVisibility(View.VISIBLE);
@@ -150,14 +150,16 @@ public class AdminQuestionsFragment extends Fragment {
 
 
                 }else{
-                    Log.v("xyzyx", "LAS PREGUNTAS SON "+questions.toString());
+
+
+                    btAddQuestion.setVisibility(View.VISIBLE);
                     if(questions.size() >= Repository.MAX_QUESTIONS_PER_CARD){ btAddQuestion.setVisibility(View.GONE); }
                     constraintWarning.setVisibility(View.GONE);
                     questionList.clear();
                     questionList.addAll(questions);
                     adapter.notifyDataSetChanged();
                 }
-                //viewModel.getLiveQuestions().removeObservers((AppCompatActivity) getContext());
+
 
             }
         });

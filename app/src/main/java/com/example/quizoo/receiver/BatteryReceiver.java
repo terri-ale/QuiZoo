@@ -27,5 +27,4 @@ public class BatteryReceiver extends BroadcastReceiver {
     }
 
 
-    //UnaLinea
 }
