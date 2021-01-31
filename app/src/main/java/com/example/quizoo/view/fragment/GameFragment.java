@@ -304,12 +304,28 @@ public class GameFragment extends Fragment {
 
             if (indicePregunta % 2 == 0 && indicePregunta!=0) {
                 textoPregunta2.setText(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).getText());
-                vuelcaDatosPregunta();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        vuelcaDatosPregunta();
+                        rg2.clearCheck();
+                    }
+                }, 200);
+
                 animation2.start();
 
             } else if (indicePregunta % 2 != 0) {
                 textoPregunta1.setText(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).getText());
-                vuelcaDatosPregunta();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        vuelcaDatosPregunta();
+                        rg1.clearCheck();
+
+                    }
+                }, 200);
                 animation1.start();
 
             }
@@ -421,17 +437,17 @@ public class GameFragment extends Fragment {
 
                              RadioButton r = rg2.findViewById(checked2);
                             int idx = rg2.indexOfChild(r);
-
+                            RadioButton radio;
                              if(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).checkAnswer(r.getText().toString())){
 
-                                 RadioButton radio = (RadioButton) rg2.getChildAt(idx);
+                                radio = (RadioButton) rg2.getChildAt(idx);
                                  radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestacorrecta));
                                  viewModel.sumUserScore(viewModel.getCurrentUser().getId());
 
 
                              }else{
 
-                                 RadioButton radio = (RadioButton) rg2.getChildAt(idx);
+                                  radio = (RadioButton) rg2.getChildAt(idx);
                                  radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestafallida));
 
 
@@ -445,23 +461,22 @@ public class GameFragment extends Fragment {
 
                             RadioButton r = rg1.findViewById(checked1);
                             int idx = rg1.indexOfChild(r);
-
+                            RadioButton radio;
                             if(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).checkAnswer(r.getText().toString())){
 
-                                RadioButton radio = (RadioButton) rg1.getChildAt(idx);
+                            radio = (RadioButton) rg1.getChildAt(idx);
                                 radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestacorrecta));
                                 viewModel.sumUserScore(viewModel.getCurrentUser().getId());
 
 
                             }else{
 
-                                RadioButton radio = (RadioButton) rg1.getChildAt(idx);
+                            radio = (RadioButton) rg1.getChildAt(idx);
                                 radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestafallida));
 
 
                             }
                             animation3.start();
-
                             indicePregunta++;
                             pruebaJuego();
 
@@ -558,31 +573,7 @@ public class GameFragment extends Fragment {
             });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
 
 
 
@@ -693,6 +684,16 @@ public class GameFragment extends Fragment {
         rb2.setVisibility(View.VISIBLE);
         rc2.setVisibility(View.VISIBLE);
         rd2.setVisibility(View.VISIBLE);
+
+        ra1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+        rb1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+        rc1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+        rd1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+
+        ra2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+        rb2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+        rc2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+        rd2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
 
         if(indicePregunta == 0 || indicePregunta%2==0){
 
