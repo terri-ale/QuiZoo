@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
@@ -21,7 +22,7 @@ public class HostActivity extends AppCompatActivity {
 
     private BatteryReceiver batteryReceiver;
     private ViewModelActivity viewModel;
-
+        MediaPlayer mpSong;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,25 +48,17 @@ public class HostActivity extends AppCompatActivity {
                 });
 
 
-        /*
-        *  Debemos comprobar que fragmento esta siendo siendo visualizado en el navhostfragment para ocultar
-        * o mostrar el drawer a nuestro gusto
-
-        * */
-
-        viewModel = new ViewModelProvider(this).get(ViewModelActivity.class);
-
-        viewModel.getCurrentFragment().observe(this, new Observer<Fragment>() {
-            @Override
-            public void onChanged(Fragment fragment) {
-                Log.v("xyzyx", "EL FRAGMENTO ACTUAL ES: "+fragment.getClass());
+                mpSong = MediaPlayer.create(this,R.raw.song);
+                mpSong.start();
+                mpSong.setLooping(true);
 
 
-            }
-        });
+
 
 
     }
+
+
 
     @Override
     protected void onResume() {
@@ -102,7 +95,9 @@ public class HostActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
-
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mpSong.stop();
+    }
 }

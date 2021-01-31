@@ -495,6 +495,7 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
                              }
                             animation4.start();
                             indicePregunta++;
+                            viewModel.sumUserResponses(viewModel.getCurrentUser().getId());
                             pruebaJuego();
 
 
@@ -519,6 +520,7 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
                             }
                             animation3.start();
                             indicePregunta++;
+                            viewModel.sumUserResponses(viewModel.getCurrentUser().getId());
                             pruebaJuego();
 
 
