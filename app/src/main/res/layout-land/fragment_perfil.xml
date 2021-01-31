@@ -222,22 +222,6 @@
         app:lottie_imageAssetsFolder="assets"
         app:lottie_loop="true" />
 
-    <com.airbnb.lottie.LottieAnimationView
-
-        android:id="@+id/logOut"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline69"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="logout.json"
-        app:lottie_imageAssetsFolder="assets"
-        app:lottie_loop="true" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
         android:layout_width="wrap_content"
