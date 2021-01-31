@@ -27,8 +27,6 @@ public class HostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host);
 
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.robotboogie);
-        mediaPlayer.start(); // no need to call prepare(); create() does that for you
 
         batteryReceiver = new BatteryReceiver();
 
