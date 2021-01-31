@@ -102,11 +102,11 @@ public class Repository {
         cardClient = retrofit.create(CardClient.class);
         questionClient = retrofit.create(QuestionClient.class);
 
-
-
     }
 
     public void setResponseListener(OnDBResponseListener listener){ this.responseListener = listener; }
+
+    /* ---- METODOS DE LA BASE DE DATOS INTERNA ---- */
 
     public LiveData<List<User>> getLiveUserList(){
         return liveUserList;
@@ -145,6 +145,47 @@ public class Repository {
 
     }
 
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+
+    }
+
+    // Inserción de usuario en la base de datos interna (DAO)
+    public void insert(User user) {
+        ThreadPool.threadExecutorPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                userDao.insert(user);
+            }
+        });
+    }
+
+    // Actualizacion del usuario en la base de datos interna (DAO)
+    public void update(User user) {
+        ThreadPool.threadExecutorPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                userDao.update(user);
+            }
+        });
+    }
+
+    // Borrado del usuario en la base de datos interna (DAO)
+    public void delete(long id){
+        ThreadPool.threadExecutorPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                userDao.delete(id);
+            }
+        });
+    }
+
+    /* ---- METODOS QUE CONTROLAN LAS SHARED PREFERENCES ---- */
+
     public boolean checkAdminPassword(String password){
         SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         String value = preferences.getString(SHARED_PREFERENCE_KEY, "");
@@ -162,6 +203,8 @@ public class Repository {
         preferences.edit().putString(SHARED_PREFERENCE_KEY, password).apply();
     }
 
+    /* ---- METODOS QUE CONTROLAN SI EXISTEN LOS PERMISOS REQUERIDOS ---- */
+
 
     public boolean contactsPermissionIsGranted(){
         if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M) { return true; }
@@ -173,24 +216,17 @@ public class Repository {
         return context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
-
+    /* ---- METODO QUE OBTIENE LOS CONTACTOS DEL TELEFONO CON EMAIL ---- */
 
     public ArrayList<Contact>getContactsWithMail(){
 
         ArrayList<Contact> contacts = new ArrayList<>();
-
-        //MutableLiveData<List<Contact>> cont = new MutableLiveData<>();
-
-
-        //cont.
 
         String[] data = new String[]{ContactsContract.Data.DISPLAY_NAME, ContactsContract.CommonDataKinds.Email.ADDRESS};
         String order = ContactsContract.Data.DISPLAY_NAME + " ASC";
         String selectionEmail = ContactsContract.Data.MIMETYPE + "='" +
                 ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE+ "' AND "
                 + ContactsContract.CommonDataKinds.Email.ADDRESS + " IS NOT NULL";
-
-
 
         Cursor cursor =  context.getContentResolver().query(
                 ContactsContract.Data.CONTENT_URI,
@@ -207,74 +243,13 @@ public class Repository {
             contacts.add(contact);
         }
 
-        //Log.v("xyzyx", nameContact.toString());
         cursor.close();
 
 
         return contacts;
     }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
-
-    public Card getCurrentCard() {
-        return currentCard;
-    }
-
-    public void setCurrentCard(Card currentCard) {
-        this.currentCard = currentCard;
-    }
-
-    public Question getCurrentQuestion() {
-        return currentQuestion;
-    }
-
-    public void setCurrentQuestion(Question currentQuestion) {
-        this.currentQuestion = currentQuestion;
-    }
-
-    public void insert(User user) {
-        ThreadPool.threadExecutorPool.execute(new Runnable() {
-            @Override
-            public void run() {
-                userDao.insert(user);
-            }
-        });
-    }
-    public void update(User user) {
-        ThreadPool.threadExecutorPool.execute(new Runnable() {
-            @Override
-            public void run() {
-                userDao.update(user);
-            }
-        });
-    }
-
-    public void delete(long id){
-        ThreadPool.threadExecutorPool.execute(new Runnable() {
-            @Override
-            public void run() {
-                userDao.delete(id);
-            }
-        });
-    }
-
-
-    public File getFileFromUri(Uri uri){
-        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-        Cursor cursor = context.getContentResolver().query(uri,
-                filePathColumn, null, null, null);
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-        return new File(picturePath);
-    }
+    /* ---- METODO PARA MANDAR CORREO A TRAVES DE INTENT ---- */
 
     public void mandarCorreo(String correo, String puntuacion){
 
@@ -295,7 +270,43 @@ public class Repository {
         }
     }
 
+    /* ---- OBTENCIÓN Y ASIGNACIÓN DE CARTAS Y PREGUNTAS GLOBALES ---- */
 
+    public Card getCurrentCard() {
+        return currentCard;
+    }
+
+    public void setCurrentCard(Card currentCard) {
+        this.currentCard = currentCard;
+    }
+
+    public Question getCurrentQuestion() {
+        return currentQuestion;
+    }
+
+    public void setCurrentQuestion(Question currentQuestion) {
+        this.currentQuestion = currentQuestion;
+    }
+
+
+    /* ---- OBTENCION DE LA URI DE LA IMAGEN QUE PROVIENE DEL SERVIDOR ---- */
+
+    public File getFileFromUri(Uri uri){
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        Cursor cursor = context.getContentResolver().query(uri,
+                filePathColumn, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        return new File(picturePath);
+    }
+
+    public String saveImage(Uri imageUri){
+        return "";
+    }
+
+    /* ---- METODOS QUE CARGAN LAS CARTAS PARA LA VISUALIZACION Y PARA EL JUEGO ---- */
 
     public void loadCardsForGame(){
         Call<ArrayList<Card>> call = cardClient.getAllCardsWithQuestions();
@@ -330,15 +341,7 @@ public class Repository {
     }
 
 
-    public String saveImage(Uri imageUri){
-        return "";
-    }
-
-
-
-
-
-
+    /* ---- INSERCIÓN, ACTUALIZACION, BORRADO Y OBTENCIÓN DE LAS CARTAS DEL SERVIDOR ---- */
 
 
     private void addCard(Card card){
@@ -347,8 +350,7 @@ public class Repository {
         request.enqueue(new Callback<DBResponse>() {
             @Override
             public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
-                //liveResponse.postValue(response.body());
-                //liveResponse.
+
                 if(response.body() == null || response.body().getResult() == false){
                     responseListener.onFailed();
                 }else{
@@ -358,7 +360,7 @@ public class Repository {
 
             @Override
             public void onFailure(Call<DBResponse> call, Throwable t) {
-                //liveResponse.setValue(null);
+
                 responseListener.onFailed();
             }
         });
@@ -411,8 +413,7 @@ public class Repository {
         request.enqueue(new Callback<DBResponse>() {
             @Override
             public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
-                //liveResponse.setValue(response.body());
-                //Log.v("xyzyx", "RESPONSE UPDATE CARD");
+
                 if(response.body() == null || response.body().getResult() == false){
                     responseListener.onFailed();
                 }else{
@@ -422,7 +423,7 @@ public class Repository {
 
             @Override
             public void onFailure(Call<DBResponse> call, Throwable t) {
-                //liveResponse.setValue(null);
+
                 responseListener.onFailed();
             }
         });
@@ -481,11 +482,13 @@ public class Repository {
 
             @Override
             public void onFailure(Call<DBResponse> call, Throwable t) {
-                //liveResponse.setValue(null);
+
                 responseListener.onFailed();
             }
         });
     }
+
+    /* ---- INSERCIÓN, ACTUALIZACION, BORRADO Y OBTENCIÓN DE LAS PREGUNTAS DEL SERVIDOR ---- */
 
     public void addQuestion(Question question){
         Call<DBResponse> request = questionClient.addQuestion(question);
@@ -535,7 +538,6 @@ public class Repository {
         request.enqueue(new Callback<DBResponse>() {
             @Override
             public void onResponse(Call<DBResponse> call, Response<DBResponse> response) {
-                //if(response.body()==null) Log.v("xyzyx", "RESPUESTA DELETE "+response.body().toString());
                 if(response.body() == null || response.body().getResult() == false){
                     responseListener.onFailed();
                 }else{
@@ -558,7 +560,7 @@ public class Repository {
         request.enqueue(new Callback<ArrayList<Question>>() {
             @Override
             public void onResponse(Call<ArrayList<Question>> call, Response<ArrayList<Question>> response) {
-                //Log.v("xyzyx", "CARGADO "+response.body().toString());
+
                 liveQuestions.setValue(response.body());
             }
 
