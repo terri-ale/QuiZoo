@@ -60,7 +60,7 @@ public class Question {
         return answer.equalsIgnoreCase(this.rightAnswer);
     }
 
-    private List<String> getShuffledAnswers(){
+    public List<String> getShuffledAnswers(){
         List<String> answers = new ArrayList<>();
         answers.add(rightAnswer);
         answers.add(wrongAnswer1);

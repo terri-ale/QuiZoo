@@ -4,7 +4,11 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.hardware.SensorAdditionalInfo;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -14,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,17 +33,23 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.quizoo.R;
 import com.example.quizoo.model.Repository;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.rest.pojo.Card;
+import com.example.quizoo.rest.pojo.Question;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import static android.text.Html.FROM_HTML_MODE_LEGACY;
@@ -48,6 +59,12 @@ public class GameFragment extends Fragment {
     ConstraintLayout card;
     ConstraintLayout pregunta1;
     ConstraintLayout pregunta2;
+
+    int checked1;
+    int checked2;
+
+    int indiceCarta=0;
+    int indicePregunta=0;
 
     CountDownTimer countDownTimer;
     private ViewModelActivity viewModel;
@@ -102,6 +119,12 @@ public class GameFragment extends Fragment {
          pregunta2 = view.findViewById(R.id.questionLayout2);
          pregunta2.setVisibility(View.GONE);
 
+        float width;
+        Point size = new Point();
+        display.getSize(size);
+        width = size.x;
+        pregunta1.setX(width);
+        pregunta2.setX(width);
 
 
         beginScreen = view.findViewById(R.id.constraintStart);
@@ -111,6 +134,8 @@ public class GameFragment extends Fragment {
         beginScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                indiceCarta=0;
+                indicePregunta=0;
                 attemptLoadGame(v);
             }
         });
@@ -180,7 +205,8 @@ public class GameFragment extends Fragment {
                 }else{
                     gameCards = cards;
                     beginScreen.setVisibility(View.GONE);
-                    gameLoop();
+
+                    pruebaJuego();
                 }
 
                 viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
@@ -199,17 +225,12 @@ public class GameFragment extends Fragment {
 
 
 
-    private void gameLoop(){
-
-        for (int i = 0; i < gameCards.size() ; i++) {
-
-            nextCard(gameCards.get(i));
-
-        }
-    }
 
 
-    public void nextCard(Card carta){
+    public void pruebaJuego(){
+
+
+
         float width;
         Point size = new Point();
         display.getSize(size);
@@ -221,41 +242,338 @@ public class GameFragment extends Fragment {
         ObjectAnimator animation2 = ObjectAnimator.ofFloat(pregunta2, "translationX", (width/2f)-(width/2f));
         animation2.setDuration(2000);
 
-        animacionCarta();
+        ObjectAnimator animation3 = ObjectAnimator.ofFloat(pregunta1, "translationX", -width);
+        animation2.setDuration(4000);
 
-        pregunta1.setX(width);
-        pregunta2.setX(width);
+        ObjectAnimator animation4 = ObjectAnimator.ofFloat(pregunta2, "translationX", -width);
+        animation2.setDuration(4000);
+
 
         pregunta1.setVisibility(View.VISIBLE);
         pregunta2.setVisibility(View.VISIBLE);
 
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-             for (int i = 0; i < carta.getQuestions().size(); i++) {
+        RadioGroup rg1 =getActivity().findViewById(R.id.radiogroup1);
+        RadioGroup rg2 =getActivity().findViewById(R.id.radiogroup2);
 
-                    //Si es par
-                    if(i%2==0){
-                        Log.v("xyzyx",carta.getQuestions().get(i).toString());
+        RadioButton ra1 = getActivity().findViewById(R.id.respuestaA1);
+        RadioButton ra2 = getActivity().findViewById(R.id.respuestaA2);
+        RadioButton rb1 = getActivity().findViewById(R.id.respuestaB1);
+        RadioButton rb2 = getActivity().findViewById(R.id.respuestaB2);
+        RadioButton rc1 = getActivity().findViewById(R.id.respuestaC1);
+        RadioButton rc2 = getActivity().findViewById(R.id.respuestaC2);
+        RadioButton rd1 = getActivity().findViewById(R.id.respuestaD1);
+        RadioButton rd2 = getActivity().findViewById(R.id.respuestaD2);
+
+        TextView textoPregunta1 = getActivity().findViewById(R.id.tvPregunta1);
+        TextView textoPregunta2 = getActivity().findViewById(R.id.tvPregunta2);
+
+        Button btSiguiente = getActivity().findViewById(R.id.btSiguienteP);
+        btSiguiente.setBackgroundColor(Color.GRAY);
+
+        if(indicePregunta==gameCards.get(indiceCarta).getQuestions().size()) {
+            indicePregunta = 0;
+            indiceCarta++;
+        }
+
+              if (indicePregunta == 0) {
+
+                animacionCarta();
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        btSiguiente.setEnabled(false);
+
+                        textoPregunta2.setText(gameCards.get(indiceCarta).getQuestions().get(0).getText());
+                        vuelcaDatosPregunta();
                         animation2.start();
 
 
-                    }else{
-                        animation1.start();
-
                     }
+                }, 14000);
+            }
+
+            if (indicePregunta % 2 == 0 && indicePregunta!=0) {
+                textoPregunta2.setText(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).getText());
+                vuelcaDatosPregunta();
+                animation2.start();
+
+            } else if (indicePregunta % 2 != 0) {
+                textoPregunta1.setText(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).getText());
+                vuelcaDatosPregunta();
+                animation1.start();
+
+            }
+
+
+            // LISTENERS ANIMADORES
+
+            animation1.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
 
                 }
 
-            }
-        }, 14000);
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    btSiguiente.setEnabled(true);
+
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+
+            animation2.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+
+            animation3.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    pregunta1.setX(width);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+
+            animation4.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                    pregunta2.setX(width);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+
+
+
+            //LISTENER BOTON
+
+            btSiguiente.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        btSiguiente.setEnabled(false);
+                        btSiguiente.setBackgroundColor(Color.GRAY);
+
+                        if(indicePregunta%2==0 || indicePregunta==0){
+
+                             RadioButton r = rg2.findViewById(checked2);
+                            int idx = rg2.indexOfChild(r);
+
+                             if(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).checkAnswer(r.getText().toString())){
+
+                                 RadioButton radio = (RadioButton) rg2.getChildAt(idx);
+                                 radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestacorrecta));
+                                 viewModel.sumUserScore(viewModel.getCurrentUser().getId());
+
+
+                             }else{
+
+                                 RadioButton radio = (RadioButton) rg2.getChildAt(idx);
+                                 radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestafallida));
+
+
+                             }
+                            animation4.start();
+                            indicePregunta++;
+                            pruebaJuego();
+
+
+                        }else if (indicePregunta%2 != 0){
+
+                            RadioButton r = rg1.findViewById(checked1);
+                            int idx = rg1.indexOfChild(r);
+
+                            if(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).checkAnswer(r.getText().toString())){
+
+                                RadioButton radio = (RadioButton) rg1.getChildAt(idx);
+                                radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestacorrecta));
+                                viewModel.sumUserScore(viewModel.getCurrentUser().getId());
+
+
+                            }else{
+
+                                RadioButton radio = (RadioButton) rg1.getChildAt(idx);
+                                radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestafallida));
+
+
+                            }
+                            animation3.start();
+
+                            indicePregunta++;
+                            pruebaJuego();
+
+
+                        }
+
+                }
+            });
+
+            //LISTENERS RADIOS
+            rg1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    btSiguiente.setBackgroundColor(Color.WHITE);
+                    btSiguiente.setEnabled(true);
+                    checked1 = rg1.getCheckedRadioButtonId();
+
+
+                    if(ra1.getId()==checkedId){
+                                ra1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
+                    }else{
+                        ra1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+
+
+                    }
+
+                    if(rb1.getId()==checkedId){
+                        rb1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
+                    }else{
+                        rb1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+
+                    }
+
+                    if(rc1.getId()==checkedId){
+                        rc1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
+                    }else{
+                        rc1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+
+                    }
+
+                    if(rd1.getId()==checkedId){
+                        rd1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
+                    }else{
+                        rd1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+
+                    }
+
+
+
+
+                    Log.v("idradio", String.valueOf(checked1));
+                }
+            });
+
+            rg2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    btSiguiente.setEnabled(true);
+                    checked2= rg2.getCheckedRadioButtonId();
+                    btSiguiente.setBackgroundColor(Color.WHITE);
+
+
+                    if(ra2.getId()==checkedId){
+                        ra2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
+                    }else{
+                        ra2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+
+
+                    }
+
+                    if(rb2.getId()==checkedId){
+                        rb2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
+                    }else{
+                        rb2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+
+                    }
+
+                    if(rc2.getId()==checkedId){
+                        rc2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
+                    }else{
+                        rc2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+
+                    }
+
+                    if(rd2.getId()==checkedId){
+                        rd2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
+                    }else{
+                        rd2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
+
+                    }
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
     }
+
+
+
+
+
 
 
 
@@ -276,7 +594,9 @@ public class GameFragment extends Fragment {
 
 
     public void animacionCarta(){
-
+        vuelcaDatosCarta();
+        Button btSiguiente = getActivity().findViewById(R.id.btSiguienteP);
+        btSiguiente.setVisibility(View.GONE);
 
         card.setVisibility(View.VISIBLE);
 
@@ -314,6 +634,7 @@ public class GameFragment extends Fragment {
                     }
 
                     public void onFinish() {
+                        btSiguiente.setVisibility(View.VISIBLE);
                         tvCount.setVisibility(View.GONE);
                         ObjectAnimator animation2 = ObjectAnimator.ofFloat(card, "translationX", -width);
                         animation2.setDuration(2000);
@@ -327,10 +648,104 @@ public class GameFragment extends Fragment {
 
     }
 
-    public void initGame(View v){
+
+    public void vuelcaDatosCarta(){
+
+        TextView tvAnimal = getActivity().findViewById(R.id.tvAnimal);
+        TextView tvDescripcion = getActivity().findViewById(R.id.tvDescripcionCard);
+        ImageView imgAnimal = getActivity().findViewById(R.id.imgAnimalCard);
+
+        tvAnimal.setText(gameCards.get(indiceCarta).getName());
+        tvDescripcion.setText(gameCards.get(indiceCarta).getDescription());
+        Glide.with(getActivity()).load(gameCards.get(indiceCarta).getPictureUrl()).into(imgAnimal);
+
+    }
+
+    public void vuelcaDatosPregunta(){
+
+            List<String> opciones;
+        opciones =  gameCards.get(indiceCarta).getQuestions().get(indicePregunta).getShuffledAnswers();
+        Log.v("opciones",opciones.toString());
+        RadioButton ra1 = getActivity().findViewById(R.id.respuestaA1);
+        RadioButton ra2 = getActivity().findViewById(R.id.respuestaA2);
+        RadioButton rb1 = getActivity().findViewById(R.id.respuestaB1);
+        RadioButton rb2 = getActivity().findViewById(R.id.respuestaB2);
+        RadioButton rc1 = getActivity().findViewById(R.id.respuestaC1);
+        RadioButton rc2 = getActivity().findViewById(R.id.respuestaC2);
+        RadioButton rd1 = getActivity().findViewById(R.id.respuestaD1);
+        RadioButton rd2 = getActivity().findViewById(R.id.respuestaD2);
+
+        ra1.setVisibility(View.VISIBLE);
+        rb1.setVisibility(View.VISIBLE);
+        rc1.setVisibility(View.VISIBLE);
+        rd1.setVisibility(View.VISIBLE);
+
+        ra2.setVisibility(View.VISIBLE);
+        rb2.setVisibility(View.VISIBLE);
+        rc2.setVisibility(View.VISIBLE);
+        rd2.setVisibility(View.VISIBLE);
+
+        if(indicePregunta == 0 || indicePregunta%2==0){
+
+            if(opciones.size()==2){
+
+                ra2.setText(opciones.get(0));
+                rb2.setText(opciones.get(1));
+                rc2.setVisibility(View.GONE);
+                rd2.setVisibility(View.GONE);
+
+
+            }else if(opciones.size()==3){
+                ra2.setText(opciones.get(0));
+                rb2.setText(opciones.get(1));
+                rc2.setText(opciones.get(2));
+                rd2.setVisibility(View.GONE);
+
+
+            }else if(opciones.size()==4){
+
+                ra2.setText(opciones.get(0));
+                rb2.setText(opciones.get(1));
+                rc2.setText(opciones.get(2));
+                rd2.setText(opciones.get(3));
+
+            }
+
+
+        }else{
+
+            if(opciones.size()==2){
+
+                ra1.setText(opciones.get(0));
+                rb1.setText(opciones.get(1));
+                rc1.setVisibility(View.GONE);
+                rd1.setVisibility(View.GONE);
+
+
+            }else if(opciones.size()==3){
+                ra1.setText(opciones.get(0));
+                rb1.setText(opciones.get(1));
+                rc1.setText(opciones.get(2));
+                rd1.setVisibility(View.GONE);
+
+
+            }else if(opciones.size()==4){
+
+                ra1.setText(opciones.get(0));
+                rb1.setText(opciones.get(1));
+                rc1.setText(opciones.get(2));
+                rd1.setText(opciones.get(3));
+
+            }
+
+        }
+
+
+
 
 
     }
+
 
 
 }
