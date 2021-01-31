@@ -295,10 +295,13 @@ public class GameFragment extends Fragment {
 
         Button btSiguiente = getActivity().findViewById(R.id.btSiguienteP);
         btSiguiente.setBackgroundColor(Color.GRAY);
-
+        btSiguiente.setEnabled(false);
         if(indicePregunta==gameCards.get(indiceCarta).getQuestions().size()) {
             indicePregunta = 0;
             indiceCarta++;
+        }
+        if(indiceCarta==gameCards.size()-1){
+            indiceCarta=0;
         }
 
               if (indicePregunta == 0) {
@@ -326,7 +329,7 @@ public class GameFragment extends Fragment {
                     public void run() {
 
                         vuelcaDatosPregunta();
-                        rg2.clearCheck();
+
                     }
                 }, 200);
 
@@ -339,7 +342,7 @@ public class GameFragment extends Fragment {
                     public void run() {
 
                         vuelcaDatosPregunta();
-                        rg1.clearCheck();
+
 
                     }
                 }, 200);
@@ -349,7 +352,6 @@ public class GameFragment extends Fragment {
 
 
             // LISTENERS ANIMADORES
-
             animation1.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animation) {
@@ -358,7 +360,9 @@ public class GameFragment extends Fragment {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    btSiguiente.setEnabled(true);
+                    rg1.clearCheck();
+                    btSiguiente.setBackgroundColor(Color.GRAY);
+                    btSiguiente.setEnabled(false);
 
                 }
 
@@ -381,7 +385,9 @@ public class GameFragment extends Fragment {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-
+                   rg2.clearCheck();
+                    btSiguiente.setBackgroundColor(Color.GRAY);
+                    btSiguiente.setEnabled(false);
                 }
 
                 @Override
@@ -394,6 +400,7 @@ public class GameFragment extends Fragment {
 
                 }
             });
+
 
             animation3.addListener(new Animator.AnimatorListener() {
                 @Override
@@ -502,6 +509,9 @@ public class GameFragment extends Fragment {
 
 
                         }
+
+                    btSiguiente.setEnabled(false);
+                    btSiguiente.setBackgroundColor(Color.GRAY);
 
                 }
             });
@@ -694,6 +704,13 @@ public class GameFragment extends Fragment {
         RadioButton rc2 = getActivity().findViewById(R.id.respuestaC2);
         RadioButton rd1 = getActivity().findViewById(R.id.respuestaD1);
         RadioButton rd2 = getActivity().findViewById(R.id.respuestaD2);
+
+        TextView tvNum1 = getActivity().findViewById(R.id.tvNumPregunta1);
+        TextView tvNum2 = getActivity().findViewById(R.id.tvNumPregunta2);
+
+        String numPregunta = String.valueOf(indicePregunta+1);
+        tvNum1.setText(numPregunta + "/" + gameCards.get(indiceCarta).getQuestions().size());
+        tvNum2.setText(numPregunta + "/" + gameCards.get(indiceCarta).getQuestions().size());
 
         ra1.setVisibility(View.VISIBLE);
         rb1.setVisibility(View.VISIBLE);
