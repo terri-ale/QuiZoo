@@ -152,6 +152,7 @@ public class GameFragment extends Fragment {
         imgIrAPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                countDownTimer.cancel();
                 NavHostFragment.findNavController(GameFragment.this)
                         .navigate(R.id.perfilFragment);
             }
