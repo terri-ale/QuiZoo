@@ -54,7 +54,9 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
             @Override
             public void onClick(View view) {
-                viewModel.mandarCorreo(holder.tvEmailContact.getText().toString(), String.valueOf(viewModel.getCurrentUser().getNumResponsesCorrect() * 10));
+                viewModel.mandarCorreo(holder.tvEmailContact.getText().toString(), "Hola, estoy jugando a un nuevo juego llamado QuiZoo," +
+                        " en el cual aprenderás todo sobre animales. Acabo de realizar uno de mis records de puntuación. Descarga y juega QuiZoo con tus amigos." +
+                        "Mi puntuación es: " + String.valueOf(viewModel.getCurrentUser().getNumResponsesCorrect() * 10) );
             }
         });
     }
