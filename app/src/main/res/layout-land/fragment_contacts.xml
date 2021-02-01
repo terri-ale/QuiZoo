@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgcontactscreen"
+    android:background="@drawable/bcklandcontacts"
     tools:context=".view.fragment.ContactsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -45,14 +45,14 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/todo"
         android:elevation="4sp"
         android:scaleType="fitCenter"
         android:src="@drawable/x"
         app:layout_constraintBottom_toTopOf="@+id/guideline27"
         app:layout_constraintEnd_toStartOf="@+id/guideline28"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        android:contentDescription="@string/todo" />
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline28"
