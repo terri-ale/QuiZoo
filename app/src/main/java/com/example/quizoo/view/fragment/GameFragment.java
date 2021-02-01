@@ -2,16 +2,12 @@ package com.example.quizoo.view.fragment;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
-import android.hardware.SensorAdditionalInfo;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,7 +23,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -50,7 +45,6 @@ import com.example.quizoo.R;
 import com.example.quizoo.model.Repository;
 import com.example.quizoo.model.entity.User;
 import com.example.quizoo.rest.pojo.Card;
-import com.example.quizoo.rest.pojo.Question;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -59,6 +53,14 @@ import java.util.List;
 import java.util.Locale;
 
 import static android.text.Html.FROM_HTML_MODE_LEGACY;
+
+/*
+ GAME FRAGMENT
+
+ En este fragmento se coordina el apartado de la mecánica y funcionamiento de las animaciones, junto a
+ la gestión de respuesta de usuario, y calculo de puntos y porcentaje de acierto.
+ */
+
 
 
 public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
@@ -177,16 +179,6 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
             }
         });
 
-        //CUANDO EL USUARIO ACIERTE UNA PREGUNTA, SE SUMA EN LA BASE DE DATOS CON:
-        //viewModel.sumUserScore(viewModel.getCurrentUser().getId());
-
-
-
-        //ESTE MÉTODO SE DEBE LLAMAR DESDE EL BOTÓN DE JUGAR.
-     //   attemptLoadGame();
-
-
-
 
 
         FloatingActionButton btHelp = view.findViewById(R.id.btHelp);
@@ -209,33 +201,7 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
 
         progressDialog = ProgressDialog.show(getActivity(), "Cargando", "Estamos cargando las cartas");
 
-        /*
 
-        viewModel.getLiveCards().observe((AppCompatActivity) getContext(), new Observer<ArrayList<Card>>() {
-            @Override
-            public void onChanged(ArrayList<Card> cards) {
-                progressDialog.dismiss();
-
-                if(cards == null){
-                    //MOSTRAR ERROR DE QUE NO SE HAN PODIDO RECUPERAR LAS CARTAS (CONEXIÓN A INTERNET)
-                    tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
-                }else if(cards.size() == 0){
-                    //MOSTRAR ERROR DE QUE NO HAY CARTAS AÑADIDAS TODAVÍA
-                    tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
-                }else{
-                    gameCards = cards;
-                    viewModel.setSessionCards(cards);
-
-                    beginScreen.setVisibility(View.GONE);
-                    pruebaJuego();
-                }
-
-                //viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
-            }
-        });
-
-
-         */
         //Este método carga en MutableLiveData las cartas.
         viewModel.loadCardsForGame();
     }
@@ -256,19 +222,42 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
             viewModel.setSessionCards(cards);
 
             beginScreen.setVisibility(View.GONE);
-            pruebaJuego();
+            gameLoop();
 
         }
     }
 
+/*
++ Cada partida funcionará con el mismo ciclo:
+
+1. Se tienen dos indices (carta y pregunta) que tendrán la guía de lo que se muestra en cada momento
+2. El método animacionCarta, que hace que la carta con la información de la animal aparezca en pantalla, y se vaya después.
+        La carga de los datos de carta se hace a través de otro método que verifica índices para mostrar la información que toque en esa carta
+
+        Las cartas estarán barajadas en un ArrayList, y las preguntas tendrán a su vez las opciones barajadas, para que exista menor riesgo
+        de que el usuario se aprenda el orden y el juego pierda dificultad.
+
+3. La animación de las preguntas se basa en un juego de indices pares e impares, teniendo dos constraintLayout exactamente iguales: uno para
+las preguntas de índice par y otro para los de impar.
+
+Se podía haber hecho perfectamente con uno, pero pierde dinamismo la animación, por tanto se tenderá a comprobar el índice de pregunta para realizar
+las acciones sobre uno u otro layout, aunque suponga mayor trabajo de programación.
+
+Las respuestas correctas se van almacenando en el usuario de forma local, generando la puntuación cuando se multiplica el número de respuestas correctas x2
+
+También se ha aprovechado esto para generar un porcentaje de acierto que es mostrado en perfil de usuario.
+
+Cuando el usuario elige una opción de pregunta y pulsa en el botón comprobar, se suma una unidad al valor del indice de pregunta y se vuelve a llamar al
+mismo método gameLoop, volviendo a ejecutar todo el proceso anterior.
+
+Se han añadido sonidos usando la clase MediaPlayer para el acierto y el fallo, además de tener una banda sonora en loop continuo.
+*
+*/
 
 
 
 
-
-    public void pruebaJuego(){
-
-
+    public void gameLoop(){
 
         float width;
         Point size = new Point();
@@ -496,7 +485,7 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
                             animation4.start();
                             indicePregunta++;
                             viewModel.sumUserResponses(viewModel.getCurrentUser().getId());
-                            pruebaJuego();
+                            gameLoop();
 
 
                         }else if (indicePregunta%2 != 0){
@@ -521,7 +510,7 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
                             animation3.start();
                             indicePregunta++;
                             viewModel.sumUserResponses(viewModel.getCurrentUser().getId());
-                            pruebaJuego();
+                            gameLoop();
 
 
                         }
