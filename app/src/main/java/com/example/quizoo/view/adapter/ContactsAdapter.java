@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizoo.R;
+import com.example.quizoo.model.Repository;
 import com.example.quizoo.model.entity.Contact;
 import com.example.quizoo.viewmodel.ViewModelActivity;
 
@@ -54,9 +55,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
             @Override
             public void onClick(View view) {
-                viewModel.mandarCorreo(holder.tvEmailContact.getText().toString(), "Hola, estoy jugando a un nuevo juego llamado QuiZoo," +
-                        " en el cual aprenderás todo sobre animales. Acabo de realizar uno de mis records de puntuación. Descarga y juega QuiZoo con tus amigos." +
-                        "Mi puntuación es: " + String.valueOf(viewModel.getCurrentUser().getNumResponsesCorrect() * 10) );
+                viewModel.mandarCorreo(holder.tvEmailContact.getText().toString(),
+                activity.getString(R.string.mail_text) + String.valueOf(viewModel.getCurrentUser().getNumResponsesCorrect() * Repository.SCORE_MULTIPLIER) );
             }
         });
     }
@@ -64,7 +64,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return contact.size();
+        return contact == null ? 0 : contact.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

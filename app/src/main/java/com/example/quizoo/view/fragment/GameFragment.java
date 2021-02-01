@@ -169,8 +169,6 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
         });
 
 
-
-
         //SE OBTIENE UN LIVE USER Y SE MUESTRA EN TIEMPO REAL SU PUNTUACION
         viewModel.getLiveUser(viewModel.getCurrentUser().getId()).observe(getActivity(), new Observer<User>() {
             @Override
@@ -178,7 +176,6 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
                 tvScore.setText(String.valueOf(user.getNumResponsesCorrect() * Repository.SCORE_MULTIPLIER));
             }
         });
-
 
 
         FloatingActionButton btHelp = view.findViewById(R.id.btHelp);
@@ -189,18 +186,11 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
                 instruccionesDialog(savedInstanceState);
             }
         });
-
-
-
-
     }
 
 
-
     private void attemptLoadGame(View v){
-
         progressDialog = ProgressDialog.show(getActivity(), "Cargando", "Estamos cargando las cartas");
-
 
         //Este método carga en MutableLiveData las cartas.
         viewModel.loadCardsForGame();
@@ -219,11 +209,9 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
             tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
         }else{
             gameCards = cards;
-            viewModel.setSessionCards(cards);
 
             beginScreen.setVisibility(View.GONE);
             gameLoop();
-
         }
     }
 
@@ -243,7 +231,7 @@ las preguntas de índice par y otro para los de impar.
 Se podía haber hecho perfectamente con uno, pero pierde dinamismo la animación, por tanto se tenderá a comprobar el índice de pregunta para realizar
 las acciones sobre uno u otro layout, aunque suponga mayor trabajo de programación.
 
-Las respuestas correctas se van almacenando en el usuario de forma local, generando la puntuación cuando se multiplica el número de respuestas correctas x2
+Las respuestas correctas se van almacenando en el usuario de forma local, generando la puntuación cuando se multiplica el número de respuestas correctas x10
 
 También se ha aprovechado esto para generar un porcentaje de acierto que es mostrado en perfil de usuario.
 
@@ -253,8 +241,6 @@ mismo método gameLoop, volviendo a ejecutar todo el proceso anterior.
 Se han añadido sonidos usando la clase MediaPlayer para el acierto y el fallo, además de tener una banda sonora en loop continuo.
 *
 */
-
-
 
 
     public void gameLoop(){
@@ -457,67 +443,56 @@ Se han añadido sonidos usando la clase MediaPlayer para el acierto y el fallo, 
             btSiguiente.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        btSiguiente.setEnabled(false);
-                        btSiguiente.setBackgroundColor(Color.GRAY);
-                        mpAcierto = MediaPlayer.create(getActivity(),R.raw.acierto);
-                        mpFallo = MediaPlayer.create(getActivity(),R.raw.fallo);
-
-                        if(indicePregunta%2==0 || indicePregunta==0){
-
-                             RadioButton r = rg2.findViewById(checked2);
-                            int idx = rg2.indexOfChild(r);
-                            RadioButton radio;
-                             if(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).checkAnswer(r.getText().toString())){
-
-                                radio = (RadioButton) rg2.getChildAt(idx);
-                                 radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestacorrecta));
-                                 viewModel.sumUserScore(viewModel.getCurrentUser().getId());
-                                 mpAcierto.start();
-
-
-                             }else{
-
-                                  radio = (RadioButton) rg2.getChildAt(idx);
-                                 radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestafallida));
-                                mpFallo.start();
-
-                             }
-                            animation4.start();
-                            indicePregunta++;
-                            viewModel.sumUserResponses(viewModel.getCurrentUser().getId());
-                            gameLoop();
-
-
-                        }else if (indicePregunta%2 != 0){
-
-                            RadioButton r = rg1.findViewById(checked1);
-                            int idx = rg1.indexOfChild(r);
-                            RadioButton radio;
-                            if(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).checkAnswer(r.getText().toString())){
-
-                            radio = (RadioButton) rg1.getChildAt(idx);
-                                radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestacorrecta));
-                                viewModel.sumUserScore(viewModel.getCurrentUser().getId());
-                                mpAcierto.start();
-
-                            }else{
-
-                            radio = (RadioButton) rg1.getChildAt(idx);
-                                radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestafallida));
-                                mpFallo.start();
-
-                            }
-                            animation3.start();
-                            indicePregunta++;
-                            viewModel.sumUserResponses(viewModel.getCurrentUser().getId());
-                            gameLoop();
-
-
-                        }
-
                     btSiguiente.setEnabled(false);
                     btSiguiente.setBackgroundColor(Color.GRAY);
+                    mpAcierto = MediaPlayer.create(getActivity(),R.raw.acierto);
+                    mpFallo = MediaPlayer.create(getActivity(),R.raw.fallo);
 
+                    if(indicePregunta%2==0 || indicePregunta==0){
+                        RadioButton r = rg2.findViewById(checked2);
+                        int idx = rg2.indexOfChild(r);
+                        RadioButton radio;
+                        if(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).checkAnswer(r.getText().toString())){
+                            radio = (RadioButton) rg2.getChildAt(idx);
+                            radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestacorrecta));
+                            viewModel.sumUserScore(viewModel.getCurrentUser().getId());
+                            mpAcierto.start();
+
+                        }else{
+                            radio = (RadioButton) rg2.getChildAt(idx);
+                            radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestafallida));
+                            mpFallo.start();
+                        }
+                        animation4.start();
+                        indicePregunta++;
+                        viewModel.sumUserResponses(viewModel.getCurrentUser().getId());
+                        gameLoop();
+
+                    }else if (indicePregunta%2 != 0){
+
+                        RadioButton r = rg1.findViewById(checked1);
+                        int idx = rg1.indexOfChild(r);
+                        RadioButton radio;
+                        if(gameCards.get(indiceCarta).getQuestions().get(indicePregunta).checkAnswer(r.getText().toString())){
+
+                        radio = (RadioButton) rg1.getChildAt(idx);
+                            radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestacorrecta));
+                            viewModel.sumUserScore(viewModel.getCurrentUser().getId());
+                            mpAcierto.start();
+
+                        }else{
+                            radio = (RadioButton) rg1.getChildAt(idx);
+                            radio.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestafallida));
+                            mpFallo.start();
+
+                        }
+                        animation3.start();
+                        indicePregunta++;
+                        viewModel.sumUserResponses(viewModel.getCurrentUser().getId());
+                        gameLoop();
+                    }
+                    btSiguiente.setEnabled(false);
+                    btSiguiente.setBackgroundColor(Color.GRAY);
                 }
             });
 
@@ -530,88 +505,67 @@ Se han añadido sonidos usando la clase MediaPlayer para el acierto y el fallo, 
                     btSiguiente.setEnabled(true);
                     checked1 = rg1.getCheckedRadioButtonId();
 
-
                     if(ra1.getId()==checkedId){
                                 ra1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
                     }else{
                         ra1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
-
-
                     }
 
                     if(rb1.getId()==checkedId){
                         rb1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
                     }else{
                         rb1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
-
                     }
 
                     if(rc1.getId()==checkedId){
                         rc1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
                     }else{
                         rc1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
-
                     }
 
                     if(rd1.getId()==checkedId){
                         rd1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
                     }else{
                         rd1.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
-
                     }
-
-
-
 
                     Log.v("idradio", String.valueOf(checked1));
                 }
             });
 
             rg2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     btSiguiente.setEnabled(true);
                     checked2= rg2.getCheckedRadioButtonId();
                     btSiguiente.setBackgroundColor(Color.WHITE);
 
-
                     if(ra2.getId()==checkedId){
                         ra2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
                     }else{
                         ra2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
-
-
                     }
 
                     if(rb2.getId()==checkedId){
                         rb2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
                     }else{
                         rb2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
-
                     }
 
                     if(rc2.getId()==checkedId){
                         rc2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
                     }else{
                         rc2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
-
                     }
 
                     if(rd2.getId()==checkedId){
                         rd2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.respuestamarcada));
                     }else{
                         rd2.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.radiobutton));
-
                     }
                 }
             });
-
-
     }
-
-
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -653,7 +607,6 @@ Se han añadido sonidos usando la clase MediaPlayer para el acierto y el fallo, 
         animation.start();
 
 
-
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -663,8 +616,6 @@ Se han añadido sonidos usando la clase MediaPlayer para el acierto y el fallo, 
                  countDownTimer = new CountDownTimer(11000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvCount.setText(String.format(Locale.getDefault(), "%d", millisUntilFinished / 1000L));
-
-
                     }
 
                     public void onFinish() {
@@ -675,16 +626,12 @@ Se han añadido sonidos usando la clase MediaPlayer para el acierto y el fallo, 
                         animation2.start();
                     }
                 }.start();
-
-
             }
         }, 2000);
-
     }
 
 
     public void vuelcaDatosCarta(){
-
         TextView tvAnimal = getActivity().findViewById(R.id.tvAnimal);
         TextView tvDescripcion = getActivity().findViewById(R.id.tvDescripcionCard);
         tvDescripcion.setMovementMethod(new ScrollingMovementMethod());
@@ -693,11 +640,9 @@ Se han añadido sonidos usando la clase MediaPlayer para el acierto y el fallo, 
         tvAnimal.setText(gameCards.get(indiceCarta).getName());
         tvDescripcion.setText(gameCards.get(indiceCarta).getDescription());
         Glide.with(getActivity()).load(gameCards.get(indiceCarta).getPictureUrl()).into(imgAnimal);
-
     }
 
     public void vuelcaDatosPregunta(){
-
             List<String> opciones;
         opciones =  gameCards.get(indiceCarta).getQuestions().get(indicePregunta).getShuffledAnswers();
         Log.v("opciones",opciones.toString());
@@ -746,33 +691,24 @@ Se han añadido sonidos usando la clase MediaPlayer para el acierto y el fallo, 
                 rc2.setVisibility(View.GONE);
                 rd2.setVisibility(View.GONE);
 
-
             }else if(opciones.size()==3){
                 ra2.setText(opciones.get(0));
                 rb2.setText(opciones.get(1));
                 rc2.setText(opciones.get(2));
                 rd2.setVisibility(View.GONE);
 
-
             }else if(opciones.size()==4){
-
                 ra2.setText(opciones.get(0));
                 rb2.setText(opciones.get(1));
                 rc2.setText(opciones.get(2));
                 rd2.setText(opciones.get(3));
-
             }
-
-
         }else{
-
             if(opciones.size()==2){
-
                 ra1.setText(opciones.get(0));
                 rb1.setText(opciones.get(1));
                 rc1.setVisibility(View.GONE);
                 rd1.setVisibility(View.GONE);
-
 
             }else if(opciones.size()==3){
                 ra1.setText(opciones.get(0));
@@ -780,26 +716,14 @@ Se han añadido sonidos usando la clase MediaPlayer para el acierto y el fallo, 
                 rc1.setText(opciones.get(2));
                 rd1.setVisibility(View.GONE);
 
-
             }else if(opciones.size()==4){
-
                 ra1.setText(opciones.get(0));
                 rb1.setText(opciones.get(1));
                 rc1.setText(opciones.get(2));
                 rd1.setText(opciones.get(3));
-
             }
-
         }
-
-
-
-
-
-
-
     }
-
 
 
     private void requestExitConfirmation(){
@@ -820,6 +744,4 @@ Se han añadido sonidos usando la clase MediaPlayer para el acierto y el fallo, 
         builder.create();
         builder.show();
     }
-
-
 }

@@ -34,21 +34,17 @@ public class PerfilFragment extends Fragment {
 
     private ViewModelActivity viewModel;
 
-    public PerfilFragment() {
-        // Required empty public constructor
-    }
+    public PerfilFragment() { }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_perfil, container, false);
     }
 
@@ -69,13 +65,12 @@ public class PerfilFragment extends Fragment {
         tvPuntosProfile.setText(viewModel.getCurrentUser().getNumResponsesCorrect() * Repository.SCORE_MULTIPLIER + getActivity().getString(R.string.string_points));
 
 
-
         TextView tvPercentage = view.findViewById(R.id.tvPercentage);
 
-        if( viewModel.getCurrentUser().getNumResponsesCorrect() == 0){
+        if( viewModel.getCurrentUser().getNumResponsesCorrect() == 0 || viewModel.getCurrentUser().getNumResponses() == 0){
             tvPercentage.setVisibility(View.GONE);
         }else{
-            int percentage = (viewModel.getCurrentUser().getNumResponses() * 100) / viewModel.getCurrentUser().getNumResponsesCorrect();
+            int percentage = (viewModel.getCurrentUser().getNumResponsesCorrect() * 100) / viewModel.getCurrentUser().getNumResponses();
             tvPercentage.setText(percentage + "% " + getContext().getString(R.string.string_hits));
         }
 
@@ -140,11 +135,5 @@ public class PerfilFragment extends Fragment {
                         .navigate(R.id.action_perfilFragment_to_gameFragment);
             }
         });
-
     }
-
-
-
-
-
 }

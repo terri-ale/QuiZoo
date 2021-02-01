@@ -15,7 +15,7 @@
     <string name="warning_empty_field">Campo vacío</string>
     <string name="greeting_admin">Hola Admin!</string>
     <string name="instructions_admin_section">A partir de ahora estás en modo administrador. Desde el menú lateral de navegación podrás crear, editar y eliminar cartas que verán todas las personas que descargaron QuiZoo. También podrás gestionar los usuarios de este dispositivo. A divertirse!</string>
-    <string name="warning_grant_permission">Para continuar, debes conceder el permiso para leer contactos</string>
+    <string name="warning_grant_permission">Para continuar, debes conceder el permiso para leer contactos. Pulsa para conceder.</string>
     <string name="bt_grant">Conceder</string>
     <string name="instructions_game">&lt;h3>Bienvenido a QuiZoo.&lt;/h3>
 
@@ -65,6 +65,7 @@
     <string name="string_yes">Si</string>
     <string name="dialog_confirm_exit">¿Seguro que quieres salir del juego?</string>
     <string name="string_hits">aciertos</string>
+    <string name="mail_text">Hola, estoy jugando a un nuevo juego llamado QuiZoo, en el cual aprenderás todo sobre animales. Acabo de realizar uno de mis records de puntuación. Descarga y juega QuiZoo con tus amigos. Mi puntuación es:</string>
 
 
 </resources>

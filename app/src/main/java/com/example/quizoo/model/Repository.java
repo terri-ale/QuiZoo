@@ -74,10 +74,10 @@ public class Repository {
     private LiveData<List<User>> liveUserList;
     private MutableLiveData<ArrayList<Card>> liveCards;
     private MutableLiveData<ArrayList<Question>> liveQuestions;
-
     private MutableLiveData<DBResponse> liveResponse;
 
-    private ArrayList<Card> sessionCards;
+    private MutableLiveData<ArrayList<Contact>> liveContacts;
+
 
 
     public final static int SCORE_MULTIPLIER = 10;
@@ -97,6 +97,7 @@ public class Repository {
         liveQuestions = new MutableLiveData<>();
         liveCards = new MutableLiveData<>();
         liveResponse = new MutableLiveData<>();
+        liveContacts = new MutableLiveData<>();
         retrofit = new Retrofit.Builder()
                 .baseUrl(REST_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -213,35 +214,43 @@ public class Repository {
 
     /* ---- METODO QUE OBTIENE LOS CONTACTOS DEL TELEFONO CON EMAIL ---- */
 
-    public ArrayList<Contact>getContactsWithMail(){
 
-        ArrayList<Contact> contacts = new ArrayList<>();
-
-        String[] data = new String[]{ContactsContract.Data.DISPLAY_NAME, ContactsContract.CommonDataKinds.Email.ADDRESS};
-        String order = ContactsContract.Data.DISPLAY_NAME + " ASC";
-        String selectionEmail = ContactsContract.Data.MIMETYPE + "='" +
-                ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE+ "' AND "
-                + ContactsContract.CommonDataKinds.Email.ADDRESS + " IS NOT NULL";
-
-        Cursor cursor =  context.getContentResolver().query(
-                ContactsContract.Data.CONTENT_URI,
-                data,
-                selectionEmail,
-                null,
-                order);
-
-        while(cursor.moveToNext()){
-            String name = cursor.getString(0);
-            String email = cursor.getString(1);
-
-            Contact contact = new Contact(name, email);
-            contacts.add(contact);
-        }
-
-        cursor.close();
+    public MutableLiveData<ArrayList<Contact>> getLiveContacts() { return liveContacts; }
 
 
-        return contacts;
+    public void loadContactsWithMail(){
+        ThreadPool.threadExecutorPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<Contact> contacts = new ArrayList<>();
+
+                String[] data = new String[]{ContactsContract.Data.DISPLAY_NAME, ContactsContract.CommonDataKinds.Email.ADDRESS};
+                String order = ContactsContract.Data.DISPLAY_NAME + " ASC";
+                String selectionEmail = ContactsContract.Data.MIMETYPE + "='" +
+                        ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE+ "' AND "
+                        + ContactsContract.CommonDataKinds.Email.ADDRESS + " IS NOT NULL";
+
+                Cursor cursor =  context.getContentResolver().query(
+                        ContactsContract.Data.CONTENT_URI,
+                        data,
+                        selectionEmail,
+                        null,
+                        order);
+
+                while(cursor.moveToNext()){
+                    String name = cursor.getString(0);
+                    String email = cursor.getString(1);
+
+                    Contact contact = new Contact(name, email);
+                    contacts.add(contact);
+                }
+
+                cursor.close();
+
+                liveContacts.postValue(contacts);
+            }
+        });
+
     }
 
     /* ---- METODO PARA MANDAR CORREO A TRAVES DE INTENT ---- */
@@ -308,18 +317,10 @@ public class Repository {
 
     /* ---- METODOS QUE CARGAN LAS CARTAS PARA LA VISUALIZACION Y PARA EL JUEGO ---- */
 
-    public ArrayList<Card> getSessionCards() {
-        return sessionCards;
-    }
-
-    public void setSessionCards(ArrayList<Card> sessionCards) {
-        this.sessionCards = sessionCards;
-    }
 
     public MutableLiveData<ArrayList<Card>> getLiveCards() {
         return liveCards;
     }
-
 
 
     public LiveData<DBResponse> getLiveResponse() { return liveResponse; }

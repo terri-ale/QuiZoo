@@ -6,8 +6,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.quizoo.R;
 import com.example.quizoo.model.Repository;
@@ -29,14 +32,19 @@ import com.example.quizoo.viewmodel.ViewModelActivity;
 import java.util.ArrayList;
 
 
-public class ContactsFragment extends Fragment {
+public class ContactsFragment extends Fragment implements Observer<ArrayList<Contact>>{
+
 
     private ViewModelActivity viewModel;
-    ConstraintLayout mensajeNoContactos;
 
-    public ContactsFragment() {
-        // Required empty public constructor
-    }
+    private ContactsAdapter adapter;
+    private ArrayList<Contact> contactList = new ArrayList<>();
+
+    private ConstraintLayout mensajeNoContactos;
+    private ConstraintLayout constraintWarning;
+    private TextView tvWarning;
+
+    public ContactsFragment() { }
 
 
     @Override
@@ -48,7 +56,6 @@ public class ContactsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_contacts, container, false);
     }
 
@@ -56,8 +63,21 @@ public class ContactsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
-      mensajeNoContactos = getActivity().findViewById(R.id.mensajeNoContactos);
-      mensajeNoContactos.setVisibility(View.GONE);
+        mensajeNoContactos = getActivity().findViewById(R.id.mensajeNoContactos);
+        mensajeNoContactos.setVisibility(View.GONE);
+
+        constraintWarning = view.findViewById(R.id.constraintWarning);
+        tvWarning = view.findViewById(R.id.tvWarning);
+
+        //ConstraintWarning sólo se mostrará como advertencia caso de no haber permisos de contactos.
+        constraintWarning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attemptLoadContacts();
+            }
+        });
+
+
 
         ImageButton btBackFromContacts = getView().findViewById(R.id.btBackFromContacts);
         btBackFromContacts.setOnClickListener(new View.OnClickListener() {
@@ -69,37 +89,44 @@ public class ContactsFragment extends Fragment {
             }
         });
 
-        if(!viewModel.contactsPermissionIsGranted()){
-            setPermissionsWarning(true);
-            requestContactsPermission();
-
-        }else{
-            init();
-        }
-
-
-
-    }
-
-
-
-
-    private void init(){
-        ArrayList<Contact> contacts = viewModel.getContactsWithMail();
-
-        if(contacts.isEmpty()){
-            setNoContactsWarning(true);
-        }
-
 
         RecyclerView recyclerContact = getView().findViewById(R.id.recyclerView);
-        ContactsAdapter adapter = new ContactsAdapter(getContext(), getActivity(),contacts);
+        adapter = new ContactsAdapter(getContext(), getActivity(), contactList);
 
         recyclerContact.setAdapter(adapter);
         recyclerContact.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        viewModel.getLiveContacts().observe((AppCompatActivity) getContext(), this);
+        attemptLoadContacts();
 
     }
+
+
+
+    private void attemptLoadContacts(){
+        if(!viewModel.contactsPermissionIsGranted()){
+            setPermissionsWarning(true);
+            requestContactsPermission();
+        }else {
+            setPermissionsWarning(false);
+            viewModel.loadContactsWithMail();
+        }
+    }
+
+
+    @Override
+    public void onChanged(ArrayList<Contact> contacts) {
+        if(contacts.size() == 0){
+            setNoContactsWarning(true);
+        }else{
+            setNoContactsWarning(false);
+            contactList.clear();
+            contactList.addAll(contacts);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+
 
 
 
@@ -120,7 +147,7 @@ public class ContactsFragment extends Fragment {
                 }
                 break;
         }
-        if(grantedCounter==permissions.length){ setPermissionsWarning(false); }
+        if(grantedCounter==permissions.length){ setPermissionsWarning(false); attemptLoadContacts(); }
     }
 
 
@@ -133,20 +160,20 @@ public class ContactsFragment extends Fragment {
 
 
     private void setNoContactsWarning(boolean shouldShowWarning){
-
-
-
-        mensajeNoContactos.setVisibility(View.VISIBLE);
+        if(shouldShowWarning){
+            mensajeNoContactos.setVisibility(View.VISIBLE);
+        }else{
+            mensajeNoContactos.setVisibility(View.GONE);
+        }
     }
 
 
     private void setPermissionsWarning(boolean shouldShowWarning){
-        //Mostrar u ocultar los elementos graficos de la advertencia
-        //Coger de strings.xml la advertencia de "Para continuar, debes conceder los permisos"
+        if(shouldShowWarning){
+            constraintWarning.setVisibility(View.VISIBLE);
+            tvWarning.setText(R.string.warning_grant_permission);
+        }else{
+            constraintWarning.setVisibility(View.GONE);
+        }
     }
-
-
-
-
-
 }
