@@ -1,5 +1,6 @@
 package com.example.quizoo.model.entity;
 
+//Clase usada para volcar con MutableLiveData una lista de contactos con correo electrónico.
 public class Contact {
 
     private String name, email;

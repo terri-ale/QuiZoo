@@ -15,7 +15,6 @@ import com.example.quizoo.rest.pojo.Card;
 import com.example.quizoo.rest.pojo.DBResponse;
 import com.example.quizoo.rest.pojo.Question;
 import com.example.quizoo.util.OnDBResponseListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -155,7 +154,7 @@ public class ViewModelActivity extends androidx.lifecycle.AndroidViewModel {
     }
 
     public File getFileFromUri(Uri uri) {
-        return repository.getFileFromUri(uri);
+        return repository.getImageFileFromUri(uri);
     }
 
 

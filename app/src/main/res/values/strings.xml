@@ -66,6 +66,8 @@
     <string name="dialog_confirm_exit">¿Seguro que quieres salir del juego?</string>
     <string name="string_hits">aciertos</string>
     <string name="mail_text">Hola, estoy jugando a un nuevo juego llamado QuiZoo, en el cual aprenderás todo sobre animales. Acabo de realizar uno de mis records de puntuación. Descarga y juega QuiZoo con tus amigos. Mi puntuación es:</string>
+    <string name="mail_subject">Puntuación QuiZoo</string>
+    <string name="mail_intent_title">Mandar este email con...</string>
 
 
 </resources>

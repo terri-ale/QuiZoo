@@ -27,9 +27,13 @@ public interface UserDao {
     @Query("select * from users where id = :id")
     LiveData<User> getLiveUser(long id);
 
+
+    //Suma 1 al número de respuestas correctas que ha respondido el usuario.
     @Query("update users set numResponsesCorrect = numResponsesCorrect + 1 where id = :id")
     void sumUserScore(long id);
 
+
+    //Suma 1 al número de respuestas generales que ha respondido el usuario.
     @Query("update users set numResponses = numResponses + 1 where id = :id")
     void sumUserResponses(long id);
 

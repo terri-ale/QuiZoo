@@ -6,6 +6,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Card {
+
+    /* Las propiedades de clase que en servidor no cumplen con la notación de camello, son las que
+     * se asigna otro nombre mediante @SerializedName y @Expose
+     */
+
+
     private long id;
 
     private String name;

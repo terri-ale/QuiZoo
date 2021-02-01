@@ -8,6 +8,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class Question {
+
+    /* Las propiedades de clase que en servidor no cumplen con la notación de camello, son las que
+     * se asigna otro nombre mediante @SerializedName y @Expose
+     */
+
     private long id;
 
     @SerializedName("card_id")
@@ -56,10 +61,14 @@ public class Question {
         this.wrongAnswer1 = wrongAnswer1;
     }
 
-    public boolean checkAnswer(String answer){
-        return answer.equalsIgnoreCase(this.rightAnswer);
-    }
 
+
+
+    /* getShuffledAnswers()
+     * Devuelve un List de las Strings de todas las respuestas asociadas a esta pregunta, en orden
+     * aleatorio. Se usa en el juego, para que siempre aparezcan en orden aleatorio para que el usuario
+     * no se aprenda el orden de las respuestas y que no baje la dificultad.
+     */
     public List<String> getShuffledAnswers(){
         List<String> answers = new ArrayList<>();
         answers.add(rightAnswer);
@@ -71,63 +80,37 @@ public class Question {
     }
 
 
-
-    public long getId() {
-        return id;
+    /* checkAnswer( String: answer )
+     * Se comprueba si la respuesta pasada como parámetro coincide con la respuesta correcta
+     * de este objeto.
+     */
+    public boolean checkAnswer(String answer){
+        return answer.equalsIgnoreCase(this.rightAnswer);
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
-    public String getText() {
-        return text;
-    }
 
-    public void setText(String text) {
-        this.text = text;
-    }
 
-    public String getRightAnswer() {
-        return rightAnswer;
-    }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
-    public void setRightAnswer(String rightAnswer) {
-        this.rightAnswer = rightAnswer;
-    }
+    public String getText() { return text; }
+    public void setText(String text) { this.text = text; }
 
-    public String getWrongAnswer1() {
-        return wrongAnswer1;
-    }
+    public String getRightAnswer() { return rightAnswer; }
+    public void setRightAnswer(String rightAnswer) { this.rightAnswer = rightAnswer; }
 
-    public void setWrongAnswer1(String wrongAnswer1) {
-        this.wrongAnswer1 = wrongAnswer1;
-    }
+    public String getWrongAnswer1() { return wrongAnswer1; }
+    public void setWrongAnswer1(String wrongAnswer1) { this.wrongAnswer1 = wrongAnswer1; }
 
-    public String getWrongAnswer2() {
-        return wrongAnswer2;
-    }
+    public String getWrongAnswer2() { return wrongAnswer2; }
+    public void setWrongAnswer2(String wrongAnswer2) { this.wrongAnswer2 = wrongAnswer2; }
 
-    public void setWrongAnswer2(String wrongAnswer2) {
-        this.wrongAnswer2 = wrongAnswer2;
-    }
+    public String getWrongAnswer3() { return wrongAnswer3; }
+    public void setWrongAnswer3(String wrongAnswer3) { this.wrongAnswer3 = wrongAnswer3; }
 
-    public String getWrongAnswer3() {
-        return wrongAnswer3;
-    }
-
-    public void setWrongAnswer3(String wrongAnswer3) {
-        this.wrongAnswer3 = wrongAnswer3;
-    }
-
-    public long getCardId() {
-        return cardId;
-    }
-
-    public void setCardId(long cardId) {
-        this.cardId = cardId;
-    }
-
+    public long getCardId() { return cardId; }
+    public void setCardId(long cardId) { this.cardId = cardId; }
 
     @Override
     public String toString() {

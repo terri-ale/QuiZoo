@@ -98,8 +98,11 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(ViewModelActivity.class);
-        //viewModel.getLiveCards().removeObservers((AppCompatActivity) getContext());
 
+
+        /* Con este OnBackPressedCallback, nos enteramos cuando el usuario presiona el botón de navegar
+         * hacia atrás del sistema.
+         */
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
