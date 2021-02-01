@@ -154,7 +154,7 @@ public class AdminCardsFragment extends Fragment {
         viewModel.getLiveCards().observe((AppCompatActivity)getContext(), new Observer<ArrayList<Card>>() {
             @Override
             public void onChanged(ArrayList<Card> cards) {
-
+                if(progressDialog == null) return; //Danke Carmelo
                 progressDialog.dismiss();
 
                 if(cards == null){

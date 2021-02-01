@@ -8,7 +8,7 @@
     tools:context=".view.fragment.EditQuestionFragment">
 
     <Button
-        android:id="@+id/btEditarCarta"
+        android:id="@+id/btAddEditQuestion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

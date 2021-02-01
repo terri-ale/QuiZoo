@@ -132,6 +132,7 @@ public class AdminQuestionsFragment extends Fragment {
         viewModel.getLiveQuestions().observe((AppCompatActivity) getContext(), new Observer<ArrayList<Question>>() {
             @Override
             public void onChanged(ArrayList<Question> questions) {
+                if(progressDialog == null) return;
                 progressDialog.dismiss();
 
                 if(questions == null){

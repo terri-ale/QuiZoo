@@ -202,6 +202,7 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
 
     @Override
     public void onChanged(ArrayList<Card> cards) {
+        if(progressDialog == null) return;
         progressDialog.dismiss();
 
         if(cards == null){
@@ -209,7 +210,7 @@ public class GameFragment extends Fragment implements Observer<ArrayList<Card>>{
             tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
         }else if(cards.size() == 0){
             //MOSTRAR ERROR DE QUE NO HAY CARTAS AÑADIDAS TODAVÍA
-            tvInstructions.setText(getContext().getString(R.string.warning_cards_not_retrieved));
+            tvInstructions.setText(getContext().getString(R.string.warning_no_cards_yet));
         }else{
             gameCards = cards;
 
